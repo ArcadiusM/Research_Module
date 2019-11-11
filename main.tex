@@ -2,7 +2,7 @@
 %University of Bonn Master of Life Science Informatics
 % arara: pdflatex: { synctex: on }
 
-\documentclass[twoside, 12pt,  footinclude=true,  headinclude=true,  cleardoublepage=empty]{scrbook}
+\documentclass[ twoside=false, 12pt,  footinclude=true,  headinclude=true,  cleardoublepage=empty]{scrbook}
 
 \usepackage[utf8]{inputenc}
 \usepackage [english] {babel} 
@@ -34,275 +34,45 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{acro}
-\usepackage[a4paper,includeall,bindingoffset=20mm,margin=2cm,marginparsep=0cm,marginparwidth=0cm]{geometry}
+\usepackage[a4paper,includeall,margin=2cm,marginparsep=0cm,marginparwidth=0cm,left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage[font={footnotesize,it}, labelfont=bf]{caption}
+
+\setlength{\parskip}{10pt} % Abstand zwischen den Absätzen
+\setlength{\parindent}{0pt} %Erstzeileneinzug 
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{4}
 
 \DeclareAcronym{AD}{
 	short = AD ,
 	long  = Alzheimer's disease
 }
-\DeclareAcronym{API}{
-	short = API ,
-	long  = Application Programming Interface
-}
-\DeclareAcronym{BioPAX}{
-	short = BioPAX,
-	long  = Biological Pathway Exchange Language
-}
-\DeclareAcronym{BEL}{
-	short = BEL,
-	long  = Biological Expression Language
-}
-\DeclareAcronym{BELIEF}{
-	short = BELIEF,
-	long  = Biological Expression Language Information Extraction Workflow
-}
-\DeclareAcronym{BRENDA}{
-	short = BRENDA,
-	long  = Braunschweig Enzyme Database
-}
-\DeclareAcronym{ChEBI}{
-	short = ChEBI,
-	long  = Chemical Entities of Biological Interest
-}
-\DeclareAcronym{CI}{
-	short = CI,
-	long  = Continuous Integration
-}
-\DeclareAcronym{CSV}{
-	short = CSV,
-	long  = Comma Separated Values
-}
-\DeclareAcronym{DL}{
-	short = DL,
-	long  = Descriptive Logic
-}
-\DeclareAcronym{eQTL}{
-	short = eQTL,
-	long  = Expression Quantitative Trait Loci
-}
-\DeclareAcronym{eSNPO}{
-	short = eSNPO,
-	long  = eQTL Single Nucleotide Polymorphism Ontology
-}
-\DeclareAcronym{FCS}{
-	short = FCS,
-	long  = Functional Class Scoring
-}
-\DeclareAcronym{GML}{
-	short = GML,
-	long  = Graph Markup Language
-}
-\DeclareAcronym{GO}{
-	short = GO,
-	long  = Gene Ontology
-}
-\DeclareAcronym{GraphQL}{
-	short = GraphQL,
-	long  = Graph Query Language
-}
-\DeclareAcronym{GRP}{
-	short = GRP,
-	long  = Gene Set File Format
-}
-\DeclareAcronym{GSEA}{
-	short = GSEA,
-	long  = Gene Set Enrichment Analysis
-}
-\DeclareAcronym{HGNC}{
-	short = HGNC,
-	long  = HUGO Gene Nomenclature Committee
-}
-\DeclareAcronym{HTML}{
-	short = HTML,
-	long  = HyperText Markup Language
-}
-\DeclareAcronym{HUGO}{
-	short = HUGO,
-	long  = Human Genome Organization
-}
-\DeclareAcronym{IMI}{
-	short = IMI,
-	long  = International Medicine Initiative
-}
-\DeclareAcronym{INDRA}{
-	short = INDRA,
-	long  = Integrated Dynamical Reasoner and Assembler
-}
-\DeclareAcronym{IRI}{
-	short = IRI,
-	long  = Internationalized Resource Identifier
-}
-\DeclareAcronym{JGIF}{
-	short = JFIG,
-	long  = JSON Graph Interchange Format
-}
-\DeclareAcronym{JSON}{
-	short = JSON,
-	long  = JavaScript Object Notation
-}
-\DeclareAcronym{JSONLD}{
-	short = JSON-LD,
-	long  = JSON Linked Data
-}
-\DeclareAcronym{KEGG}{
-	short = KEGG,
-	long  = Kyoto Encyclopedia of Genes and Genomes
-}
-\DeclareAcronym{MeSH}{
-	short = MeSH,
-	long  = Medical Subject Headings
-}
-\DeclareAcronym{NDEx}{
-	short = NDEx,
-	long  = Network Data Exchange
-}
-\DeclareAcronym{NeuroMMSig}{
-	short = NeuroMMSig,
-	long  = Multimodal Mechanistic Signatures for Neurodegenerative Diseases
-}
-\DeclareAcronym{NPA}{
-	short = NPA,
-	long  = Network Perturbation Amplitude
-}
-\DeclareAcronym{OBO}{
-	short = OBO,
-	long  = Open Biomedical Ontology
-}
-\DeclareAcronym{OLS}{
-	short = OLS,
-	long  = Ontology Lookup Service
-}
-\DeclareAcronym{ORA}{
-	short = ORA,
-	long  = Over Representation Analysis
-}
-\DeclareAcronym{OWL}{
-	short = OWL,
-	long  = Web Ontology Language
-}
-\DeclareAcronym{PD}{
-	short = PD,
-	long  = Parkinson's disease
-}
-\DeclareAcronym{PT}{
-	short = PT,
-	long  = Pathway Topology
-}
-\DeclareAcronym{PTSD}{
-	short = PTSD,
-	long  = Post-traumatic Stress Disorder
-}
-\DeclareAcronym{miRNA}{
-	short = miRNA,
-	long  = Micro-Ribonucleic Acid
-}
-\DeclareAcronym{mRNA}{
-	short = mRNA,
-	long  = Messenger Ribonucleic Acid
-}
-\DeclareAcronym{RCR}{
-	short = RCR,
-	long  = Reverse Causal Reasoning
-}
-\DeclareAcronym{RDF}{
-	short = RDF,
-	long  = Resource Description Format
-}
-\DeclareAcronym{RDFS}{
-	short = RDFS,
-	long  = Resource Description Format Schema
-}
-\DeclareAcronym{REST}{
-	short = REST,
-	long  = Representational State Transfer
-}
-\DeclareAcronym{RNA}{
-	short = RNA,
-	long  = Ribonucleic acid
-}
-\DeclareAcronym{SBML}{
-	short = SBML,
-	long  = Systems Biology Markup Language
-}
-\DeclareAcronym{SIF}{
-	short = SIF,
-	long  = Simple Interaction Format
-}
-\DeclareAcronym{SPARQL}{
-	short = SPARQL,
-	long  = SPARQL Protocol and RDF Query Language
-}
-\DeclareAcronym{SQL}{
-	short = SQL,
-	long  = Structured Query Language
-}
-\DeclareAcronym{SNP}{
-	short = SNP,
-	long  = Single-Nucleotide Polymorphism
-}
-\DeclareAcronym{SST}{
-	short = SST,
-	long  = Sampling of Spanning Trees
-}
-\DeclareAcronym{TBI}{
-	short = TBI,
-	long  = Traumatic Brain Injury
-}
-\DeclareAcronym{UBERON}{
-	short = UBERON,
-	long  = Uber Anatomy Ontology
-}
-\DeclareAcronym{UniProt}{
-	short = UniProt,
-	long  = Universal Protein Resource
-}
-\DeclareAcronym{XML}{
-	short = XML,
-	long  = eXtensible Markup Language
-}
-\DeclareAcronym{XMLS}{
-	short = XMLS,
-	long  = eXtensible Markup Language Schema
-}
-\DeclareAcronym{XGMML}{
-	short = XGMML,
-	long  = eXtensible Graph Markup and Modeling Language
-}
 
 \title{Master Thesis}
-\author{Charles Tapley Hoyt}
 \date{\today}
 \begin{document}
 	\begin{titlepage}
 		\centering
-		Bonn-Aachen International Center for Information Technology (B-IT)
-		
 		University of Bonn
 		
-		 Master Programme in Life Science Informatics
-		
+		 Master Programme in Economics
 		\vspace{1in}
-		 {\Large \bfseries Master's Thesis}
 		\vspace{1in}
 		
-		{\LARGE \bfseries PyBEL: a Computational Framework for Biological Expression Language}
+		{\LARGE \bfseries  Random Forest for Classification Problems}
 		\vspace{1in}
 		
 		{\large Submitted by}
 		
-		{\LARGE Charles Tapley Hoyt\par}
+		{\LARGE Burak Balaban \par
+				Arkadiusz Modzelewski\par
+				Raphael Redmer\par}
 		
 		\vspace{1in}
 		
-			First Supervisor: Prof. Dr. Martin Hofmann-Apitius
-			\par
-			Second Supervisor: Prof. Dr. Thomas Schultz
-			\par
-			Internal Supervisor: Christian Ebeling
+			Supervisor: Prof. Dr. Dominik Liebl
 			
 		\vfill
-		In collaboration with the Fraunhofer Institute for Algorithms and Scientific Computing (SCAI)
+		
 		\begin{flushleft}
 			\today
 		\end{flushleft}
@@ -318,39 +88,30 @@
 	
 	\frontmatter
 
-
 \tableofcontents
 
-
 \chapter*{Abstract}
-The quantity of data, information, and knowledge in the biomedical domain is increasing at an unprecedented rate — with no signs of deceleration. Even with the assistance of information retrieval technologies, it is overwhelming, if not impossible, for individuals or groups of researchers to be knowledgeable of the state-of-the-art in any but an incredibly specific topic. Besides their obvious increases in volume and velocity, data are also increasing in variety as multi-modal and multi-scale experiments grow more important in the investigation of complex diseases. As experiments' complexities grow, so does the intellectual and temporal burden of analysis and interpretation. 
+As a non-parametric estimation tool, decision trees attract attention in the economics literature. Yet, decision trees suffer from high variance and, for prediction purposes higher variance seems to be a crucial problem, thus, several improvements were proposed such as bootstrap aggregation, boosting and most importantly random forests. In this project, while the main focus is being on the random forest, The elements of statistical learning by \cite{friedman2001elements} \cite{varian2014big} \cite{maimon2005data}, \cite{louppe2014understanding} and as expected \cite{breiman2001random} are the main literature that will be utilized in this project.
 
-The ability to reason over the wealth of knowledge from both structured and unstructured sources to generate and prioritize hypotheses in order to automatically interpret new data sets would provide a huge relief to this burden. 
+To explain the concept of random forests in full extent, primarily decision trees should be discussed. Exploiting the main idea and struggles with bias-variance trade-off, random forests' importance can be emphasized as a more stable prediction tool \cite{maimon2005data}. Conceptual comparison of random forests with bagging and boosting can deliver a better understanding of its unique features as \cite{lee2019bootstrap} shows in a similar fashion. To get a further understanding, random forests’ estimation process can be mathematical explained \cite{biau2012analysis} and likewise, examining the consistency of estimator and showing the properties can be included \cite{breiman2004consistency}, \cite{denil2014narrowing}. Also, variable importance in the tree growing process is another area that needs to be delved into \cite{ishwaran2007variable} and \cite{louppe2013understanding}.
 
-Developing systematic and reproducible methods first requires the formalization and assembly of knowledge in a computable form. As an aside, many techniques and methodologies in bioinformatics are biased towards the study of cancer biology and focus on data and knowledge at the molecular level. In this modeling strategy, often called the bottom-up approach, network and mathematical models are validated against the literature and experiments. 
 
-As we foray into the assembly of knowledge pertaining to new disease areas and associated clinical indications, we find much more focus on the process level and phenotypic level. Because the links between genetics, molecular mechanisms, phenotypes, and clinical measurements are much less clear, they also require the top-down approach to modeling, which first focuses on the larger scales.  While most modeling languages and data formats for assembling knowledge are insufficient, the \ac{BEL} possesses the unique faculty to capture this multi-scale knowledge. It has the potential to serve as a semantic integration platform on which the data measured across scales can be integrated and analyzed. 
-
-The purpose of this work is to outline the first steps taken towards the building of an automatic interpretation and hypothesis generation machine. The contents of this thesis describe the framework built to parse and manipulate the knowledge assemblies encoded in \ac{BEL}, which enables \ac{BEL} to act as a semantic integration layer for heterogeneous data and knowledge sources, the development of a framework for automatic integration of relevant knowledge from structured sources, and the development of schema-free analytical techniques to generate data-driven hypothesis.
 
 % /frontmatter -> Turn on normal numbering 
 \mainmatter
 
 \include{chapters/intro}
 
-\include{chapters/motivation_goal}
+\include{chapters/decision_tree}
 
-% \include{pybel_core}
+\include{chapters/random_forest}
 
-% \include{bio2bel}
-
-% \include{pybel_tools}
+\include{chapters/comparison}
 
 \include{chapters/conclusion}
 
 \printbibliography
-	
-\backmatter
+
 
 \chapter*{Declaration}
 I hereby certify that this material is my own work, that I used only those sources and resources referred to in the thesis, and that I have identified citations as such.
@@ -358,9 +119,5 @@ I hereby certify that this material is my own work, that I used only those sourc
 \vspace{0.3in}
 
 \noindent Bonn, \today
-
-\vspace{1in}
-
-\noindent Charles Tapley Hoyt
 
 \end{document}
