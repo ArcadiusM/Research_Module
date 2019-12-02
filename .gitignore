@@ -4,4 +4,4 @@
 !*.jpg
 !*.bib
 !*.m
-!.gitignore
+!*.gitignore
