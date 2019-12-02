@@ -1,26 +1,149 @@
 \chapter{Decision tree}
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
 et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-\section{Main idea and illustration}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Main idea}
+The Decision Tree is a non-parametric supervised learning method used for classification and regression.
+It predicts the response with a set of if-then-else decision rules derived from the data.
+The deeper the tree, the more complex the decision rules and the closer the model fits the data.
+The decision tree builds classification or regression models in the form of a tree structure. 
+Each node in the tree further partions the feature space into smaller and smaller subsets 
+while at the same time an associated decision tree is incrementally developed.
+The final result is a tree with decision nodes and terminal nodes. 
+A decision node has two or more branches.
+Leaf node represents a classification or decision. 
+The topmost decision node in a tree which corresponds to the best predictor is called the root node.
+Decision trees can handle both categorical and numerical data.
 
-\section{Mathematical explanation}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
+An example of such a tree is depicted below in figure \ref{Fig:decision_tree_example}.
 
-\section{Splitting criteria}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
-sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\begin{figure}[H]
+    \captionsetup{format=plain}
+    \makebox[\textwidth]{\includegraphics[width=120mm]{decision_tree_example.png}}
+    \caption{Given a data set with two features height and weight, and gender as the target variable, 
+             this example tree stratisfies the two-dimensional feature space into three distinct subset each 
+             represented by the terminal nodes at the bottom.
+             The stratification occurs at the two deciding nodes depending either on whether its height is above 180 cm 
+             and or its weight  is above 80kg.
+             }
+    \label{Fig:decision_tree_example}
+\end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tree Building Process}
+This chapter describes the CART algorithm for tree building as specified in \cite{breiman1984classification}.
+The basic idea of tree growing is to choose a split among all the possible splits at each node
+so that the resulting child nodes are the “purest”. In this algorithm, only univariate splits are
+considered. That is, each split depends on the value of only one predictor variable. All
+possible splits consist of possible splits of each predictor.
+
+A tree is grown starting from the root node by repeatedly using the following steps on each
+node (also called binary splitting)
+
+\begin{itemize}
+    \item[(i)] \textbf{Find best split \(s\) for each feature \(X_{m}\):}
+    For each feature \(X_{m}\), there exist \(K-1\)-many potiential splits whereas \(K\) is the number of different values for the respective feature.
+    Evaluate each value \(X_{m,i}\) at the current node \(t\) as a candidate split point (for \(x \in X_{m}\), if \(x \leq X_{m,i}=s\),
+    then \(x\) goes to left child node \(t_{L}\) else to right child node \(t_{R}\)).
+    The best split point is the one that maximize the splitting criterion \(\ \Delta i(s,t) \) the most when the node is split according to it.
+    The different splitting criteria will be covered in the next chapter.
+    \item[(ii)] \textbf{Find the node’s best split:} Among the best splits for each feature from Step (i) find the one \(s^{*}\), which maximizes the splitting criterion \(\Delta i(s,t)\).
+    \item[(iii)] \textbf{Satisfy stopping criterion:} Split the node \(t\) using best node split \(s^{*}\) from Step (ii) and 
+    repeat from Step (i) until stopping criterion is satisfied. 
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Splitting criteria}
+Since we are only concerned with classification, \(Y\) is categorical. The original CART algorithm uses Gini and Twoing as 
+purity measures for the splitting criterion. However, implementations of the algorithm such as Python's sklearn package
+also contain entropy and misclassification rate as measures of impurity.
+
+For a give learning sample \(L\) for a \(J\) class problem, let \(N_{j}\) be the number of instances \( \{x,y\}  \)
+belonging to in class \(j\).
+
+In node \(t\), let \(N(t)\) be the total number of instances with \( \{x,y\} \in t \) and \( N_{j}(t) \) the number of class \(j\)
+cases in \(t\). The proportion of the class \(j\) instances in the sample \(L\) falling into \(t\) is  \( N_{j}(t) / N_{j} \).
+For a given set of priors, \( \pi(j) \) is interpreted as the probability that an instance belongs to class \(j\).
+
+At node \(t\) let the probabilities \(p(j,t)\), \(p(t)\) and \(p(j|t)\) be estimated by using
+Thus, let 
+
+\begin{equation}
+    p(j,t) = \frac{ \pi(j)N_{j}(t) }{ N_{j} }
+\end{equation}
+
+be the estimate for the probability that na instance will both be in class \(j\) and fall into node \(t\).
+Therefore, the estimate for the probability that any instance falls into node \(t\) is defined by
+
+\begin{equation}
+    p(t) = \sum_{j} p(j,t),
+\end{equation}
+
+The estimate \( p(t) \) for the probability that an instance belongs to class \(j\) given that it falls into node \(t\) is defined by
+
+\begin{equation}
+    p(j|t) = \frac{ p(j,t)}{ p(t) } = \frac{ p(j,t) }{ \sum_{j} p(j,t) }.
+\end{equation}
+
+It holds that the conditional probability \(p(j|t)\) must satisfy
+
+\begin{equation}
+    \sum_{j} p(j|t)  = 1
+\end{equation}
+
+Let \(i(t)\) be an impurity measure evaluated at note \(t\). Then, the decrease of impurity (i.e. the splitting criterion) is defined as
+
+\begin{equation}
+    \Delta i(s,t) = i(t) - p_{L} i(t_{L}) - p_{R} i(t_{R}),
+\end{equation}
+
+where \(p_{L}\) and \(p_{R}\) are probabilities of sending a case to the left child node \(t_{L}\) and to the
+right child node \(t_{R}\) respectively. 
+They are estimated as \( p_{L} = p(t_{L}) / p(t) \) and \( p_{R} = p(t_{R}) / p(t) \).
+
+As already stated abobe, the goal is to maximize \(\Delta i(s,t)\)
+In the following, different measures for impurity will be presented.
+
+\textbf{Gini Measure}
+
+The Gini impurity measure is defined as 
+
+
+\begin{equation}
+    i(t) = \sum_{j} p(j|t) (1 - p(j|t)) = 1 - \sum_{j=1}^{J} p_{j}^{2}
+\end{equation}
+
+The intuition behind this measure is to assign nodes for which its probabilities are more skewed towards a particular group a higher value.
+Conversely, if a node has more balanced distribution, then \(i(t)\) will turn out to be lower.
+For example, in the case of \( J=2 \), \(i(t)\) will be maximized with \( p(j|t) = 0.5 \) for \(j = 1, 2\).
+
+
+\textbf{Information Entropy}
+
+The Entropy measure from information theory is defined as
+
+\begin{equation}
+    i(t) = \sum_{j} p(j|t) log(p(j|t))
+\end{equation}
+
+which measures the average rate at which information is produced by a stochastic source of data .
+Thus, it can also be used for measuring impurity.
+
+\newpage
+
+\textbf{Rate of Misclassification}
+
+The rate of misclassification is defined as 
+
+\begin{equation}
+    i(t) = 1 - \max_{0 < j \leq J} p(j|t) .
+\end{equation}
+
+which measure the proportion of instances node \(t\) not belonging to the dominant group in \(t\).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bias-variance trade-off}
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, 
 sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
