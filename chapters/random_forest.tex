@@ -11,10 +11,144 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
 no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 \section{Mathematical explanation and Consistency}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
+\paragraph{}
+Let $D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})}$ be the set, we want to train our model on and $T_{D, \theta}$ decision tree produced by using the set $D$ and parameters $\theta$. We assume that $D$ is countable which normally is the case especially for Y values although replacing sums with integrals can extent the analysis and provide results for uncountable sets as well (Kohavi, 1996). As mentioned earlier, Random Forest classifier selects a bootstrapped subset of observations denoted as $\boldsymbol{D'}$ and grow the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times gives a Random Forest Estimator. Assume $x^*$ is the value that we want to predict its class, there are two rules that can be used to get the prediction; majority voting and soft voting (Louppe, 2014; Zhou,2012).
+\paragraph{}
+In majority voting, after getting every trees prediction denoted as $\hat{T}(x^*)$ final prediction is the class that gets most votes from trees;
+\begin{equation}
+\boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
+	\underset{c \in Y}{argmax} \sum_{b = 1}^{B}{1(\hat{T}_{b}(x^*) = c)}
+\end{equation}
+
+\paragraph{}
+In soft voting, probability estimates of a tree denoted as $\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)$ is estimated and after all are averaged and most likely class is predicted;
+\begin{equation}
+\boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
+	\underset{c \in Y}{argmax} \dfrac{1}{B}\sum_{b = 1}^{B}{\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)}
+\end{equation}
+
+\paragraph{}
+As mentioned in Breiman(1994), aformentioned two voting procedures provides similar results, yet using soft voting can provide smoother class probability estimates and be exploited in a deeper analysis setting such as certainty estimates investigation (Louppe, 2014). 
+
+\subsection{Properties}
+\paragraph{}
+The generalization error which also called test error or the expected prediction error of $T_{D,\theta}$ is;
+\begin{equation}
+\boldsymbol{Err}(T_{D,\theta}) = \mathbb{E}_{X,Y}\{L(Y, T_{D,\theta}(X)) \}
+\end{equation}
+where L is the loss function measuring the difference between its two arguments. Since we focus on classification setting, the zero-one loss function is our interest, however, to get a better understanding, widely used in regression type predictions, the squared loss function will be examined first. The bias-variance decomposition of both functions are similar and follow the same dynamics(Domingos, 2000). The squared loss function can be defined as
+\begin{equation}
+L(Y, T_{D, \theta}(x)) = (Y - T_{D, \theta}(x))^2
+\end{equation}
+while the zero-one loss function is
+\begin{equation}
+L(Y, T_{D,\theta}(X)) = 1 (Y \neq T_{D, \theta}(X))
+\end{equation}
+The expected prediction error for both functions 
+\begin{align}
+\boldsymbol{Err}(T_{D,\theta}) & = \mathbb{E}_{X,Y}\{ (Y - T_{D, \theta}(x))^2 \} \\
+\boldsymbol{Err}(T_{D,\theta}) & = \mathbb{E}_{X,Y}\{ 1(Y \neq T_{D, \theta}(X)) \}
+= P(Y \neq T_{D, \theta}(X))
+\end{align}
+where the last expression in the second equation is the probability of misclassification of the tree.
+\paragraph{}
+Given the probability distribution of P(X,Y), there exists a model $\phi_{\beta}$ that minimizes the expected prediction error and can be derived analytically independent or learning set $D$ (Louppe, 2014). Conditioning on X gives;
+\begin{equation}
+\mathbb{E}_{X,Y} \{L(Y, \phi_{\beta}(X))\} = \mathbb{E}_{X}\{\mathbb{E}_{Y|X}\{L(Y, \phi_{\beta}(X)) \} \}
+\end{equation}
+Minimizing the term with conditional expectation with respect to Y;
+\begin{equation}
+\phi_{\beta} = \underset{c \in Y}{argmin} \mathbb{E}_{Y|X=x}\{L(Y,c)\}
+\end{equation}
+$\phi_{\beta}$ is defined as Bayes model and $\boldsymbol{Err}(\phi_{\beta})$ is the residual error, the minimum obtainable error with any model, which is considered as the irreducible error due to random deviations in the data(Louppe, 2014). We will exploit the irreducible concept when examining the dynamics of random forests and decision trees. In that sense, with couple of manipulations, Bayes Model for squared loss is
+\begin{align}
+\phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
+			 & = \mathbb{E}_{Y|X=x}\{Y\}
+\end{align}
+For squared loss function, bayes model predicts the average value of Y at X=x. In zero-one loss function case Bayes Model is
+\begin{align}
+\phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c) \} \notag\\
+			 & = \underset{c \,\in\, Y}{argmin} \; P(Y \neq c \,| X = x) \notag\\
+			 & = \underset{c \,\in\, Y}{argmax} \; P(Y = c \,| X = x)
+\end{align}
+The most likely class in the set Y is chosen by Bayes Model when using the zero-one loss function. Aformentioned residual error can be computed for both functions;
+\begin{align}
+\boldsymbol{Err}(\phi_{\beta}) & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2 \}\\
+\boldsymbol{Err}(\phi_{\beta}) & = P(Y \neq \phi_{\beta}(x) )
+\end{align}
+\paragraph{}
+With using the squared loss function, $\boldsymbol{Err}(T_{D,\theta}(x))$ can be written as
+\begin{align}
+\boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
+							  & = \mathbb{E}_{Y|X=x}\{(Y -\phi_{\beta}(x) +\phi_{\beta}(x) -T_{D,\theta}(x))^2\} \notag \\
+							  & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\} \notag \\
+							  &	\: + \underbrace{\mathbb{E}_{Y|X=x}\{2(Y-\phi_{\beta}(x))(\phi_{\beta}(x)-T_{D,\theta}(x))\}}_\text{$=0$ \ since $ \mathbb{E}_{Y|X=x}(Y-\phi_{\beta}(x)) = 0$ from $(18)$}  \notag \\
+							  & = \underbrace{\mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\}}_\text{from $(20)$ equals to $\boldsymbol{Err}(\phi_{\beta}(x))$} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\}  \notag \\
+							  & = \boldsymbol{Err}(\phi_{\beta}(x)) + (\phi_{\beta}(x)-T_{D,\theta}(x))^2
+\end{align}
+As mentioned above, first term in the last equation corresponds the irreducible error and the second term is due to the prediction differences between Bayes Model and our decision tree estimation. The expected prediction error increases with an increase in that difference. Since the result does not depend on the Y-values, it can be also expressed without conditional expectation. Decision trees in random forest classifier uses a bootstrapped dataset and $D$ is a random variable, thus, if we further examine the second term with taking expectation over $D$, it decomposes as
+\begin{align}
+& \mathbb{E}_{D}\{(\phi_{\beta}(x) - T_{D,\theta}(x))^2 \} \notag \\
+& = \mathbb{E}_{D}\{(\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\} + \mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\} \notag \\
+& = \mathbb{E}_{D}\{(\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x))^2\} 
+	+ \mathbb{E}_{D}\{(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\} \notag \\
+&\: \: + \mathbb{E}_{D}\{2(\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\})(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))\} \notag \\
+& \text{since $\mathbb{E}_{D}\{\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x)\} = \mathbb{E}_{D}\{T_{D,\theta}(x)\} - \mathbb{E}_{D}\{T_{D,\theta}(x)\} = 0$} \notag \\
+& = \mathbb{E}_{D}\{(\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x))^2\} 
+	+ \mathbb{E}_{D}\{(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\} \notag \\
+& = (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x))^2 + \mathbb{E}_{D}\{(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\}
+\end{align}
+In the equation $(23)$, the first term shows how the expected prediction of our decision tree differs from Bayes Model also called squared bias and the latter term is the variance of our estimator. Therefore, we can define $\boldsymbol{Err}(T_{D,\theta})$ as follows
+\begin{equation}
+\boldsymbol{Err}(T_{D,\theta}) = noise(x) + bias^2(x) + var(x)
+\end{equation}
+where
+\begin{align}
+& noise(x) = \boldsymbol{Err}(\phi_{\beta}) \notag \\
+& bias^2(x) = (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\})^2 \notag \\
+& var(x) = \mathbb{E}_{D}\{(\mathbb{E}_{D}(T_{D,\theta}(x)) - T_{D,\theta}(x))^2\} \notag
+\end{align}
+The same decomposition can be conducted for the zero-one loss function and as mentioned in (Louppe,2014), (Domingos,2000), (James,2003) ,(Friedman,1997) both zero-one and squared loss functions can be decomposed similarly. However, since the distribution of $D$ is unknown, bias-variance decompostion cannot be solved explicitly as done for squared loss(Louppe, 2014). (Kohavi,1996) introduces another decomposition for zero-one loss function, but, still it remains to be unexplanatory compared to squared loss, thus, we explain the dynamics with using squared loss although the main focus of the paper remains to be on classification setting.
+\paragraph{}
+In regression setting, random forest classifier shares the same idea with classification prediction with soft voting. Random forest classifier for regression can be written as
+\begin{equation}
+\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) = \dfrac{1}{B}\sum_{b = 1}^{B}(T_{D,\theta_{b}}(x))
+\end{equation}
+When we take the average prediction in this case equals to expectation in terms of training set, we get
+\begin{align}
+\mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \} & = 
+	\mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\dfrac{1}{B}\sum_{b = 1}^{B}(T_{D,\theta_{b}}(x))\} \notag \\
+	& = \dfrac{1}{M}\sum_{b=1}^{B}\mathbb{E}_{D,\theta_{b}}\{T_{D, \theta{b}}(x)\}\notag \\
+	& = \mu_{D,\theta}(x) 
+\end{align}
+where $\mu_{D,\theta}(x)$ is the average prediction of all ensembled trees as a random forest since $\theta$'s are random, independent
+and have the same distribution(Louppe, 2014). When we extend this finding bias of a random forest we can state that 
+\begin{equation}
+bias^2(x) = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2
+\end{equation}
+meaning that squared bias cannot be decreased and will be same for any randomized models. So far regarding $noise(x)$ and $bias^2$, random forest does not propose any structure to decrease the prediction error, as the last remaining part of the prediction error, we can continue our exploration with variance of random forest. For any two trees $T_{D,\theta'}$ and $T_{D,\theta''}$ trained with the same training data and different growing parameters $\theta'$ and $\theta''$, we can define the correlation coefficient as follows
+\begin{align}
+\rho(x) & = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{(T_{D,\theta'}(x) - \mu_{D,\theta'}(x))(T_{D,\theta''}(x) - \mu_{D,\theta''}(x))\} }					{\sigma_{D,\theta'}(x)\sigma_{D,\theta'}(x)}\notag \\
+		& = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{T_{D,\theta'}(x)T_{D,\theta''}(x) - T_{D,\theta'}(x)\mu_{D,\theta''}(x) - T_{D,								\theta''}(x)\mu_{D,\theta'}(x) + \mu_{D,\theta'}(x)\mu_{D,\theta''}(x))\} }
+					{\sigma_{D,\theta}^2(x)} \notag \\
+		& = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{T_{D,\theta'}(x) T_{D,\theta''}(x)\} - \mu_{D,\theta}^2(x)}{\sigma_{D,\theta}^2(x)}
+\end{align}
+
+
+
+-How Random Forest estimator decrease generalization error with balancing squared bias?
+-Two trees are uncorrelated
+
+
+Increasing the number of predictors $m$ used in tree growing process can lead the increase in generalization error through increasing squared bias. As mentioned in !Citation Needed!, normally m is taken as $\sqrt{p}$ or even can be as low as 1. If we ignore the computational burden, $m$ can be selected as according to Out-Of-Sample Error.
+-OOB Error
+
+
+-Random forest does not overfit
+
+
+
+
 
 \section{Interpretation}
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
