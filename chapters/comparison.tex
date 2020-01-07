@@ -99,9 +99,7 @@ since deaths outnumber survivals considerably.
 
 \section{AdaBoost Classifier}
 \label{sec:adaboost}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Adaptive Booosting (Adaboost) was introduced by Freund and Schapire (1997) and we employ Adaboost as a comparison tecnique against Random Forest. In adaboost algorithm, instead of fully-grown trees as in random forest  we use trees with only one internal node and two leaves also called stumps. We consider those as weak-learners compared to trees since its depth and power is limited. Before generating stumps, we assign weights to observations in the sample, normally weight of a observation takes the value of $1/N$ as $N$ is the sample size. We generate a stump for each classifier in the data and compare them regarding their misclassification rate. After selecting the best classifier, with using its stump's misclassification rate we compute its stump's significance. With that significance we compute new weights for the sample. We repeat the algorith sequantially for the sample with new weights until a stopping criteria is achieved. Generally, using number of classifiers as iteriation number is a common practice (Elements of statistical learning). After generating multiple stumps, we can predict an observation's class. We get the decision of every stump and form groups accordingly. Every outcome class has a group of stumps which predict that class and every stump has its own significance. After summing significance values of stumps in each group, the prediction is the class with the total highest significance. Although stumps are weak-learners, we exploit the error of a weak-learner to generate another weak-learner and iterating this multiple times provides us a powerful algorithm.
 
 \section{Gradient Boosting Classifier}
 \label{sec:gradient_boosting}
