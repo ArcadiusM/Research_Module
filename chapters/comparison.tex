@@ -101,6 +101,19 @@ since deaths outnumber survivals considerably.
 \label{sec:adaboost}
 Adaptive Boosting (Adaboost) was introduced by Freund and Schapire (1997) and we employ Adaboost as a comparison technique against Random Forest. In the Adaboost algorithm, instead of fully-grown trees as in Random Forest, we use trees with only one internal node and two leaves also called stumps. We consider those as weak-learners compared to trees since its depth and power is limited. Before generating stumps, we assign weights to observations in the sample, normally the weight of each observation takes the value of $1/N$ as $N$ is the sample size. We generate a stump for each classifier in the data and compare them regarding their misclassification rate. After selecting the best classifier, with using its stump's misclassification rate we compute its stump's significance. With that significance, we compute new weights for the sample. We repeat the algorithm sequentially for the sample with new weights until a stopping criterion is achieved. Generally, using the number of classifiers as the number of iteration is a common practice (Elements of statistical learning). After generating multiple stumps, we can predict an observation's class. We get the decision of every stump and form groups accordingly. Every outcome class has a group of stumps which predict that class and every stump has its significance. After summing significance values of stumps in each group, the prediction is the class with the total highest significance. Although stumps are weak-learners, we exploit the error of a weak-learner to generate another weak-learner and iterating multiple times provides us with a powerful algorithm.
 
+\subsection{Real Data Application of Adaboost}
+When we employ Adaboost to predict the survival outcome of the passenger on Titanic, we achieve approximately a rate of 82\% accuracy. With utilizing the confusion matrix of Adaboost and compare it with Random Forest's, we can see that for the non-survivals the result is almost the same but Random Forest is better when it comes to identify survivors.
+
+\begin{figure}[H]
+    \captionsetup{format=plain}
+    \makebox[\textwidth]{\includegraphics[width=200mm]{confusion_matrix_adaboost.png}}
+    \caption
+        {This plot illustrates the accuracy of the Adaboost's prediction on the Titanic data set.
+        }
+    \label{fig:confusion_matrix_adaboost}
+\end{figure}
+
+
 \section{Gradient Boosting Classifier}
 \label{sec:gradient_boosting}
 \subsection{An introduction to the Gradient Boosting method}
