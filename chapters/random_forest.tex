@@ -145,24 +145,37 @@ Increasing the number of ensembled trees $B$, will lower the latter expression i
 
 
 \section{Interpretation}
-In many cases, the main purpose of using a random forest model is its usefulness in performing predictions of a dependent variable based on a set of explanatory variables. In addition, very often, to understand the processes under study we need to understand which explanatory variables are the most important and useful to make mentioned predictions. Thanks to random forest we are often capable to not only build an accurate model with reliable predictions, but also to provide variable importance measures which are very important in the process of interpreting the model and its prediction results. This section of the paper will be fully based on work “Understanding variable importances in forests of randomized trees” presented by G. Louppe, L. Wehenkel, A. Sutera and P. Geurts.
+In many cases, the main purpose of using a random forest model is its usefulness in performing predictions of a dependent variable based on a set of explanatory variables. In addition, very often, to understand the processes under study we need to understand which explanatory variables are the most important and useful to make mentioned predictions. Thanks to random forest we are often capable to not only build an accurate model with reliable predictions, but also to provide variable importance measures which are very important in the process of interpreting the model and its prediction results. This section of the paper will be fully based on work “Understanding variable importances in forests of randomized trees” presented by G. Louppe, L. Wehenkel, A. Sutera and P. Geurts and "A Random Forest Guided Tour" presented by G. Biau and E. Scornet.
 
 \subsection{Variable importance}
 In order to rank the importance of the explanatory variables in classification problems using random forest we use two possible measures. Both the first and second measure have been proposed by Breiman (2001, 2002). First of them is known as Mean Decrease Impurity (MDI). MDI measure is based on the total decrease in node impurity from splitting on the given explanatory variable and moreover MDI is averaged over all trees. The second measure is known as Mean Decrease Accuracy (MDA). This measure assumes that if the explanatory variable is not relevant to the study of the problem, then rearranging its values should not demolish prediction accuracy. Mean Decrease Impurity proposed by Breiman (2001, 2002) is given by: 
 \begin{center}
-$ MDI( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T}  \displaystyle\sum_{t \in T: v(s_{t}) =  X^{(j)}  } p(t)\Delta i(s_{t}, t)$
+$ \widehat{MDI}( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T}  \displaystyle\sum_{t \in T: v(s_{t}) =  X^{(j)}  } p(t)\Delta i(s_{t}, t)$
 \end{center}
 
 where $ v(st) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
 By definition $ MDI( X^{(j)} ) $ evaluates importance of a variable $ X^{(j)} $ for predicting $Y$ by adding up the weighted impurity decreases $p(t)i(s_{t}, t)$ for all nodes $t$ where $ X^{(j)}$ is used. Mean in the name of MDI comes from averaging over all $N_{T}$ trees in the random forest. Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the Shannon entropy. The second mentioned measure MDA uses out-of-bag error estimate. In this case to measure the importance of the $X^{(j)}$ variable, we have to permute its values in the out-of-bag example and use these all observations in the tree. $ MDA( X^{(j)})$ is counted thanks to averaging the differences in out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, this measure is sometimes called also as the permutation importance. In order to represent MDA measure mathematically, consider an explanatory $j-th$ variable $X^{(j)}$ and stand $OOB_{k,n}$ as a symbol for the out-of-bag data set of the $k-th$ tree and  $OOB_{k,n}^{j}$ as the same data set, but with randomly permuted values of $X^{(j)}$. Denote also by $ m_{n}(\cdot ;\Theta_{k}) $  the $k-th$ tree estimate. Then definition of MDA is given by:
 
 \begin{center}
-$ MDA( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T} \Big[C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}^{j}\big] - C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}\big]   \Big]  $
+$ \widehat{MDA}( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T} \Big[C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}^{j}\big] - C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}\big]   \Big]  $,
 \end{center}
 where $R_{n}$ is defined for $ OOB =  OOB_{k,n}^{j}$ or $OOB =  OOB_{k,n}$ by:
 \begin{center}
-$C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB\big] = \frac{1}{|OOB|} \displaystyle\sum_{ i :( \pmb{X_{i}}, Y_{i} )  \in OOB} (Y_{i} - m_{n}( \pmb{X_{i}} ;\Theta_{k})) $
+$C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB\big] = \frac{1}{|OOB|} \displaystyle\sum_{ i :( \pmb{X_{i}}, Y_{i} )  \in OOB} (Y_{i} - m_{n}( \pmb{X_{i}} ;\Theta_{k})) $.
 \end{center}
+
+Above formulas are true for regression and classification purposes. It is also visible that population version for $\widehat{MDA}( X^{(j)} )$ is as given below:
+\begin{center}
+$  MDA( X^{(j)} ) =  \mathbb{E}[Y - m_{n}( \pmb{X^{'}_{j}};\Theta_{k})]^{2} -  \mathbb{E}[Y - m_{n}( \pmb{X};\Theta_{k})]^{2}$,
+\end{center}
+
+where $ \pmb{X^{'}_{j}} = (X^{(1)},...,X^{'(j)},...,X^{(p)}) $ and $X^{'(j)}$ is here independent copy of  $X^{(j)}$. 
+
+
+
+
+
+
 
 
 
