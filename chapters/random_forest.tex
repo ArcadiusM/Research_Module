@@ -26,7 +26,7 @@ where in a random forest with the number of decision trees equals to $T$ each tt
 Another important idea which is used in applications of random forest is validating model using Out of Bag sample. When performing a bootstrap for getting a sample of data for training, remaining part of data is our Out of Bag (OOB) sample. After training random forest model, OOB sample will be used as not known data for prediction. Leftover sample will be passed through every possible decision tree in the model that not include this data in the bootstrap training sample. Out of Bag is commonly used to monitor error of predictions. Breiman’s work on error estimates from 1996, shows empirically that Out of Bag estimate is as accurate as a test set of the same size as the training set [Leo Breiman, OUT-OF-BAG ESTIMATION, 1996].
 
 
-\section{Mathematical explanation and Consistency}
+\section{Mathematical explanation}
 \paragraph{}
 Let $D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})}$ be the set, we want to train our model on and $T_{D, \theta}$ decision tree produced by using the set $D$ and parameters $\theta$. We assume that $D$ is countable which normally is the case especially for Y values although replacing sums with integrals can extent the analysis and provide results for uncountable sets as well (Kohavi, 1996). As mentioned earlier, Random Forest classifier selects a bootstrapped subset of observations denoted as $\boldsymbol{D'}$ and grow the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times gives a Random Forest Estimator. Assume $x^*$ is the value that we want to predict its class, there are two rules that can be used to get the prediction; majority voting and soft voting (Louppe, 2014; Zhou,2012).
 \paragraph{}
@@ -140,7 +140,7 @@ We can decompose variance of a random forest as follows;
 \begin{align}
 \mathbb{V}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \}  = \rho(x)\sigma^2_{D,\theta}(x) + \dfrac{1-\rho(x)}{B}\sigma^2_{D,\theta}(x)
 \end{align}
-Increasing the number of ensembled trees $B$, will lower the latter expression in the equation and in the extreme case where $B \rightarrow \infty $ variance of a random forest equals to $\rho(x)\sigma^2_{D,\theta}(x)$ and due to randomization in the algorithm $\rho(x) < 1$, thus, variance of a random forest is less than variance of a decision tree. This inference implies that the expected prediction error of a random forest is less than the expected prediction error of a decision tree. If the decision trees in the random forest are independent and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\dfrac{\sigma^2_{D,\theta}(x)}{B}$ which can be decreased with increasing $B$ as mentioned.
+Increasing the number of ensembled trees $B$, will lower the latter expression in the equation and in the extreme case where $B \rightarrow \infty $, the variance of a random forest equals to $\rho(x)\sigma^2_{D,\theta}(x)$ and due to randomization in the algorithm $\rho(x) < 1$, thus, variance of a random forest is less than variance of a decision tree. This inference implies that the expected prediction error of a random forest is less than the expected prediction error of a decision tree. If the decision trees in the random forest are independent and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\dfrac{\sigma^2_{D,\theta}(x)}{B}$ which can be decreased with increasing $B$ as mentioned.
 
 
 
