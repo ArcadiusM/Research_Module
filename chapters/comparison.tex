@@ -96,12 +96,15 @@ since deaths outnumber survivals considerably.
 \end{figure}
 
 
+\section{Comparison to two boosting methods}
+Before introducing AdaBoost and Gradient Boosting methods firstly, it is essential to understand what boosting is. Like bagging, boosting is an approach which can be applied to many machine learning methods for classification or regression. Bagging uses bootstrap to create multiple datasets for training the method. As a next stage bagging fits a separate decision tree to each training dataset, and then it combines all decision trees in order to create a single predictive model. Every decision tree is independent to others thanks to using bootstrap to create different training datasets. Boosting method works similarly, but in our case decision trees are grown sequentially. It means that each tree is built using information from previously built trees. Boosting method does not involve bootstrap sampling. In this method instead of bootstrap each decision tree is fit on a modified version of the original dataset.
 
-\section{AdaBoost Classifier}
+\subsection{AdaBoost Classifier}
 \label{sec:adaboost}
+\subsubsection{An introduction to the AdaBoost method}
 Adaptive Boosting (Adaboost) was introduced by Freund and Schapire (1997) and we employ Adaboost as a comparison technique against Random Forest. In the Adaboost algorithm, instead of fully-grown trees as in Random Forest, we use trees with only one internal node and two leaves also called stumps. We consider those as weak-learners compared to trees since its depth and power is limited. Before generating stumps, we assign weights to observations in the sample, normally the weight of each observation takes the value of $1/N$ as $N$ is the sample size. We generate a stump for each classifier in the data and compare them regarding their misclassification rate. After selecting the best classifier, with using its stump's misclassification rate we compute its stump's significance. With that significance, we compute new weights for the sample. We repeat the algorithm sequentially for the sample with new weights until a stopping criterion is achieved. Generally, using the number of classifiers as the number of iteration is a common practice (Elements of statistical learning). After generating multiple stumps, we can predict an observation's class. We get the decision of every stump and form groups accordingly. Every outcome class has a group of stumps which predict that class and every stump has its significance. After summing significance values of stumps in each group, the prediction is the class with the total highest significance. Although stumps are weak-learners, we exploit the error of a weak-learner to generate another weak-learner and iterating multiple times provides us with a powerful algorithm.
 
-\subsection{Real Data Application of Adaboost}
+\subsubsection{Real Data Application of Adaboost}
 When we employ Adaboost to predict the survival outcome of the passenger on Titanic, we achieve approximately a rate of 82\% accuracy. With utilizing the confusion matrix of Adaboost and compare it with Random Forest's, we can see that for the non-survivals the result is almost the same but Random Forest is better when it comes to identify survivors.
 
 \begin{figure}[H]
@@ -114,15 +117,13 @@ When we employ Adaboost to predict the survival outcome of the passenger on Tita
 \end{figure}
 
 
-\section{Gradient Boosting Classifier}
+\subsection{Gradient Boosting Classifier}
 \label{sec:gradient_boosting}
-\subsection{An introduction to the Gradient Boosting method}
-Firstly, it is worth to remind what boosting is. Like bagging, boosting is an approach which can be applied to many machine learning methods for classification or regression. Bagging uses bootstrap to create multiple datasets for training the method. As a next stage bagging fits a separate decision tree to each training dataset, and then it combines all decision trees in order to create a single predictive model. Every decision tree is independent to others thanks to using bootstrap to create different training datasets. Boosting method works similarly, but in our case decision trees are grown sequentially. It means that each tree is built using information from previously built trees. Boosting method does not involve bootstrap sampling. In this method instead of bootstrap each decision tree is fit on a modified version of the original dataset.
-
-In gradient boosting the idea is to take weak learning algorithm or hypothesis and make some corrections that will improve the power of this algorithm/hypothesis. In hypothesis boosting, you check every observation on which statistical learning method was trained on, then you leave the observations which were correctly classified. Then method creates new weak learner and test it only on the observations that were poorly classified. Next, the examples that were correctly classified are kept.
+\subsubsection{An introduction to the Gradient Boosting method}
+In Gradient Boosting the idea is to take weak learning algorithm or hypothesis and make some corrections that will improve the power of this algorithm/hypothesis. In hypothesis boosting, you check every observation on which statistical learning method was trained on, then you leave the observations which were correctly classified. Then method creates new weak learner and test it only on the observations that were poorly classified. Next, the examples that were correctly classified are kept.
 The idea described above was used in the AdaBoost (Adaptive Boosting) algorithm. In this algorithm, many weak learners are created thanks to many decision trees that only have a single split. Created instances in the training dataset are weighted in the way that larger weights are assigned to instances which were difficult to classify. To the most difficult training instances weaker learners are added sequentially.
 Gradient boosting classifiers are the Adaptive Boosting method, but it is combined with weighted minimization. After weighted minimization, all classifiers and weighted inputs are again calculated. The aim of gradient boosting classifiers is to minimize the loss and it operates in the similar way, as gradient descent in a neural network.
-\subsection{Real data example}
+\subsubsection{Real data example}
 
 After a simple and short introduction it is time to apply Gradient Boosting Classifier on the Titanic data set. As in every application in the paper,
 after conducting feature engineering, we try to determine the survival of the passengers using available explanatory variables. 
