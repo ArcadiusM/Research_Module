@@ -1,9 +1,7 @@
-\chapter{Decision tree}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+\section{Decision tree}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Main idea}
+\subsection{Main idea}
 The Decision Tree is a non-parametric supervised learning method used for classification and regression.
 It predicts the response with a set of if-then-else decision rules derived from the data.
 The deeper the tree, the more complex the decision rules and the closer the model fits the data.
@@ -16,7 +14,7 @@ Leaf node represents a classification or decision.
 The topmost decision node in a tree which corresponds to the best predictor is called the root node.
 Decision trees can handle both categorical and numerical data.
 
-An example of such a tree is depicted below in figure \ref{Fig:decision_tree_example}.
+An example of such a tree is depicted below in figure \ref{fig:decision_tree_example}.
 
 \begin{figure}[H]
     \captionsetup{format=plain}
@@ -27,11 +25,11 @@ An example of such a tree is depicted below in figure \ref{Fig:decision_tree_exa
              The stratification occurs at the two deciding nodes depending either on whether its height is above 180 cm 
              and or its weight  is above 80kg.
              }
-    \label{Fig:decision_tree_example}
+    \label{fig:decision_tree_example}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Tree Building Process}
+\subsection{Tree Building Process}
 This chapter describes the CART algorithm for tree building as specified in \cite{breiman1984classification}.
 The basic idea of tree growing is to choose a split among all the possible splits at each node
 so that the resulting child nodes are the “purest”. In this algorithm, only univariate splits are
@@ -54,7 +52,7 @@ node (also called binary splitting)
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Splitting criteria}
+\subsubsection{Splitting criteria}
 Since we are only concerned with classification, \(Y\) is categorical. The original CART algorithm uses Gini and Twoing as 
 purity measures for the splitting criterion. However, implementations of the algorithm such as Python's sklearn package
 also contain entropy and misclassification rate as measures of impurity.
@@ -144,7 +142,7 @@ which measure the proportion of instances node \(t\) not belonging to the domina
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bias-variance trade-off}
+\subsubsection{Bias-variance trade-off}
 To measure the fit of a model to data, the generalization error is a widely used concept(Breiman, 2001). Principally, we use generalization error to compare methods and adjust parameters to improve methods. Under certain assumptions, we can decompose the generalization error into three main components; the Bayes Error, the squared bias ($bias^2$) and the variance. We will explain the mathematical aspects of the generalization error in the following chapters. For now, we only need to mention the Bayes Error is irreducible and independent of the classifier, and there is a trade-off between $bias^2$ and variance. Since decision trees suffer from high variance and decreasing variance causes $bias^2$ to increase, we need methods to bypass this trade-off. Methods including Bagging, Boosting and Random Forest exploits mathematical properties to decrease variance without increasing $bias^2$. We will explain bagging briefly, exhibit mathematical dynamics of Random Forest and use Boosting in the application section.
 
 

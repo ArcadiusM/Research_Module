@@ -1,14 +1,17 @@
-\chapter{Random Forest}
+\section{Random Forest}
 Decision trees, which we mentioned in the previous section, have been used for a long time. Deployment of decision trees is visible in simple situations and also in more complex scientific or real life and industrial affairs. The recent popularity of decision trees is due to work presented by Breiman between 1996 and 2004 that ensamples of different decision trees can get a meaningful improvement in accuracy in classification problems and other common learning tasks such as regression. As the unit in this procedure is based on decision tree and includes an injection of randomness, this method is known as a random forest. 
 
-\section{Main idea and illustration}
+\subsection{Main idea and illustration}
 An ensemble of randomly trained decision trees, so in other words random decision forest was defined by Breiman in his work ,,Random Forests”  from 2001 as follows:
 
-\newtheorem{theorem}{Definition}
+
+% \theoremstyle{definition} % amsthm only
+\newtheorem{theorem}{Theorem}
 \begin{theorem}
 A random forest is a classifier consisting of a collection of tree-structured classifiers \{${g(\textbf{x},\Theta_{k})}, k = 1,2,...$\} where the \{$\Theta_{k}$\} are independent identically
 distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
 \end{theorem}
+
 \subsection{Randomness in the model}
 The main aspect of a random decision forest model is an injection of randomness which allows to have all unit trees different from the others. Two key concepts that makes decision forest "random" are:
 \begin{enumerate}
@@ -27,27 +30,27 @@ Another important idea which is used in applications of random forest is validat
 
 
 \section{Mathematical explanation}
-\paragraph{}
+
 Let $D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})}$ be the set, we want to train our model on and $T_{D, \theta}$ decision tree produced by using the set $D$ and parameters $\theta$. We assume that $D$ is countable which normally is the case especially for Y values although replacing sums with integrals can extent the analysis and provide results for uncountable sets as well (Kohavi, 1996). As mentioned earlier, Random Forest classifier selects a bootstrapped subset of observations denoted as $\boldsymbol{D'}$ and grow the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times gives a Random Forest Estimator. Assume $x^*$ is the value that we want to predict its class, there are two rules that can be used to get the prediction; majority voting and soft voting (Louppe, 2014; Zhou,2012).
-\paragraph{}
+
 In majority voting, after getting every trees prediction denoted as $\hat{T}(x^*)$ final prediction is the class that gets most votes from trees;
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
 	\underset{c \in Y}{argmax} \sum_{b = 1}^{B}{1(\hat{T}_{b}(x^*) = c)}
 \end{equation}
 
-\paragraph{}
+
 In soft voting, probability estimates of a tree denoted as $\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)$ is estimated and after all are averaged and most likely class is predicted;
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
 	\underset{c \in Y}{argmax} \dfrac{1}{B}\sum_{b = 1}^{B}{\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)}
 \end{equation}
 
-\paragraph{}
+
 As mentioned in Breiman(1994), aformentioned two voting procedures provides similar results, yet using soft voting can provide smoother class probability estimates and be exploited in a deeper analysis setting such as certainty estimates investigation (Louppe, 2014). 
 
 \subsection{Properties}
-\paragraph{}
+
 The generalization error which also called test error or the expected prediction error of $T_{D,\theta}$ is;
 \begin{equation}
 \boldsymbol{Err}(T_{D,\theta}) = \mathbb{E}_{X,Y}\{L(Y, T_{D,\theta}(X)) \}
@@ -67,7 +70,7 @@ The expected prediction error for both functions
 = P(Y \neq T_{D, \theta}(X))
 \end{align}
 where the last expression in the second equation is the probability of misclassification of the tree.
-\paragraph{}
+
 Given the probability distribution of P(X,Y), there exists a model $\phi_{\beta}$ that minimizes the expected prediction error and can be derived analytically independent or learning set $D$ (Louppe, 2014). Conditioning on X gives;
 \begin{equation}
 \mathbb{E}_{X,Y} \{L(Y, \phi_{\beta}(X))\} = \mathbb{E}_{X}\{\mathbb{E}_{Y|X}\{L(Y, \phi_{\beta}(X)) \} \}
@@ -113,7 +116,7 @@ where
 & var(x) = \mathbb{E}_{D}\{(\mathbb{E}_{D}(T_{D,\theta}(x)) - T_{D,\theta}(x))^2\} \notag
 \end{align}
 The same decomposition can be conducted for the zero-one loss function and as mentioned in (Louppe,2014), (Domingos,2000), (James,2003), (Friedman,1997) both zero-one and squared loss functions can be decomposed in similar fashion. However, since the distribution of $D$ is unknown, bias-variance decompostion cannot be solved explicitly as done for squared loss(Louppe, 2014). (Kohavi,1996) introduces another decomposition for zero-one loss function (included in the Appendix), but, still it remains to be unexplanatory compared to squared loss, thus, we explain the dynamics with using squared loss although the main focus of the paper remains to be on classification setting.
-\paragraph{}
+
 In regression setting, random forest classifier shares the same idea with classification prediction with soft voting. Random forest classifier for regression can be written as
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) = \dfrac{1}{B}\sum_{b = 1}^{B}(T_{D,\theta_{b}}(x))
