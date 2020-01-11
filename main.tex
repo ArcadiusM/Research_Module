@@ -37,11 +37,6 @@
 \setcounter{tocdepth}{4}
 
 
-% \DeclareAcronym{AD}{
-% 	short = AD ,
-% 	long  = Alzheimer's disease
-% }
-
 \title{Master Thesis}
 \date{\today}
 \begin{document}
@@ -75,35 +70,37 @@
 	\end{titlepage}
 	
 
-\tableofcontents
-\thispagestyle{empty}
-\newpage
+	\tableofcontents
+	\thispagestyle{empty}
+	\newpage
 
-\include{chapters/abstract}
-\renewcommand{\cleardoublepage}{}
-\renewcommand{\clearpage}{}
-\pagenumbering{arabic}
-\include{chapters/intro}
+	\include{chapters/abstract}
 
-\include{chapters/decision_tree}
+	\renewcommand{\cleardoublepage}{}
+	\renewcommand{\clearpage}{}
+	\pagenumbering{arabic}
 
-\include{chapters/random_forest}
+	\include{chapters/intro}
 
-\include{chapters/comparison}
+	\include{chapters/decision_tree}
 
-% \include{chapters/conclusion}
+	\include{chapters/random_forest}
 
-\include{chapters/appendix}
+	\include{chapters/comparison}
 
-% \printbibliography
+	\include{chapters/conclusion}
+	% \newpage
+	\include{chapters/appendix}
 
-\printbibliography
+	% \pagebreak
 
-% \section{Declaration}
-% I hereby certify that this material is my own work, that I used only those sources and resources referred to in the thesis, and that I have identified citations as such.
-		
-% \vspace{0.3in}
+	\printbibliography
 
-% \noindent Bonn, \today
+	% \section{Declaration}
+	% I hereby certify that this material is my own work, that I used only those sources and resources referred to in the thesis, and that I have identified citations as such.
+			
+	% \vspace{0.3in}
+
+	% \noindent Bonn, \today
 
 \end{document}

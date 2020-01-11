@@ -1,61 +1,106 @@
 \section{Random Forest}
-Decision trees, which we mentioned in the previous section, have been used for a long time. Deployment of decision trees is visible in simple situations and also in more complex scientific or real life and industrial affairs. The recent popularity of decision trees is due to work presented by Breiman between 1996 and 2004 that ensamples of different decision trees can get a meaningful improvement in accuracy in classification problems and other common learning tasks such as regression. As the unit in this procedure is based on decision tree and includes an injection of randomness, this method is known as a random forest. 
+Decision trees, which we mentioned in the previous section, have been used for a long time. 
+Deployment of decision trees is visible in simple situations and also in more complex scientific or real life and industrial affairs.
+The recent popularity of decision trees is due to work presented by 
+\cite{Breiman1996OUT-OF-BAG-E}, \cite{breiman2001random}, and \cite{breiman2004consistency} that ensamples of 
+different decision trees can get a meaningful improvement in accuracy in classification problems and other 
+common learning tasks such as regression. As the unit in this procedure is based on decision tree and includes an injection of
+randomness, this method is known as a random forest. 
 
 \subsection{Main idea and illustration}
-An ensemble of randomly trained decision trees, so in other words random decision forest was defined by Breiman in his work ,,Random Forests”  from 2001 as follows:
+An ensemble of randomly trained decision trees, so in other words random decision forest was defined by \cite{breiman2001random}:
 
 
-% \theoremstyle{definition} % amsthm only
 \newtheorem{theorem}{Theorem}
 \begin{theorem}
-A random forest is a classifier consisting of a collection of tree-structured classifiers \{${g(\textbf{x},\Theta_{k})}, k = 1,2,...$\} where the \{$\Theta_{k}$\} are independent identically
-distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
+	A random forest is a classifier consisting of a collection of tree-structured classifiers ${\hat{T}_{\theta_{b}}(\textbf{x})}, b = 1,...,B$ where the $\theta_{b}$ are independent identically
+	distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
 \end{theorem}
 
 \subsection{Randomness in the model}
 The main aspect of a random decision forest model is an injection of randomness which allows to have all unit trees different from the others. Two key concepts that makes decision forest "random" are:
 \begin{enumerate}
-\item Random sampling of training data points when building trees
-\item Random subsets of features considered when splitting nodes
+	\item Random sampling of training data points when building trees
+	\item Random subsets of features considered when splitting nodes
 \end{enumerate}
-In practise, random sampling of training observations is done by using bootstrapping. Bootstrapping for random forests means that every single decision tree learns from a random sample which is drawn with replacement. The second important injection of randomness into model is taking into consideration only a subset of all the variables, when splitting each node in every unit decision tree. It means that number of variables for splitting the node has to be chosen and for classification recommended number is $\lfloor{\sqrt{n}} \rfloor$, where $n$ is a number of features in the classification problem. This yields that in problem with 10 different variables, only 3 randomly chosen will be considered for splitting the node. Randomness parameter, so the number of chosen variables has a meaningful impact on the model, because except controlling the amount of randomness within each tree, it controls also the amount of correlation between different trees in the forest. As randomness parameter decreases, trees become more decorrelated [Decision Forests: A Unified Framework for Classification, Regression, Density Estimation, Manifold Learning and Semi-Supervised Learning].
+In practise, random sampling of training observations is done by using bootstrapping. 
+Bootstrapping for random forests means that every single decision tree learns from a random sample which is drawn with replacement. 
+The second important injection of randomness into model is taking into consideration only a subset of all the variables, 
+when splitting each node in every unit decision tree. It means that number of variables for splitting the node has to be chosen 
+and for classification recommended number is $\lfloor{\sqrt{n}} \rfloor$, 
+where $n$ is a number of features in the classification problem. This yields that in problem with 10 different variables, 
+only 3 randomly chosen will be considered for splitting the node. Randomness parameter, 
+so the number of chosen variables has a meaningful impact on the model, 
+because except controlling the amount of randomness within each tree, 
+it controls also the amount of correlation between different trees in the forest. 
+As randomness parameter decreases, trees become more decorrelated \cite{criminisi2012decision}.
+
 \subsection {Training, testing and prediction}
-Training of all trees is done independently and testing consists in the fact that each test point $\textbf{x}$ is pushed through every tree included in forest until it ends in corresponding leaves. As a last step is taking all predictions from every unit decision tree and combining them into prediction of single random forest. Combination of different tree predictions can be done in different ways. In random forests for classification problems, forests generate probabilistic output. It means that they return not just a single class point prediction, but whole class distribution, so combination of tree predictions can be described as below:
+Training of all trees is done independently and testing consists in the fact that each test point $\textbf{x}$ is pushed 
+through every tree included in forest until it ends in corresponding leaves. As a last step is taking all predictions from 
+every unit decision tree and combining them into prediction of single random forest. Combination of different tree predictions 
+can be done in different ways. In random forests for classification problems, forests generate probabilistic output. 
+It means that they return not just a single class point prediction, but whole class distribution, 
+so combination of tree predictions can be described as below:
+
 \begin{equation}
-p(c|\textbf{x}) =  \frac{1}{T} \displaystyle\sum_{t}^{T} p_{t}(c|\textbf{x})
+	p(c|\textbf{x}) =  \frac{1}{B} \displaystyle\sum_{b=1}^{B} p_{b}(Y = c |X = \textbf{x})
 \end{equation}
-where in a random forest with the number of decision trees equals to $T$ each tth tree obtains the posterior distribution $ p_{t}(c|\textbf{x})$. The class label here is symbolized by $c$ such that $c \in \textbf{C}$ with $ \textbf{C} = \{ c_{k}\} $
+where in a random forest with the number of decision trees equals to $B$ each tth tree obtains the posterior 
+distribution $ p_{b}(Y = c |X = \textbf{x}) $.
+
 \subsection {Out of Bag sample}
-Another important idea which is used in applications of random forest is validating model using Out of Bag sample. When performing a bootstrap for getting a sample of data for training, remaining part of data is our Out of Bag (OOB) sample. After training random forest model, OOB sample will be used as not known data for prediction. Leftover sample will be passed through every possible decision tree in the model that not include this data in the bootstrap training sample. Out of Bag is commonly used to monitor error of predictions. Breiman’s work on error estimates from 1996, shows empirically that Out of Bag estimate is as accurate as a test set of the same size as the training set [Leo Breiman, OUT-OF-BAG ESTIMATION, 1996].
+Another important idea which is used in applications of random forest is validating model using Out of Bag sample.
+When performing a bootstrap for getting a sample of data for training,
+remaining part of data is our Out of Bag (OOB) sample.
+After training random forest model, OOB sample will be used as not known data for prediction.
+Leftover sample will be passed through every possible decision tree in the model that not include this
+data in the bootstrap training sample. Out of Bag is commonly used to monitor error of predictions. 
+Breiman’s work \cite{Breiman1996OUT-OF-BAG-E} shows empirically that Out of Bag estimate is as accurate 
+as a test set of the same size as the training set \cite{Breiman1996OUT-OF-BAG-E}.
 
 
 \section{Mathematical explanation}
 
-Let $D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})}$ be the set, we want to train our model on and $T_{D, \theta}$ decision tree produced by using the set $D$ and parameters $\theta$. We assume that $D$ is countable which normally is the case especially for Y values although replacing sums with integrals can extent the analysis and provide results for uncountable sets as well (Kohavi, 1996). As mentioned earlier, Random Forest classifier selects a bootstrapped subset of observations denoted as $\boldsymbol{D'}$ and grow the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times gives a Random Forest Estimator. Assume $x^*$ is the value that we want to predict its class, there are two rules that can be used to get the prediction; majority voting and soft voting (Louppe, 2014; Zhou,2012).
+Let $D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})}$ be the set, we want to train our model on and $T_{D, \theta}$ 
+decision tree produced by using the set $D$ and parameters $\theta$. We assume that $D$ is countable which normally is the 
+case especially for Y values although replacing sums with integrals can extent the analysis and 
+provide results for uncountable sets as well (Kohavi, 1996). As mentioned earlier, 
+Random Forest classifier selects a bootstrapped subset of observations denoted as $\boldsymbol{D'}$ and 
+grow the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times 
+gives a Random Forest Estimator. Assume $x^*$ is the value that we want to predict its class, 
+there are two rules that can be used to get the prediction; majority voting and 
+soft voting \cite{louppe2014understanding} and \cite{Zhou2014DrugBank}.
 
-In majority voting, after getting every trees prediction denoted as $\hat{T}(x^*)$ final prediction is the class that gets most votes from trees;
+In majority voting, after getting every trees prediction denoted as $\hat{T}(x^*)$ final prediction is the class that gets most votes from trees:
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
 	\underset{c \in Y}{argmax} \sum_{b = 1}^{B}{1(\hat{T}_{b}(x^*) = c)}
 \end{equation}
 
 
-In soft voting, probability estimates of a tree denoted as $\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)$ is estimated and after all are averaged and most likely class is predicted;
+In soft voting, probability estimates of a tree denoted as $\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)$ is estimated and after all are averaged and most likely class is predicted:
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1}, \theta_{2}, ..., \theta_{B}} (x^*) =
 	\underset{c \in Y}{argmax} \dfrac{1}{B}\sum_{b = 1}^{B}{\hat{p}_{D, \theta_{b}} (Y = c | X = x^*)}
 \end{equation}
 
 
-As mentioned in Breiman(1994), aformentioned two voting procedures provides similar results, yet using soft voting can provide smoother class probability estimates and be exploited in a deeper analysis setting such as certainty estimates investigation (Louppe, 2014). 
+As mentioned in \cite{Breiman1996OUT-OF-BAG-E}, the two aforementioned voting procedures provides similar results,
+ yet using soft voting can provide smoother class probability estimates and be exploited in a deeper analysis setting such as 
+ certainty estimates investigation \cite{louppe2014understanding}. 
 
 \subsection{Properties}
-
 The generalization error which also called test error or the expected prediction error of $T_{D,\theta}$ is;
 \begin{equation}
-\boldsymbol{Err}(T_{D,\theta}) = \mathbb{E}_{X,Y}\{L(Y, T_{D,\theta}(X)) \}
+	\boldsymbol{Err}(T_{D,\theta}) = \mathbb{E}_{X,Y}\{L(Y, T_{D,\theta}(X)) \}
 \end{equation}
-where L is the loss function measuring the difference between its two arguments. Since we focus on classification setting, the zero-one loss function is our interest, however, to get a better understanding, widely used in regression type predictions, the squared loss function will be examined first. The bias-variance decomposition of both functions are similar and follow the same dynamics(Domingos, 2000). The squared loss function can be defined as
+
+where L is the loss function measuring the difference between its two arguments. Since we focus on classification setting, 
+the zero-one loss function is our interest, however, to get a better understanding, widely used in regression type predictions, 
+the squared loss function will be examined first. The bias-variance decomposition of both functions are similar and 
+follow the same dynamics \cite{domingos2000decomposition}. The squared loss function can be defined as
+
 \begin{equation}
 L(Y, T_{D, \theta}(x)) = (Y - T_{D, \theta}(x))^2
 \end{equation}
@@ -71,7 +116,8 @@ The expected prediction error for both functions
 \end{align}
 where the last expression in the second equation is the probability of misclassification of the tree.
 
-Given the probability distribution of P(X,Y), there exists a model $\phi_{\beta}$ that minimizes the expected prediction error and can be derived analytically independent or learning set $D$ (Louppe, 2014). Conditioning on X gives;
+Given the probability distribution of P(X,Y), there exists a model $\phi_{\beta}$ that minimizes the expected prediction error 
+and can be derived analytically independent or learning set $D$ \cite{louppe2014understanding}. Conditioning on X gives;
 \begin{equation}
 \mathbb{E}_{X,Y} \{L(Y, \phi_{\beta}(X))\} = \mathbb{E}_{X}\{\mathbb{E}_{Y|X}\{L(Y, \phi_{\beta}(X)) \} \}
 \end{equation}
@@ -79,7 +125,10 @@ Minimizing the term with conditional expectation with respect to Y;
 \begin{equation}
 \phi_{\beta} = \underset{c \in Y}{argmin} \mathbb{E}_{Y|X=x}\{L(Y,c)\}
 \end{equation}
-$\phi_{\beta}$ is defined as Bayes model and $\boldsymbol{Err}(\phi_{\beta})$ is the residual error, the minimum obtainable error with any model, which is considered as the irreducible error due to random deviations in the data(Louppe, 2014). We will exploit the irreducible concept when examining the dynamics of random forests and decision trees. In that sense, with couple of manipulations, Bayes Model for squared loss is
+$\phi_{\beta}$ is defined as Bayes model and $\boldsymbol{Err}(\phi_{\beta})$ is the residual error, 
+the minimum obtainable error with any model, which is considered as the irreducible error due to random deviations in the 
+data\cite{louppe2014understanding}. We will exploit the irreducible concept when examining the dynamics of random forests and 
+decision trees. In that sense, with couple of manipulations, Bayes Model for squared loss is
 \begin{align}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
 			 & = \mathbb{E}_{Y|X=x}\{Y\}
@@ -89,7 +138,8 @@ For squared loss function, bayes model predicts the average value of Y at X=x. I
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c) \} \notag\\
 			 & = \underset{c \,\in\, Y}{argmax} \; P(Y = c \,| X = x)
 \end{align}
-The most likely class in the set Y is chosen by Bayes Model when using the zero-one loss function. Aformentioned residual error can be computed for both functions;
+The most likely class in the set Y is chosen by Bayes Model when using the zero-one loss function. 
+Aformentioned residual error can be computed for both functions:
 \begin{align}
 \boldsymbol{Err}(\phi_{\beta}) & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2 \}\\
 \boldsymbol{Err}(\phi_{\beta}) & = P(Y \neq \phi_{\beta}(x) )
@@ -100,12 +150,21 @@ With using the squared loss function, $\boldsymbol{Err}(T_{D,\theta}(x))$ can be
 \boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
 							   	  & = \boldsymbol{Err}(\phi_{\beta}(x)) + (\phi_{\beta}(x)-T_{D,\theta}(x))^2
 \end{align}
-Intermediate steps are included in the Appendix. As mentioned above, first term in the equation corresponds the irreducible error and the second term is due to the prediction differences between Bayes Model and our decision tree estimation. The expected prediction error increases with an increase in that difference. Since the result does not depend on the Y-values, it can be also expressed without conditional expectation. Decision trees in random forest classifier uses a bootstrapped dataset and $D$ is a random variable, thus, if we further examine the second term with taking expectation over $D$, it decomposes as
+
+Intermediate steps are included in the Appendix. As mentioned above, first term in the equation corresponds the 
+irreducible error and the second term is due to the prediction differences between Bayes Model and our decision tree estimation. 
+The expected prediction error increases with an increase in that difference. Since the result does not depend on the Y-values, 
+it can be also expressed without conditional expectation. Decision trees in random forest classifier uses a bootstrapped dataset 
+and $D$ is a random variable, thus, if we further examine the second term with taking expectation over $D$, it decomposes as
+
 \begin{align}\label{eq:decomp_squared_loss_cont}
 & \mathbb{E}_{D}\{(\phi_{\beta}(x) - T_{D,\theta}(x))^2 \} \notag \\
 &= (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x))^2 + \mathbb{E}_{D}\{(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\}
 \end{align}
-With intermediate steps being in Appendix, the first term in $(23)$ shows how the expected prediction of our decision tree differs from Bayes Model also called squared bias and the latter term is the variance of our estimator. Therefore, we can define $\boldsymbol{Err}(T_{D,\theta})$ as follows
+With intermediate steps being in Appendix, the first term in $(23)$ shows how the expected prediction of our 
+decision tree differs from Bayes Model also called squared bias and the latter term is the variance of our estimator. 
+Therefore, we can define $\boldsymbol{Err}(T_{D,\theta})$ as follows
+
 \begin{equation}
 \boldsymbol{Err}(T_{D,\theta}) = noise(x) + bias^2(x) + var(x)
 \end{equation}
@@ -115,51 +174,110 @@ where
 & bias^2(x) = (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\})^2 \notag \\
 & var(x) = \mathbb{E}_{D}\{(\mathbb{E}_{D}(T_{D,\theta}(x)) - T_{D,\theta}(x))^2\} \notag
 \end{align}
-The same decomposition can be conducted for the zero-one loss function and as mentioned in (Louppe,2014), (Domingos,2000), (James,2003), (Friedman,1997) both zero-one and squared loss functions can be decomposed in similar fashion. However, since the distribution of $D$ is unknown, bias-variance decompostion cannot be solved explicitly as done for squared loss(Louppe, 2014). (Kohavi,1996) introduces another decomposition for zero-one loss function (included in the Appendix), but, still it remains to be unexplanatory compared to squared loss, thus, we explain the dynamics with using squared loss although the main focus of the paper remains to be on classification setting.
 
-In regression setting, random forest classifier shares the same idea with classification prediction with soft voting. Random forest classifier for regression can be written as
+% CITATION MISSING (James,2003) !!!!!
+The same decomposition can be conducted for the zero-one loss function and as mentioned in 
+\cite{louppe2014understanding},\cite{domingos2000decomposition}, (James,2003), \cite{friedman1997zeroLoss}
+both zero-one and squared loss functions can be decomposed in similar fashion. However, since the distribution of $D$ is unknown, bias-variance decompostion cannot be solved explicitly as done for squared loss(Louppe, 2014). (Kohavi,1996) introduces another decomposition for zero-one loss function (included in the Appendix), but, still it remains to be unexplanatory compared to squared loss, thus, we explain the dynamics with using squared loss although the main focus of the paper remains to be on classification setting.
+
+In regression setting, random forest classifier shares the same idea with classification prediction with soft voting. 
+Random forest classifier for regression can be written as
+
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) = \dfrac{1}{B}\sum_{b = 1}^{B}(T_{D,\theta_{b}}(x))
 \end{equation}
+
 When we take the average prediction in this case equals to expectation in terms of training set, we get
+
 \begin{align}\label{eq:mu}
 \mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \} & = 
 	\mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\dfrac{1}{B}\sum_{b = 1}^{B}(T_{D,\theta_{b}}(x))\} \notag \\
 	& = \dfrac{1}{M}\sum_{b=1}^{B}\mathbb{E}_{D,\theta_{b}}\{T_{D, \theta_{b}}(x)\}\notag \\
 	& = \mu_{D,\theta}(x)
 \end{align}
-where $\mu_{D,\theta}(x)$ is the average prediction of all ensembled trees as a random forest since $\theta$'s are random, independent
-and have the same distribution(Louppe, 2014). When we extend this finding bias of a random forest we can state that 
+
+where $\mu_{D,\theta}(x)$ is the average prediction of all ensembled trees as a random forest since $\theta$'s are random, 
+independent and have the same distribution(Louppe, 2014). When we extend this finding bias of a random forest 
+we can state that 
+
 \begin{equation}
 bias^2(x) = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2
 \end{equation}
-meaning that squared bias cannot be decreased and will be same for any randomized models. Although random forest is inadequate to propose any structure to decrease the prediction error so far regarding $noise(x)$ and $bias^2$, it displays phenomenal performance in reducing the last remaining part of the prediction error. Thus, we can continue our exploration with variance of random forest and need to define the correlation coefficient $\rho(x)$. For any two trees $T_{D,\theta'}$ and $T_{D,\theta''}$ trained with the same training data and different growing parameters $\theta'$ and $\theta''$, we can define the correlation coefficient as follows
+
+meaning that squared bias cannot be decreased and will be same for any randomized models. 
+Although random forest is inadequate to propose any structure to decrease the prediction error so far regarding $noise(x)$ 
+and $bias^2$, it displays phenomenal performance in reducing the last remaining part of the prediction error. 
+Thus, we can continue our exploration with variance of random forest and need to define the correlation coefficient $\rho(x)$. 
+For any two trees $T_{D,\theta'}$ and $T_{D,\theta''}$ trained with the same training data 
+and different growing parameters $\theta'$ and $\theta''$, we can define the correlation coefficient as follows
+
 \begin{align}
 \rho(x) & = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{T_{D,\theta'}(x) T_{D,\theta''}(x)\} - \mu_{D,\theta}^2(x)}{\sigma_{D,\theta}^2(x)}
 \end{align}
-We utilize the definition of the Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following the same distribution in the intermediate steps which are included in the Appendix. $\sigma_{D, \theta}(x)$ is the variance of a decision tree and generally $\rho(x)$ represents the effect of randomization in the learning algorithm. In our case, it is close to 1 when predictions of two decision trees are highly correlated and implies that randomization does not have a significant effect. On the other hand, if it is close to 0, the prediction of two trees are perfectly random and non-correlated.
 
-We can decompose variance of a random forest as follows;
+We utilize the definition of the Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following 
+the same distribution in the intermediate steps which are included in the Appendix. $\sigma_{D, \theta}(x)$ is the 
+variance of a decision tree and generally $\rho(x)$ represents the effect of randomization in the learning algorithm. 
+In our case, it is close to 1 when predictions of two decision trees are highly correlated and implies that randomization 
+does not have a significant effect. On the other hand, if it is close to 0, the prediction of two trees are perfectly random 
+and non-correlated.
+
+We can decompose variance of a random forest as follows:
+
 \begin{align}\label{eq:decomp_var}
 \mathbb{V}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \}  = \rho(x)\sigma^2_{D,\theta}(x) + \dfrac{1-\rho(x)}{B}\sigma^2_{D,\theta}(x)
 \end{align}
-Increasing the number of ensembled trees $B$, will lower the latter expression in the equation and in the extreme case where $B \rightarrow \infty $, the variance of a random forest equals to $\rho(x)\sigma^2_{D,\theta}(x)$ and due to randomization in the algorithm $\rho(x) < 1$, thus, variance of a random forest is less than variance of a decision tree. This inference implies that the expected prediction error of a random forest is less than the expected prediction error of a decision tree. If the decision trees in the random forest are independent and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\dfrac{\sigma^2_{D,\theta}(x)}{B}$ which can be decreased with increasing $B$ as mentioned.
+
+Increasing the number of ensembled trees $B$, will lower the latter expression in the equation and in the extreme 
+case where $B \rightarrow \infty $, the variance of a random forest equals to $\rho(x)\sigma^2_{D,\theta}(x)$ 
+and due to randomization in the algorithm $\rho(x) < 1$, thus, variance of a random forest is less than variance of a 
+decision tree. This inference implies that the expected prediction error of a random forest is less than the expected 
+prediction error of a decision tree. If the decision trees in the random forest are independent 
+and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\dfrac{\sigma^2_{D,\theta}(x)}{B}$ 
+which can be decreased with increasing $B$ as mentioned.
 
 
 
 \section{Interpretation}
-In many cases, the main purpose of using a random forest model is its usefulness in performing predictions of a dependent variable based on a set of explanatory variables. In addition, very often, to understand the processes under study we need to understand which explanatory variables are the most important and useful to make mentioned predictions. Thanks to random forest we are often capable to not only build an accurate model with reliable predictions, but also to provide variable importance measures which are very important in the process of interpreting the model and its prediction results. This section of the paper will be fully based on work “Understanding variable importances in forests of randomized trees” presented by G. Louppe, L. Wehenkel, A. Sutera and P. Geurts and "A Random Forest Guided Tour" presented by G. Biau and E. Scornet.
+In many cases, the main purpose of using a random forest model is its usefulness in performing predictions of a dependent variable
+based on a set of explanatory variables. In addition, very often, to understand the processes under study we need to understand
+which explanatory variables are the most important and useful to make mentioned predictions. 
+Thanks to random forest we are often capable to not only build an accurate model with reliable predictions, 
+but also to provide variable importance measures which are very important in the process of interpreting the model and 
+its prediction results. This section of the paper will be fully based on work by \cite{louppe2013understanding}  and \cite{gerard2016foresttour}.
 
 \subsection{Variable importance}
-In order to rank the importance of the explanatory variables in classification problems using random forest we use two possible measures. Both the first and second measure have been proposed by Breiman (2001, 2002). First of them is known as Mean Decrease Impurity (MDI). MDI measure is based on the total decrease in node impurity from splitting on the given explanatory variable and moreover MDI is averaged over all trees. The second measure is known as Mean Decrease Accuracy (MDA). This measure assumes that if the explanatory variable is not relevant to the study of the problem, then rearranging its values should not demolish prediction accuracy. Mean Decrease Impurity proposed by Breiman (2001, 2002) is given by: 
-\begin{equation}
-\widehat{MDI}( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T}  \displaystyle\sum_{t \in T: v(s_{t}) =  X^{(j)}  } p(t)\Delta i(s_{t}, t)
-\end{equation}
-where $ v(st) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
-By definition $ MDI( X^{(j)} ) $ evaluates importance of a variable $ X^{(j)} $ for predicting $Y$ by adding up the weighted impurity decreases $p(t)i(s_{t}, t)$ for all nodes $t$ where $ X^{(j)}$ is used. Mean in the name of MDI comes from averaging over all $N_{T}$ trees in the random forest. Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the Shannon entropy. The second mentioned measure MDA uses out-of-bag error estimate. In this case to measure the importance of the $X^{(j)}$ variable, we have to permute its values in the out-of-bag example and use these all observations in the tree. $ MDA( X^{(j)})$ is counted thanks to averaging the differences in out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, this measure is sometimes called also as the permutation importance. In order to represent MDA measure mathematically, consider an explanatory $j-th$ variable $X^{(j)}$ and stand $OOB_{k,n}$ as a symbol for the out-of-bag data set of the $k-th$ tree and  $OOB_{k,n}^{j}$ as the same data set, but with randomly permuted values of $X^{(j)}$. Denote also by $ m_{n}(\cdot ;\Theta_{k}) $  the $k-th$ tree estimate. Then definition of MDA is given by:
+In order to rank the importance of the explanatory variables in classification problems using random forest 
+we use two possible measures. Both the first and second measure have been proposed by \cite{breiman2001random}. 
+First of them is known as Mean Decrease Impurity (MDI). MDI measure is based on the total decrease in node impurity from splitting 
+on the given explanatory variable and moreover MDI is averaged over all trees. 
+The second measure is known as Mean Decrease Accuracy (MDA). 
+This measure assumes that if the explanatory variable is not relevant to the study of the problem, 
+then rearranging its values should not demolish prediction accuracy. Mean Decrease Impurity proposed 
+by \cite{breiman2001random} is given by: 
 
 \begin{equation}
-\widehat{MDA}( X^{(j)} ) = \frac{1}{N_{T}}\displaystyle\sum_{T} \Big[C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}^{j}\big] - C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}\big]   \Big],
+	\widehat{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t}) =  X_{j}  } p(t)\Delta i(s_{t}, t)
+\end{equation}
+where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
+By definition $ MDI( X_{j} ) $ evaluates importance of a variable $ X_{j} $ for predicting $Y$ by 
+adding up the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used. 
+Mean in the name of MDI comes from averaging over all $B$ trees in the random forest. 
+Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the Shannon entropy. 
+The second mentioned measure MDA uses out-of-bag error estimate. 
+In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the out-of-bag example and 
+use these all observations in the tree. $ MDA( X_{j} )$ is counted thanks to averaging the differences in 
+out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
+this measure is sometimes called also as the permutation importance. In order to represent MDA measure mathematically, 
+consider an explanatory $j$-th variable $X_{j}$ and stand $OOB_{b,n}$ as a symbol for the out-of-bag data set of 
+the $b$-th tree and  $OOB_{b,n}^{j}$ as the same data set, but with randomly permuted values of $X_{j}$. 
+Denote also by $ m_{n}(\cdot ;\theta_{b}) $  the $k$-th tree estimate. 
+Then definition of MDA is given by:
+
+% NOTATION NOT CLEAR
+
+\begin{equation}
+\widehat{MDA}( X_{j} ) = \frac{1}{N_{T}}\displaystyle\sum_{T} \Big[C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}^{j}\big] - C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}\big]   \Big],
 \end{equation}
 where $R_{n}$ is defined for $ OOB =  OOB_{k,n}^{j}$ or $OOB =  OOB_{k,n}$ by:
 \begin{equation}
