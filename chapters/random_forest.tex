@@ -268,34 +268,5 @@ The second mentioned measure MDA uses out-of-bag error estimate.
 In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the out-of-bag example and 
 use these all observations in the tree. $ MDA( X_{j} )$ is counted thanks to averaging the differences in 
 out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
-this measure is sometimes called also as the permutation importance. In order to represent MDA measure mathematically, 
-consider an explanatory $j$-th variable $X_{j}$ and stand $OOB_{b,n}$ as a symbol for the out-of-bag data set of 
-the $b$-th tree and  $OOB_{b,n}^{j}$ as the same data set, but with randomly permuted values of $X_{j}$. 
-Denote also by $ m_{n}(\cdot ;\theta_{b}) $  the $k$-th tree estimate. 
-Then definition of MDA is given by:
-
-% NOTATION NOT CLEAR
-
-\begin{equation}
-\widehat{MDA}( X_{j} ) = \frac{1}{N_{T}}\displaystyle\sum_{T} \Big[C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}^{j}\big] - C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB_{k,n}\big]   \Big],
-\end{equation}
-where $R_{n}$ is defined for $ OOB =  OOB_{k,n}^{j}$ or $OOB =  OOB_{k,n}$ by:
-\begin{equation}
-C_{n}\big[m_{n}(\cdot ;\Theta_{k}), OOB\big] = \frac{1}{|OOB|} \displaystyle\sum_{ i :( \pmb{X_{i}}, Y_{i} )  \in OOB} (Y_{i} - m_{n}( \pmb{X_{i}} ;\Theta_{k})).
-\end{equation}
-
-Above formulas are true for regression and classification purposes. It is also visible that population version for $\widehat{MDA}( X^{(j)} )$ is as given below:
-\begin{equation}
-MDA( X^{(j)} ) =  \mathbb{E}[Y - m_{n}( \pmb{X^{'}_{j}};\Theta_{k})]^{2} -  \mathbb{E}[Y - m_{n}( \pmb{X};\Theta_{k})]^{2},
-\end{equation}
-
-where $ \pmb{X^{'}_{j}} = (X^{(1)},...,X^{'(j)},...,X^{(p)}) $ and $X^{'(j)}$ is here independent copy of  $X^{(j)}$. 
-
-
-
-
-
-
-
-
+this measure is sometimes called also as the permutation importance.
 
