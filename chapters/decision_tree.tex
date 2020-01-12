@@ -160,6 +160,7 @@ It is easy to guess that decision trees belong to methods which are sensitive to
 we can get much different resulting decision trees and as a result of that also predictions are different. 
 Bagging was created for these kind of methods which has high variance, like classification and regression trees.
 Bagging or in other words Bootstrap Aggregation is a procedure that can be used for reducing the variance.
+It was also described by L. Breiman in his work \cite{breiman1996bagging}.
 As a first step in bagging procedure we do bootstrapping, so we have to create many random subsample datasets with replacement
 and then we use these datasets as training data for our model for example in our case decision tree. As a result we have the same number
 of decision trees as the number of created datasets. Last step is to use new dataset to predict the result from each model and finally average the result 
