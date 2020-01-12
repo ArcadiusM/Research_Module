@@ -142,14 +142,14 @@ which measure the proportion of instances node \(t\) not belonging to the domina
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Bias-variance trade-off}
-To measure the fit of a model to data, the generalization error is a widely used concept from \cite{breiman2001random}. 
+To measure the fit of a model to data, the generalization error is a widely used concept \cite{breiman2001random}.
 Principally, we use generalization error to compare methods and adjust parameters to improve methods. 
 Under certain assumptions, we can decompose the generalization error into three main components; the Bayes Error, 
 the squared bias ($bias^2$) and the variance. 
 We will explain the mathematical aspects of the generalization error in the following chapters. 
 For now, we only need to mention the Bayes Error is irreducible and independent of the classifier, 
 and there is a trade-off between $bias^2$ and variance. Since decision trees suffer from high variance and 
-decreasing variance causes $bias^2$ to increase, we need methods to bypass this trade-off. 
+decreasing variance causes $bias^2$ to increase \cite{geman1992neural}, we need methods to bypass this trade-off. 
 Methods including Bagging, Boosting and Random Forest exploits mathematical properties to decrease variance 
 without increasing $bias^2$. We will explain bagging briefly, exhibit mathematical dynamics of Random Forest and 
 use Boosting in the application section.
