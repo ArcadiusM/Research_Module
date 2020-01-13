@@ -1,9 +1,7 @@
-\chapter{Decision tree}
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+\section{Decision tree}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Main idea}
+\subsection{Main idea}
 The Decision Tree is a non-parametric supervised learning method used for classification and regression.
 It predicts the response with a set of if-then-else decision rules derived from the data.
 The deeper the tree, the more complex the decision rules and the closer the model fits the data.
@@ -16,22 +14,22 @@ Leaf node represents a classification or decision.
 The topmost decision node in a tree which corresponds to the best predictor is called the root node.
 Decision trees can handle both categorical and numerical data.
 
-An example of such a tree is depicted below in figure \ref{Fig:decision_tree_example}.
+An example of such a tree is depicted below in figure \ref{fig:decision_tree_example}.
 
 \begin{figure}[H]
     \captionsetup{format=plain}
-    \makebox[\textwidth]{\includegraphics[width=120mm]{decision_tree_example.png}}
+    \makebox[\textwidth]{\includegraphics[width=100mm]{decision_tree_example.png}}
     \caption{Given a data set with two features height and weight, and gender as the target variable, 
              this example tree stratisfies the two-dimensional feature space into three distinct subset each 
              represented by the terminal nodes at the bottom.
              The stratification occurs at the two deciding nodes depending either on whether its height is above 180 cm 
              and or its weight  is above 80kg.
              }
-    \label{Fig:decision_tree_example}
+    \label{fig:decision_tree_example}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Tree Building Process}
+\subsection{Tree Building Process}
 This chapter describes the CART algorithm for tree building as specified in \cite{breiman1984classification}.
 The basic idea of tree growing is to choose a split among all the possible splits at each node
 so that the resulting child nodes are the “purest”. In this algorithm, only univariate splits are
@@ -54,42 +52,41 @@ node (also called binary splitting)
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Splitting criteria}
-Since we are only concerned with classification, \(Y\) is categorical. The original CART algorithm uses Gini and Twoing as 
-purity measures for the splitting criterion. However, implementations of the algorithm such as Python's sklearn package
-also contain entropy and misclassification rate as measures of impurity.
+\subsubsection{Splitting criteria}
+Since we are only concerned with classification, \(Y\) is therefore categorical. The original CART algorithm uses Gini and Twoing as 
+purity measures for the splitting criterion \cite{breiman1984classification}. However, implementations of the algorithm
+such as Python's sklearn package \cite{scikit2011learn} also contain entropy and misclassification rate as measures of impurity.
 
-For a give learning sample \(L\) for a \(J\) class problem, let \(N_{j}\) be the number of instances \( \{x,y\}  \)
-belonging to in class \(j\).
+For a given learning sample \( D = {(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})} \) for a \(C\) class problem, let \(N_{c}\) be the number of instances \( \{x,y\}  \)
+belonging to in class \(c\).
 
-In node \(t\), let \(N(t)\) be the total number of instances with \( \{x,y\} \in t \) and \( N_{j}(t) \) the number of class \(j\)
-cases in \(t\). The proportion of the class \(j\) instances in the sample \(L\) falling into \(t\) is  \( N_{j}(t) / N_{j} \).
-For a given set of priors, \( \pi(j) \) is interpreted as the probability that an instance belongs to class \(j\).
+In node \(t\), let \(N(t)\) be the total number of instances with \( \{x,y\} \in t \) and \( N_{c}(t) \) the number of class \(c\)
+cases in \(t\). The proportion of the class \(c\) instances in the sample \(L\) falling into \(t\) is  \( N_{c}(t) / N_{j} \).
+For a given set of priors, \( \pi(c) \) is interpreted as the probability that an instance belongs to class \(c\).
 
-At node \(t\) let the probabilities \(p(j,t)\), \(p(t)\) and \(p(j|t)\) be estimated by using
-Thus, let 
+At node \(t\), let the probabilities \(p(c,t)\) be estimated by 
 
 \begin{equation}
-    p(j,t) = \frac{ \pi(j)N_{j}(t) }{ N_{j} }
+    p(c,t) = \frac{ \pi(c)N_{c}(t) }{ N_{c} }.
 \end{equation}
 
-be the estimate for the probability that na instance will both be in class \(j\) and fall into node \(t\).
+This represents the probability that an instance will both be  in class \(j\) and fall into node \(t\).
 Therefore, the estimate for the probability that any instance falls into node \(t\) is defined by
 
 \begin{equation}
-    p(t) = \sum_{j} p(j,t),
+    p(t) = \sum_{c \in C} p(c,t),
 \end{equation}
 
-The estimate \( p(t) \) for the probability that an instance belongs to class \(j\) given that it falls into node \(t\) is defined by
+The estimate \( p(t) \) for the probability that an instance belongs to class \(c\) given that it falls into node \(t\) is defined by
 
 \begin{equation}
-    p(j|t) = \frac{ p(j,t)}{ p(t) } = \frac{ p(j,t) }{ \sum_{j} p(j,t) }.
+    p(c|t) = \frac{ p(c,t)}{ p(t) } = \frac{ p(c,t) }{ \sum_{c \in C} p(c,t) }.
 \end{equation}
 
-It holds that the conditional probability \(p(j|t)\) must satisfy
+It holds that the conditional probability \(p(c|t)\) must satisfy
 
 \begin{equation}
-    \sum_{j} p(j|t)  = 1
+    \sum_{c \in C} p(c|t)  = 1
 \end{equation}
 
 Let \(i(t)\) be an impurity measure evaluated at note \(t\). Then, the decrease of impurity (i.e. the splitting criterion) is defined as
@@ -102,7 +99,7 @@ where \(p_{L}\) and \(p_{R}\) are probabilities of sending a case to the left ch
 right child node \(t_{R}\) respectively. 
 They are estimated as \( p_{L} = p(t_{L}) / p(t) \) and \( p_{R} = p(t_{R}) / p(t) \).
 
-As already stated abobe, the goal is to maximize \(\Delta i(s,t)\)
+As already stated abobe, the goal is to maximize \(\Delta i(s,t)\).
 In the following, different measures for impurity will be presented.
 
 \textbf{Gini Measure}
@@ -111,12 +108,12 @@ The Gini impurity measure is defined as
 
 
 \begin{equation}
-    i(t) = \sum_{j} p(j|t) (1 - p(j|t)) = 1 - \sum_{j=1}^{J} p_{j}^{2}
+    i(t) = \sum_{c \in C} p(c|t) (1 - p(c|t)) = 1 - \sum_{c \in C} p_{c}^{2}
 \end{equation}
 
 The intuition behind this measure is to assign nodes for which its probabilities are more skewed towards a particular group a higher value.
 Conversely, if a node has more balanced distribution, then \(i(t)\) will turn out to be lower.
-For example, in the case of \( J=2 \), \(i(t)\) will be maximized with \( p(j|t) = 0.5 \) for \(j = 1, 2\).
+For example, in the case of \( |C|=2 \), \(i(t)\) will be maximized by \( p(c|t) = 0.5 \) for \( c \in C \).
 
 
 \textbf{Information Entropy}
@@ -124,7 +121,7 @@ For example, in the case of \( J=2 \), \(i(t)\) will be maximized with \( p(j|t)
 The Entropy measure from information theory is defined as
 
 \begin{equation}
-    i(t) = \sum_{j} p(j|t) log(p(j|t))
+    i(t) = \sum_{c \in C} p(c|t) log(p(c|t))
 \end{equation}
 
 which measures the average rate at which information is produced by a stochastic source of data .
@@ -137,24 +134,35 @@ Thus, it can also be used for measuring impurity.
 The rate of misclassification is defined as 
 
 \begin{equation}
-    i(t) = 1 - \max_{0 < j \leq J} p(j|t) .
+    i(t) = 1 - \max_{c \in C} p(c|t) .
 \end{equation}
 
 which measure the proportion of instances node \(t\) not belonging to the dominant group in \(t\).
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Bias-variance trade-off}
-To measure the fit of a model to data, the generalization error is a widely used concept(Breiman, 2001). Principally, we use generalization error to compare methods and adjust parameters to improve methods. Under certain assumptions, we can decompose the generalization error into three main components; the Bayes Error, the squared bias ($bias^2$) and the variance. We will explain the mathematical aspects of the generalization error in the following chapters. For now, we only need to mention the Bayes Error is irreducible and independent of the classifier, and there is a trade-off between $bias^2$ and variance. Since decision trees suffer from high variance and decreasing variance causes $bias^2$ to increase, we need methods to bypass this trade-off. Methods including Bagging, Boosting and Random Forest exploits mathematical properties to decrease variance without increasing $bias^2$. We will explain bagging briefly, exhibit mathematical dynamics of Random Forest and use Boosting in the application section.
+\subsubsection{Bias-variance trade-off}
+To measure the fit of a model to data, the generalization error is a widely used concept \cite{breiman2001random}.
+Principally, we use generalization error to compare methods and adjust parameters to improve methods. 
+Under certain assumptions, we can decompose the generalization error into three main components; the Bayes Error, 
+the squared bias ($bias^2$) and the variance. 
+We will explain the mathematical aspects of the generalization error in the following chapters. 
+For now, we only need to mention the Bayes Error is irreducible and independent of the classifier, 
+and there is a trade-off between $bias^2$ and variance. Since decision trees suffer from high variance and 
+decreasing variance causes $bias^2$ to increase \cite{geman1992neural}, we need methods to bypass this trade-off. 
+Methods including Bagging, Boosting and Random Forest exploits mathematical properties to decrease variance 
+without increasing $bias^2$. We will explain bagging briefly, exhibit mathematical dynamics of Random Forest and 
+use Boosting in the application section.
 
 
 \subsection{Bagging}
-It is easy to guess that decision trees belong to methods which are sensitive to the specific data on which they are trained. It means that when we change training data 
+Decision trees belong to methods which are sensitive to the specific data on which they are trained. When we change training data 
 we can get much different resulting decision trees and as a result of that also predictions are different. 
-Bagging was created for these kind of methods which has high variance, like classification and regression trees.
+Bagging was created for methods which has high variance, like classification and regression trees.
 Bagging or in other words Bootstrap Aggregation is a procedure that can be used for reducing the variance.
+It was also described by L. Breiman in his work \cite{breiman1996bagging}.
 As a first step in bagging procedure we do bootstrapping, so we have to create many random subsample datasets with replacement
 and then we use these datasets as training data for our model for example in our case decision tree. As a result we have the same number
 of decision trees as the number of created datasets. Last step is to use new dataset to predict the result from each model and finally average the result 
 over all unit results. After introducing bagged decision trees, another improvement to this method was created. Method which is an improvement over bagged decision trees 
-is commonly known as the Random Forest which is the topic of our next section of paper.
+is commonly known as the Random Forest. The fundamental difference between bagging and Random Forest is that in Random Forest injection of randomness is added. This method and mentioned injection of randomness in it will be described in the next section of paper.

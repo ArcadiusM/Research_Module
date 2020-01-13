@@ -1,42 +1,34 @@
-%template Master Thesis 
-%University of Bonn Master of Life Science Informatics
-% arara: pdflatex: { synctex: on }
-
-\documentclass[ twoside=false, 12pt,  footinclude=true,  headinclude=true,  cleardoublepage=empty]{scrbook}
-
+\documentclass[12pt,a4paper]{scrartcl}
 \usepackage[utf8]{inputenc}
-\usepackage [english] {babel} 
-
-\usepackage[]{biblatex}
-\addbibresource{references.bib}
-
-\usepackage{lipsum}
-\usepackage[linedheaders, parts, pdfspacing]{classicthesis}
-\usepackage{amsmath} 
-\usepackage{amsthm}
-\usepackage{booktabs}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{makeidx}
+\usepackage[left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{chngcntr} 
+\usepackage{pdfpages}
 \usepackage{graphicx}
 \graphicspath{ {images/} }
-\usepackage{float}
-\usepackage [T1]{fontenc}
-\usepackage{listings}
-\usepackage{color}
-\usepackage{multirow}
-\usepackage{tikz}
-\usepackage[toc,page]{appendix}
-\usepackage{MnSymbol}
-\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{caption}
+\usepackage{amssymb, amsmath, amsthm}
+% \usepackage{mathtools} % Bonus
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{graphicx}
-\usepackage{subcaption}
-\usepackage{mathtools} 
-\usepackage{enumerate}
-\usepackage{csquotes}
-\usepackage{amsmath}
-\usepackage{hyperref}
-\usepackage{acro}
-\usepackage[a4paper,includeall,margin=2cm,marginparsep=0cm,marginparwidth=0cm,left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage[font={footnotesize,it}, labelfont=bf]{caption}
 \usepackage{float}
+\usepackage{lipsum}
+\usepackage[]{biblatex}
+\addbibresource{references.bib}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
 
 
 \setlength{\parskip}{10pt} % Abstand zwischen den Absätzen
@@ -44,10 +36,6 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{4}
 
-\DeclareAcronym{AD}{
-	short = AD ,
-	long  = Alzheimer's disease
-}
 
 \title{Master Thesis}
 \date{\today}
@@ -81,40 +69,36 @@
 		
 	\end{titlepage}
 	
-%	% Add blank page
-%	\newpage
-%	\thispagestyle{empty}
-%	\mbox{}
-	
-	% /frontmatter -> Turn on roman numbering for the following content and turns off normal numbering
-	
-	\frontmatter
 
-\tableofcontents
+	\tableofcontents
+	\thispagestyle{empty}
+	\newpage
 
-\include{chapters/abstract}
+	\include{chapters/abstract}
 
-% /frontmatter -> Turn on normal numbering 
-\mainmatter
+	\pagenumbering{arabic}
 
-\include{chapters/intro}
+	\include{chapters/intro}
 
-\include{chapters/decision_tree}
+	\include{chapters/decision_tree}
 
-\include{chapters/random_forest}
+	\include{chapters/random_forest}
 
-\include{chapters/comparison}
+	\include{chapters/comparison}
 
-\include{chapters/conclusion}
+	\include{chapters/conclusion}
+	% \newpage
+	\include{chapters/appendix}
 
-\printbibliography
+	% \pagebreak
 
+	\printbibliography
 
-\chapter*{Declaration}
-I hereby certify that this material is my own work, that I used only those sources and resources referred to in the thesis, and that I have identified citations as such.
-		
-\vspace{0.3in}
+	% \section{Declaration}
+	% I hereby certify that this material is my own work, that I used only those sources and resources referred to in the thesis, and that I have identified citations as such.
+			
+	% \vspace{0.3in}
 
-\noindent Bonn, \today
+	% \noindent Bonn, \today
 
 \end{document}
