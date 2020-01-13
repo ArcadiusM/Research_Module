@@ -56,7 +56,7 @@ When performing a bootstrap for getting a sample of data for training,
 remaining part of data is our Out of Bag (OOB) sample.
 After training random forest model, OOB sample will be used as not known data for prediction.
 Leftover sample will be passed through every possible decision tree in the model that not include this
-data in the bootstrap training sample. Out of Bag is commonly used to monitor error of predictions. 
+data in the bootstrap training sample \cite{friedman2001elements}. Out of Bag is commonly used to monitor error of predictions. 
 Breiman’s work \cite{Breiman1996OUT-OF-BAG-E} shows empirically that Out of Bag estimate is as accurate 
 as a test set of the same size as the training set \cite{Breiman1996OUT-OF-BAG-E}.
 
