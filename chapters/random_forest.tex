@@ -17,7 +17,7 @@ An ensemble of randomly trained decision trees, so in other words random decisio
 	distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
 \end{theorem}
 
-\subsection{Randomness in the model}
+\subsubsection{Randomness in the model}
 The main aspect of a random decision forest model is an injection of randomness which allows to have all unit trees different from the others. Two key concepts that makes decision forest "random" are:
 \begin{enumerate}
 	\item Random sampling of training data points when building trees
@@ -35,7 +35,7 @@ because except controlling the amount of randomness within each tree,
 it controls also the amount of correlation between different trees in the forest. 
 As randomness parameter decreases, trees become more decorrelated \cite{criminisi2012decision}.
 
-\subsection {Training, testing and prediction}
+\subsubsection {Training, testing and prediction}
 Training of all trees is done independently and testing consists in the fact that each test point $\textbf{x}$ is pushed 
 through every tree included in forest until it ends in corresponding leaves. As a last step is taking all predictions from 
 every unit decision tree and combining them into prediction of single random forest. Combination of different tree predictions 
@@ -49,7 +49,7 @@ so combination of tree predictions can be described as below:
 where in a random forest with the number of decision trees equals to $B$ each tth tree obtains the posterior 
 distribution $ p_{b}(Y = c |X = \textbf{x}) $.
 
-\subsection {Out of Bag sample}
+\subsubsection {Out of Bag sample}
 Another important idea which is used in applications of random forest is validating model using Out of Bag sample.
 When performing a bootstrap for getting a sample of data for training,
 remaining part of data is our Out of Bag (OOB) sample.
