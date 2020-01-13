@@ -36,7 +36,8 @@ it controls also the amount of correlation between different trees in the forest
 As randomness parameter decreases, trees become more decorrelated \cite{criminisi2012decision}.
 
 \subsubsection {Training, testing and prediction}
-Training of all trees is done independently and testing consists in the fact that each test point $\textbf{x}$ is pushed 
+Training and testing is an integral part of building up every machine learning model.
+In Random forest training of all trees is done independently and testing consists in the fact that each test point $\textbf{x}$ is pushed 
 through every tree included in forest until it ends in corresponding leaves. As a last step is taking all predictions from 
 every unit decision tree and combining them into prediction of single random forest. Combination of different tree predictions 
 can be done in different ways. In random forests for classification problems, forests generate probabilistic output. 
