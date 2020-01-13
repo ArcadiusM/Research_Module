@@ -1,9 +1,34 @@
 \section{Introduction}
 \label{ch:intro}
 
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut 
-labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo 
-dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Drawing conclusions from data and utilizing it to get predictions is a common practice in Economics alongside with many other fields. 
+As a non-parametric estimation tool, decision trees attract attention in the literature 
+yet we require robust methods to correctly identify patterns in data and to obtain accurate predictions 
+and decision trees suffer from high variance \cite{friedman2001elements}. 
+For prediction purposes having high variance is a crucial problem, thus, several improvements were proposed 
+such as bootstrap aggregation, boosting and most importantly Random Forests which is our focus in this paper. 
+Fundamentally Random Forests are an ensemble of decision trees which are grown from randomly sampled data with 
+randomly selected explanatory variables. 
+Although Random Forest is also capable in regression type problems, 
+from our perspective it gives an account of itself in classification setting and we scale down our focus to classification 
+settings meaning that dependent variable in data is categorical. 
+
+
+We start with explaining the decision trees since the decision tree is the building block and the starting point of Random Forest.
+We concentrated on the tree-building process with differing splitting criteria rather than pruning 
+as Random Forest uses fully grown trees and does not prune trees. 
+After delving into the variance problem, we describe as one of the solutions, bootstrap aggregating (bagging) 
+because Random forest utilizes the main principle of bagging, bootstrapped data. 
+In the next section, we start with defining Random Forest and discuss the main root of randomness and mention the idea of 
+Out of Bag sample which stems from the usage of bootstrapping.
+There are two different class determination methods available theoretically in Random Forest. 
+We start the Mathematical Explanation part with defining those voting processes. 
+Although primarily we use soft voting, understanding majority voting provides us with a better insight.
+Then we define a measure of the decision tree's fit and decompose it to understand the improvement of Random Forest over decision trees.
+With exploiting bias-variance decomposition of that measure and expanding our findings to Random Forest, 
+we exhibit the working principle of Random Forest.
+In the next section, we examine variable importance as Random Forest enables us to measure 
+how much each independent variable is important.
+Finally, we applied the Random Forest algorithm to simulated and real data. 
+In the simulation study, we employed linear and non-linear data generation processes and compared Random Forest's performance with linear regression.
+In real data study, we used Titanic data \cite{titanicData} and compared Random Forest's performance with two boosting methods; Adaptive and Gradient Boosting.
