@@ -115,7 +115,7 @@ of $1/N$ as $N$ is the sample size. We generate a stump for each classifier in t
 their misclassification rate. After selecting the best classifier, with using its stump's misclassification rate 
 we compute its stump's significance. With that significance, we compute new weights for the sample. 
 We repeat the algorithm sequentially for the sample with new weights until a stopping criterion is achieved. 
-Generally, using the number of classifiers as the number of iteration is a common practice (Elements of statistical learning). 
+Generally, using the number of classifiers as the number of iteration is a common practice \cite{friedman2001elements}. 
 After generating multiple stumps, we can predict an observation's class. 
 We get the decision of every stump and form groups accordingly. 
 Every outcome class has a group of stumps which predict that class and every stump has its significance. 
