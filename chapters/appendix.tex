@@ -1,5 +1,6 @@
 \section{Appendix}
 \subsection{Bayes Model explanation}
+\label{app:bayes_model}
 We identified Bayes Model in \autoref{eq:bayes_model} as such
 \begin{align}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c) \} \notag\\
@@ -8,6 +9,7 @@ We identified Bayes Model in \autoref{eq:bayes_model} as such
 \end{align}
 
 \subsection{Bias-variance decomposition of Squared Loss Function}
+\label{app:bias_var_decomp}
 We derived the result in \autoref{eq:decomp_squared_loss} as follows;
 \begin{align}
 \boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
@@ -30,28 +32,33 @@ We adopted following steps in the futher derivations of bias-variance decomposit
 & = (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x))^2 + \mathbb{E}_{D}\{(\mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\}\notag
 \end{align}
 
-\subsection{Kohlavi's decomposition of zero-one loss function}
-Kohlavi proposed an alternative decomposition for zero-function(1996). Our notation differs in some extent from Kohlavi's paper to be coherent with out prior findings. The zero-one loss function is defined as
+\subsection{Kohavi's decomposition of zero-one loss function}
+\label{app:kohavi_decomp}
+Kohavi proposed an alternative decomposition for zero-function \cite{kohavi1996bias}. 
+Our notation differs in some extent from Kohavi's paper to be coherent with out prior findings. 
+The zero-one loss function is defined as
 \begin{align}
 L(\phi_{\beta}(x), T_{D,\theta}(x)) = 1 - \delta(\phi_{\beta}(x), T_{D, \theta}(x)) \notag
 \end{align}
 where $\delta(\phi_{\beta}(x), T_{D, \theta}(x)) = 1$ if $\phi_{\beta}(x) = T_{D, \theta}(x)$ and 0 otherwise. The generalization error (misclassification rate in the paper) is defined and extented as
-\begin{align}\label{eq:kohlavi_eq}
+\begin{align}\label{eq:kohavi_eq}
 \boldsymbol{Err}(T_{D, \theta}(x)) 
 & = L(\phi_{\beta}(x), T_{D,\theta}(x) P(\phi_{\beta}(x), T_{D, \theta}(x)) \notag \\
 & = \sum_{\phi_{\beta}(x), T_{D, \theta}(x)} [1 - \delta(\phi_{\beta}(x), T_{D, \theta}(x))] P(\phi_{\beta}(x), T_{D, \theta}(x)) \notag \\
 & = 1 - \sum_{y \in Y} P(\phi_{\beta}(x) = T_{D, \theta}(x)) = y)
 \end{align}
-Even if in the Kohlavi's paper it is stated that the last step is a simplified version of the extended Bayesian Formalism (Wolpert, 1994), there is not enough explanation to explicitly show the mathematical derivation nor the intuition. If we continue examine the \autoref{eq:kohlavi_eq} we get the following decomposition;
-\begin{align}\label{eq:kohlavi_eq1}
+Even if in the Kohavi's paper it is stated that the last step is a 
+simplified version of the extended Bayesian Formalism \cite{wolpert2018relationship}, 
+there is not enough explanation to explicitly show the mathematical derivation nor the intuition. If we continue examine the \autoref{eq:kohavi_eq} we get the following decomposition;
+\begin{align}\label{eq:kohavi_eq1}
 \boldsymbol{Err}(T_{D, \theta}(x))
 & = 1 - \sum_{y \in Y} P(\phi_{\beta}(x) = T_{D, \theta}(x)) = y) \notag\\
 & = \sum_{y \in Y} -P(\phi_{\beta}(x) = T_{D, \theta}(x)) = y) + \sum_{y \in Y} P(\phi_{\beta}(x) = y) P(T_{D, \theta}(x)) = y) \notag\\
 & + \sum_{y \in Y}[-P(\phi_{\beta}(x) = y) P(T_{D, \theta}(x)) = y) + \dfrac{1}{2}P(T_{D, \theta}(x) = y)^2 + \dfrac{1}{2}P(\phi_{\beta} = y)^2] \notag\\
 & + [\dfrac{1}{2} - \dfrac{1}{2}\sum_{y \in Y} P(T_{D,\theta}(x)= y)^2] + [\dfrac{1}{2} - \dfrac{1}{2}\sum_{y \in Y} P(\phi_{\beta}(x)= y)^2]
 \end{align}
-Rearranging \autoref{eq:kohlavi_eq1} yields
-\begin{align}\label{eq:kohlavi_eq2}
+Rearranging \autoref{eq:kohavi_eq1} yields
+\begin{align}\label{eq:kohavi_eq2}
 \boldsymbol{Err}(T_{D, \theta}(x))
 & = \sum_{y \in Y} [P(T_{D,\theta}(x)=y)P(\phi_{\beta}(x) = y) - P(T_{D,\theta}(x) = \phi_{\beta}(x) = y)]\tag{$*$} \\
 & + \dfrac{1}{2}\sum_{y \in Y} [P(T_{D,\theta}(x)=y) - P(\phi_{\beta}(x) = y)]^2\notag \\
@@ -67,9 +74,10 @@ where
 bias^2 & = \dfrac{1}{2}\sum_{y \in Y} [P(T_{D,\theta}(x)=y) - P(\phi_{\beta}(x) = y)]^2\notag \\
 variance & = \dfrac{1}{2}(1 - \sum_{y \in Y}P(T_{D, \theta}(x) = y)^2) \notag
 \end{align}
-Since the outcome of Kohlavi's decomposition is not as explanatory as our prior findings and without assuming a certain type of distribution for the sample(Louppe,2014), we wanted to explain mathematical dynamics of random forest with using the squared loss function alongside zero-one loss function.
+Since the outcome of Kohavi's decomposition is not as explanatory as our prior findings and without assuming a certain type of distribution for the sample \cite{louppe2014understanding}, we wanted to explain mathematical dynamics of random forest with using the squared loss function alongside zero-one loss function.
 
 \subsection{Correlation Coefficient}
+\label{app:corr_coef}
 Using the definition of the Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following the same distribution, we derived correlation coefficient as such
 \begin{align}
 \rho(x) & = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{(T_{D,\theta'}(x) - \mu_{D,\theta'}(x))(T_{D,\theta''}(x) - \mu_{D,\theta''}(x))\} }				{\sigma_{D,\theta'}(x)\sigma_{D,\theta'}(x)}\notag \\
@@ -78,9 +86,12 @@ Using the definition of the Pearson's correlation coefficient and the property o
 		& = \dfrac{\mathbb{E}_{D,\theta',\theta''}\{T_{D,\theta'}(x) T_{D,\theta''}(x)\} - \mu_{D,\theta}^2(x)}{\sigma_{D,\theta}^2(x)}\notag
 \end{align}
 
-With an alternative decomposition, we can state that $\rho(x)$ is non-negative (Louppe, 2014; Geurts, 2002). Being that said the findings we explored with decomposing the variance of the squared loss function are robust.
+With an alternative decomposition, we can state that $\rho(x)$ is non-negative 
+\cite{louppe2014understanding} \cite{geurts2002contributions}. 
+Being that said the findings we explored with decomposing the variance of the squared loss function are robust.
 
 \subsection{Decomposition of Variance}
+\label{app:var_decomp}
 The derivation of \autoref{eq:decomp_var} is as follows;
 
 \begin{align}
@@ -106,4 +117,3 @@ where $\mu_{D, \theta}$ is the average prediction of all ensembled trees and der
 & = \dfrac{\sigma_{D,\theta}^2(x)}{B} + \rho(x)\sigma_{D,\theta}^2(x) - \rho(x)\dfrac{\sigma_{D,\theta}^2(x)}{B}\notag \\
 & = \rho(x)\sigma_{D,\theta}^2(x) + \dfrac{1 - \rho(x)}{B}\sigma_{D,\theta}^2(x) \notag
 \end{align}
-%& = \rho(x)\sigma^2_{D,\theta}(x) + \dfrac{1-\rho(x)}{B}\sigma^2_{D,\theta}(x)
