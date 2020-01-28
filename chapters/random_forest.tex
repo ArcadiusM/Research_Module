@@ -99,21 +99,27 @@ The generalization error of a decision tree $T_{D,\theta}$ which is grown using 
 \begin{equation}
 	\boldsymbol{Err}(T_{D,\theta}) = \mathbb{E}_{X,Y}\{L(Y, T_{D,\theta}(X)) \}
 \end{equation}
-where $L$ is the loss function measuring the difference between its two arguments. Since we focus on classification setting, 
-the zero-one loss function is our interest, however, to get a better understanding, widely used in regression type predictions, 
-the squared loss function will be examined first. The bias-variance decomposition of both functions are similar and 
+where $L$ is the loss function measuring the difference between its two arguments. 
+Since we focus on classification setting, 
+the zero-one loss function is our interest, however, 
+to get a better understanding, widely used in regression type predictions, 
+the squared loss function will be examined jointly. 
+The bias-variance decomposition of both functions are similar and 
 follow the same dynamics \cite{domingos2000decomposition}. 
-The squared loss function measures the sqaured difference between the dependent variable and its predicted value 
+While the bias-variance decomposition of zero-one loss function remains 
+to be relatively unexplanatory, the squared loss provides us a superior insight. 
+Therefore we denoted the findings with using the zero-one loss function with apostrophe.
+The squared loss function measures the squared difference between the dependent variable and its predicted value 
 by decision tree $T_{D,\theta}$ and can be defined as
 \begin{equation}
 	L(Y, T_{D, \theta}(x)) = (Y - T_{D, \theta}(x))^2
 \end{equation}
 while the zero-one loss function yields is
 \begin{equation}
-	L(Y, T_{D,\theta}(X)) = 1 (Y \neq T_{D, \theta}(X))
+	L'(Y, T_{D,\theta}(X)) = \mathds{1} (Y \neq T_{D, \theta}(X))
 \end{equation}
 $L(Y, T_{D,\theta}(X))$ equals to $1$ if the class of dependant variable is 
-different than its predicted class by decision tree and equals to 0 if both are the same 
+different than its predicted class by decision tree and equals to 0 if both are the same, 
 meaning that $Y = T_{D, \theta}(X)$. 
 Both loss functions follow the same logic in essence. 
 While the squared loss function yielding a number to measure the error, 
@@ -124,8 +130,13 @@ The generalization error for both functions
 	\boldsymbol{Err'}(T_{D,\theta}) & = \mathbb{E}_{X,Y}\{ 1(Y \neq T_{D, \theta}(X)) \}
 	= P(Y \neq T_{D, \theta}(X))
 \end{align}
-where the last expression in the second equation is the probability of misclassification of the tree.
-
+where the expression in the first equation measures the squared difference of true and predicted values
+and the expression in the second equation is the probability of misclassification of the tree. 
+We will decompose the expected generalization error and investigate the improvement of random forest upon 
+decision trees.
+\vspace{2mm}
+\\
+\textbf{\emph{The Decomposition of $\boldsymbol{Err}(T_{D,\theta})$}}\\
 Given the probability distribution of P(X,Y), there exists a model $\phi_{\beta}$ that minimizes the generalization error 
 and can be derived analytically independent or learning set $D$ \cite{louppe2014understanding}. 
 With conditioning on X generalization error for $\phi_{\beta}$ becomes;
@@ -144,9 +155,9 @@ decision trees. In that sense, with couple of manipulations, Bayes Model for squ
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
 			 & = \mathbb{E}_{Y|X=x}\{Y\}
 \end{align}
-It yields the expected value of $Y$ since mean of $Y$ minimizes the squared difference 
-and mean of $Y$ equals to its expected value.
-For squared loss function, Bayes Model predicts the average value of Y at X=x. 
+For squared loss function, Bayes Model predicts the expected value of Y at X=x 
+since the mean of $Y$ minimizes the squared difference 
+and equals to its expected value.
 Bayes Model of zero-one loss function denoted as $\phi_{\beta}'$ is
 \begin{align}\label{eq:bayes_model}
 \phi_{\beta}' & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c) \} \notag\\
@@ -179,13 +190,15 @@ the first term in \autoref{eq:decomp_squared_loss_cont} also called squared bias
 decision tree differs from Bayes Model and the latter term is the variance of our estimator. 
 Therefore, we can define $\boldsymbol{Err}(T_{D,\theta})$ as follows
 \begin{equation}
-\boldsymbol{Err}(T_{D,\theta}) = noise(x) + bias^2(x) + var(x)
+\boldsymbol{Err}(T_{D,\theta}) = noise + bias^2 + var
 \end{equation}
-where
+\vspace{-3mm}
+\qquad \qquad \qquad \quad where
+\vspace{-6.3mm}
 \begin{align}
-& noise(x) = \boldsymbol{Err}(\phi_{\beta}) \notag \\
-& bias^2(x) = (\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\})^2 \notag \\
-& var(x) = \mathbb{E}_{D}\{(\mathbb{E}_{D}(T_{D,\theta}(x)) - T_{D,\theta}(x))^2\} \notag
+& noise = \boldsymbol{Err}(\phi_{\beta}) \notag \\
+& bias^2 = [\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\}]^2 \notag \\
+& var = \mathbb{E}_{D}\{[\mathbb{E}_{D}(T_{D,\theta}(x)) - T_{D,\theta}(x)]^2\} \notag
 \end{align}
 The same decomposition can be conducted for the zero-one loss function in similar fashion and as mentioned in 
 \cite{louppe2014understanding},\cite{domingos2000decomposition}, 
@@ -196,7 +209,9 @@ cannot be solved for zero-one loss function explicitly as done for squared loss 
 \cite{kohavi1996bias} introduces another decomposition for zero-one loss function (included in \autoref{app:kohavi_decomp}), 
 but still it remains to be unexplanatory compared to squared loss, thus, 
 we explain the dynamics with using squared loss although the main focus of the paper remains to be on classification setting.
-
+\vspace{2mm}
+\\
+\textbf{\emph{Extenting findings to Random Forest }}\\
 In regression setting, random forest shares the same idea with classification prediction with soft voting. 
 Random forest for regression setting can be written as
 \begin{equation}
@@ -206,23 +221,23 @@ When we take the average prediction in this case equals to expectation in terms 
 \begin{align}\label{eq:mu}
 \mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \} 
 	& = \mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\dfrac{1}{B}\sum_{b = 1}^{B}T_{D,\theta_{b}}(x)\} \notag \\
-	& = \dfrac{1}{M}\sum_{b=1}^{B}\mathbb{E}_{D,\theta_{b}}\{T_{D, \theta_{b}}(x)\}\notag \\
+	& = \dfrac{1}{B}\sum_{b=1}^{B}\mathbb{E}_{D,\theta_{b}}\{T_{D, \theta_{b}}(x)\}\notag \\
 	& = \mu_{D,\theta}(x)
 \end{align}
 where $\mu_{D,\theta}(x)$ is the average prediction of all ensembled trees. Since $\theta$'s are random, 
 independent and have the same distribution \cite{louppe2014understanding}, when we extend this finding bias of a random forest 
 we can state that 
 \begin{equation}\label{eq:random_forest_bias}
-bias^2(x) = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2
+bias^2 = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2
 \end{equation}
 Intiutively, when we get the average prediction of all ensembled trees, 
 we are able to consider $\mu_{D,\theta}(x)$ as one decision tree in simplest terms and make this inference.
 We can interpret \autoref{eq:random_forest_bias} as the squared bias cannot be decreased with ensembling randomized models, 
 namely, an ensemble of trees does not guarantee having lower bias compared to only one tree \cite{friedman2001elements}.
-Although random forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise(x)$ 
+Although random forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise$ 
 and $bias^2$, it displays promising performance in reducing the last remaining part of the generalization error. 
 Thus, we can continue our exploration with variance of random forest, yet, we need to define the correlation coefficient $\rho(x)$
-before delve into variance since the correlation coefficient have significant place in variance. 
+before delve into variance since the correlation coefficient have significant role in variance. 
 For any two trees $T_{D,\theta'}$ and $T_{D,\theta''}$ trained with the same data $D$
 and different growing parameters $\theta'$ and $\theta''$, we can define the correlation coefficient as follows
 \begin{align}
@@ -237,8 +252,11 @@ associated with prediction variability stemming from randomness of the set $D$
 and randomness introduced with $\theta$ \cite{louppe2014understanding}.
 Therefore, $\rho(x)$ represents the effect of randomization in the learning algorithm in general.
 In our case, it is close to 1 when predictions of two decision trees are highly correlated and implies that randomization 
-does not have a significant effect. On the other hand, if it is close to 0, the prediction of two trees are perfectly random 
-and non-correlated. We can decompose variance of a random forest as follows:
+does not have a significant effect. 
+On the other hand, if it is close to 0, trees are non-correlated and 
+the prediction of trees are perfectly random in the sense that 
+not dependent on the predictions of other trees. 
+We can decompose variance of a random forest as follows:
 \begin{align}\label{eq:decomp_var}
 \mathbb{V}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \}  = \rho(x)\sigma^2_{D,\theta}(x) + \dfrac{1-\rho(x)}{B}\sigma^2_{D,\theta}(x)
 \end{align}
@@ -249,7 +267,7 @@ and due to randomization in the algorithm $\rho(x) < 1$,
 thus, variance of a random forest is less than variance of a decision tree. 
 This inference implies that the generalization error of a random forest is less than the generalization error of a decision tree. 
 If the decision trees in the random forest are independent 
-and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\dfrac{\sigma^2_{D,\theta}(x)}{B}$ 
+and consequently $\rho(x) \rightarrow 0$, the variance is reduced to $\sigma^2_{D,\theta}(x)/B$ 
 which can be decreased with increasing $B$ as mentioned. 
 Conclusively, Random Forest improves the performance of decision tree with decreasing variance and keeping bias unaffected.
 
