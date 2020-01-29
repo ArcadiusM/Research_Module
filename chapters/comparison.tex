@@ -6,11 +6,13 @@ A major reason for choosing this data set was due to the fact that it consists o
 In order to use the data to its fullest extent, we conducted additional feature engineering. 
 Without that, many features remain unusable for our methods, 
 because they contain missing values or values that are formatted as text.
+Further, we split up the data set randomly into five folds via the K-fold method.
+Then, the random forest got applied on each of the folds to obtain the classification rates.
+Finally, we averaged these results to get a more representative performance evaluation of the Random Forest.
 For the implementation of the feature engineering and the classification,
 one can consult our code repository \cite{githubApplication}.
-The Random Forest managed to achieve a total classification accuracy of 84,32\% on the holdout set,
-which consists out of 15\% of the total data.
-According to the confusion matrix in \autoref{fig:confusion_matrix}, for passengers that died, 
+The Random Forest managed to achieve a total classification accuracy of 82.71\% on the holdout set.
+According to the confusion matrix in \autoref{fig:confusion_matrix_random_forest}, for passengers that died, 
 the accuracy was slightly higher compared to those that survived. This is to be expected,
 since deaths outnumber survivals considerably.
 
@@ -19,13 +21,27 @@ since deaths outnumber survivals considerably.
     \makebox[\textwidth]{\includegraphics[width=200mm]{confusion_matrix_random_forest.png}}
     \caption
         {This plot illustrates the accuracy of the Random Forest's prediction on the Titanic data set.
+        The data set got split into five folds on which the Random Forest got applied. 
+        Then, the resulting combination of classification errors got averaged.
+        The left axis indicates the true class membership, while the bottom one indicates the predicted one. 
         }
-    \label{fig:confusion_matrix}
+    \label{fig:confusion_matrix_random_forest}
 \end{figure}
 
 
 \section{Comparison to two boosting methods}
-Before introducing AdaBoost and Gradient Boosting methods firstly, it is essential to understand what boosting is. Like bagging, boosting is an approach which can be applied to many machine learning methods for classification or regression. Bagging uses bootstrap to create multiple datasets for training the method. As a next stage bagging fits a separate decision tree to each training dataset, and then it combines all decision trees in order to create a single predictive model. Every decision tree is independent to others thanks to using bootstrap to create different training datasets. Boosting method works similarly, but in our case decision trees are grown sequentially. It means that each tree is built using information from previously built trees. Boosting method does not involve bootstrap sampling. In this method instead of bootstrap each decision tree is fit on a modified version of the original dataset \cite{James2013}.
+Before introducing AdaBoost and Gradient Boosting methods firstly, 
+it is essential to understand what boosting is. 
+Like bagging, boosting is an approach which can be applied to many machine learning methods for 
+classification or regression. Bagging uses bootstrap to create multiple datasets for training the method. 
+As a next stage bagging fits a separate decision tree to each training dataset, 
+and then it combines all decision trees in order to create a single predictive model. 
+Every decision tree is independent to others thanks to using bootstrap to create different training datasets. 
+Boosting method works similarly, but in our case decision trees are grown sequentially. 
+It means that each tree is built using information from previously built trees. 
+Boosting method does not involve bootstrap sampling. 
+In this method instead of bootstrap each decision tree is fit on a modified version of 
+the original dataset \cite{James2013}.
 
 \subsection{AdaBoost Classifier}
 \label{sec:adaboost}
@@ -49,13 +65,21 @@ Although stumps are weak-learners, we exploit the error of a weak-learner to gen
 and iterating multiple times provides us with a powerful algorithm.
 
 \subsubsection{Real Data Application of Adaboost}
-When we employ Adaboost to predict the survival outcome of the passenger on Titanic, we achieve approximately a rate of 82\% accuracy. With utilizing the confusion matrix of Adaboost and compare it with Random Forest's, we can see that for the non-survivals the result is almost the same but Random Forest is better when it comes to identify survivors.
+The application of Adaboost is analogous to that of the Random Forest. 
+That means that it got applied on the same five folds from the data set and its results got averaged.
+Thus, when we employ Adaboost to predict the survival outcome of the passenger on Titanic, 
+we achieve a mean classification rate of 82.94\% accuracy. With utilizing the confusion matrix of Adaboost 
+and compare it with Random Forest's, we can see that for the non-survivals the result is almost the same 
+but Random Forest is better when it comes to identify survivors.
 
 \begin{figure}[H]
     \captionsetup{format=plain}
     \makebox[\textwidth]{\includegraphics[width=200mm]{confusion_matrix_adaboost.png}}
     \caption
-        {This plot illustrates the accuracy of the Adaboost's prediction on the Titanic data set.
+        {This plot illustrates the accuracy of the AdaBoost's prediction on the Titanic data set.
+        The data set got split into five folds on which the Random Forest got applied. 
+        Then, the resulting combination of classification errors got averaged.
+        The left axis indicates the true class membership, while the bottom one indicates the predicted one.
         }
     \label{fig:confusion_matrix_adaboost}
 \end{figure}
@@ -68,21 +92,20 @@ When we employ Adaboost to predict the survival outcome of the passenger on Tita
 In Gradient Boosting the idea is to take weak learning algorithm or hypothesis and make some corrections that will improve the power of this algorithm/hypothesis. In hypothesis boosting, we check every observation on which statistical learning method was trained on, then you leave the observations which were correctly classified. Then method creates new weak learner and test it only on the observations that were poorly classified. Next, the examples that were correctly classified are kept.
 The idea described above was used in the AdaBoost algorithm. In this algorithm, many weak learners are created by many decision trees that only have a single split. Created instances in the training dataset are weighted in the way that larger weights are assigned to instances which were difficult to classify. To the most difficult training instances weaker learners are added sequentially.
 Gradient boosting classifiers are the Adaptive Boosting method, but it is combined with weighted minimization. After weighted minimization, all classifiers and weighted inputs are again calculated. The aim of gradient boosting classifiers is to minimize the loss and it operates in the similar way, as gradient descent in a neural network.
+
 \subsubsection{Real data example}
-
-After a simple and short introduction it is time to apply Gradient Boosting Classifier on the Titanic data set. As in every application in the paper,
-after conducting feature engineering, we try to determine the survival of the passengers using available explanatory variables. 
-Gradient Boosting Classifier if it comes to a total classification accuracy is slightly worse than the Random Forest method. In this case achieved accuracy is equal
-approximately 82,84\%. 
-As for the Random Forest, the confusion matrix in Figure 6
-shows higher accuracy for passengers that died than passengers who survived and it is respectively 85\% and 80\%.
-
+The application of Gradient Boosting is analogous to that of the other methods. 
+That means that it got applied on the same five folds from the data set and its results got averaged.
+Thus, when we employ Gradient Boosting to predict the survival outcome of the passenger on Titanic, 
+we achieve a mean classification rate of 82.15\% accuracy.
 
 \begin{figure}[H]
     \captionsetup{format=plain}
     \makebox[\textwidth]{\includegraphics[width=200mm]{confusion_matrix_gradient_boosting.png}}
-    \caption{This plot illustrates the accuracy of the Gradient Boosting Classifier's prediction on
-             the Titanic data set.}
+    \caption{This plot illustrates the accuracy of the Gradient Boosting's prediction on the Titanic data set.
+    The data set got split into five folds on which the Random Forest got applied. 
+    Then, the resulting combination of classification errors got averaged.
+    The left axis indicates the true class membership, while the bottom one indicates the predicted one.}
     \label{fig:confusion_matrix_gradient_boosting}
 \end{figure}
 

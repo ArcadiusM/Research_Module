@@ -232,7 +232,7 @@ bias^2 = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2
 \end{equation}
 Intiutively, when we get the average prediction of all ensembled trees, 
 we are able to consider $\mu_{D,\theta}(x)$ as one decision tree in simplest terms and make this inference.
-We can interpret \autoref{eq:random_forest_bias} as the squared bias cannot be decreased with ensembling randomized models, 
+We can interpret equation (\ref{eq:random_forest_bias}) as the squared bias cannot be decreased with ensembling randomized models, 
 namely, an ensemble of trees does not guarantee having lower bias compared to only one tree \cite{friedman2001elements}.
 Although random forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise$ 
 and $bias^2$, it displays promising performance in reducing the last remaining part of the generalization error. 
