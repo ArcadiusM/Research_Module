@@ -44,10 +44,19 @@ The main aspect of a random decision forest model is an injection of randomness 
 In practise, random sampling of training observations is done by using bootstrapping. 
 Bootstrapping for random forests means that every single decision tree learns from a random sample which is drawn with replacement. 
 The second important injection of randomness into model is taking into consideration only a subset of all the variables, 
-when splitting each node in every unit decision tree. It means that number of variables for splitting the node has to be chosen 
-and for classification recommended number as mentioned in\cite{friedman2001elements} is $\lfloor{\sqrt{n}} \rfloor$ , 
-where $n$ is a number of features in the classification problem. This yields that in problem with 10 different variables, 
-only 3 randomly chosen will be considered for splitting the node. Randomness parameter, 
+when splitting each node in every unit decision tree. It means that number of variables for splitting the node has to be chosen.
+ 
+As it is mentioned in \cite{friedman2001elements}, the inventors recommend following numbers:
+\begin{enumerate}
+	\item For classification:  $\lfloor{\sqrt{n}} \rfloor$ and the minimum node size is one
+	\item For regression: $\lfloor \frac{n}{3} \rfloor$ and the minimum nodeesize is five
+\end{enumerate}
+where $n$ is a number of features in the classification or regression problem. 
+This yields that in classification problem with 10 different variables, 
+only 3 randomly chosen will be considered for splitting the node.
+These numbers mentioned above are only the recomendations made by invetors and in practise the best values for these
+parameters can be very different and it will depend on the problem. Therefore, these parameters
+should be treated as tuning parameters. Randomness parameter, 
 so the number of chosen variables has a meaningful impact on the model, 
 because except controlling the amount of randomness within each tree, 
 it controls also the amount of correlation between different trees in the forest. 
