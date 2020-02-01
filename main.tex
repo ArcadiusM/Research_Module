@@ -20,11 +20,14 @@
 \usepackage{float}
 \usepackage{lipsum}
 \usepackage[]{biblatex}
-\usepackage[ruled, vlined]{algorithm2e}
-
 \addbibresource{references.bib}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
+\usepackage[ruled, vlined]{algorithm2e}
+
+\usepackage{newclude}
+
+
 \hypersetup{
     colorlinks=true, %set true if you want colored links
     linktoc=all,     %set to all if you want both sections and subsections linked
@@ -83,19 +86,19 @@
 
 	\pagenumbering{arabic}
 
-	\include{chapters/intro}
+	\include*{chapters/intro}
 
-	\include{chapters/decision_tree}
+	\include*{chapters/decision_tree}
 
-	\include{chapters/random_forest}
+	\include*{chapters/random_forest}
 
-	\include{chapters/simulation}
+	\include*{chapters/simulation}
 
-	\include{chapters/comparison}
+	\include*{chapters/comparison}
 
-	\include{chapters/conclusion}
+%	\include*{chapters/conclusion}
 	% \newpage
-	\include{chapters/appendix}
+	\include*{chapters/appendix}
 
 	% \pagebreak
 
