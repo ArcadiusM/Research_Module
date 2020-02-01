@@ -17,6 +17,24 @@ An ensemble of randomly trained decision trees, so in other words random decisio
 	distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
 \end{theorem}
 
+\begin{algorithm}[H]
+\SetAlgoLined
+\begin{enumerate}
+	\item For $b$ = 1 to $B$:
+	\begin{enumerate}
+	    \item Draw a bootstrap sample $D_{b}$ of size N from the training data.
+	    \item Grow the Random Forest tree ${{T}_{D_{b},\theta_{b}}}$ to the bootstrapped data, by recursively repeating the following steps for each terminal node of the tree, until the minimum node size $n_{min}$ is reached:
+	    \begin{enumerate}
+	       \item Select $m$ variables denoted by $\theta_{b}$ at random from the $n$ variables
+	       \item Pick the best variable/split-point among the $m$
+	       \item  Split the node into two daughter nodes
+	    \end{enumerate}
+	\end{enumerate}
+	\item  Output the ensemble of trees $\{{T}_{D_{b},\theta_{b}}\}_{b=1}^{B}$
+\end{enumerate}
+ \caption{Random Forest for Regression or Classification \cite{friedman2001elements}}
+\end{algorithm}
+
 \subsubsection{Randomness in the model}
 The main aspect of a random decision forest model is an injection of randomness which allows to have all unit trees different from the others. Two key concepts that makes decision forest "random" are:
 \begin{enumerate}
