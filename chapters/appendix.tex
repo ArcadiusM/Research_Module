@@ -117,3 +117,30 @@ where $\mu_{D, \theta}$ is the average prediction of all ensembled trees and der
 & = \dfrac{\sigma_{D,\theta}^2(x)}{B} + \rho(x)\sigma_{D,\theta}^2(x) - \rho(x)\dfrac{\sigma_{D,\theta}^2(x)}{B}\notag \\
 & = \rho(x)\sigma_{D,\theta}^2(x) + \dfrac{1 - \rho(x)}{B}\sigma_{D,\theta}^2(x) \notag
 \end{align}
+\subsection{Bias-Variance Decomposition Figures}
+\begin{figure}[H]
+	\centering
+	\captionsetup{format=plain}
+	\makebox{\includegraphics[width=120mm]{bias_var_linearDGP.png}}
+	\caption{This figure demonstrates the decomposition of the expected generalization error in linear DGP. 
+			The expected generalization error is denoted with loss. 
+			As sample size increases both the expected generalization error and bias tend to decrease. 
+			Although the variance does not follow a pattern, in theory, we expect low variance and 
+			variance remains to be low for all sample sizes.}
+	\label{fig:bias_var_linear}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{format=plain}
+	\makebox{\includegraphics[width=120mm]{bias_var_nonlinearDGP.png}}
+	\caption{This figure demonstrates the decomposition of the expected generalization error in nonlinear DGP. 
+			The expected generalization error is denoted with loss. 
+			The expected generalization error is driven primarily 
+			by variance and bias remains to be low for all sample sizes. 
+			As expected, Random Forest decreases the variance and bias remains to be low due to low biasness of decision tree estimates.}
+	\label{fig:bias_var_nonlinear}
+\end{figure}
+
+
+

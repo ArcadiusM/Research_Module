@@ -1,0 +1,24 @@
+\subsubsection{Bias Variance Decomposition}
+For both simulation setups we decomposed the 
+expected generalization error of 
+Random Forest estimator. We included the figures for both 
+cases in Appendix. 
+Figure \ref{fig:bias_var_linear} is the decomposition in 
+linear setup and 
+figure \ref{fig:bias_var_nonlinear} is in non-linear setup. 
+In both figures the expected generalization error 
+is denoted as loss. 
+In the linear case, as sample size increases both 
+the expected generalization error and bias tend to decrease, 
+yet while being regularly low, the variance of 
+Random Forest estimator does not show any pattern. 
+Theoretically, we expect low variance and 
+the figure is in line with our expectations.
+On the other hand, the case with non-linear DGP emphasizes 
+more the power of decision trees embedded in Random Forest. 
+The expected generalization error is driven primarily 
+by variance and bias remains to be low for all sample sizes. 
+Since the decision trees yield low biased estimates and 
+the variance in the figure decreases with sample size, 
+figure is consistent with our expectations and in addition is
+a better showcase of Random Forest compared to linear DGP.
