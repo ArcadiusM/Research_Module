@@ -1,20 +1,35 @@
-\section{Abstract}
+\section*{Abstract}
 \thispagestyle{empty}
-As a non-parametric estimation tool, decision trees attract attention in the economics literature. 
-Yet, decision trees suffer from high variance and, 
-for prediction purposes higher variance seems to be a crucial problem, thus, 
-several improvements were proposed such as bootstrap aggregation, boosting and most importantly random forests. 
-In this project, while the main focus is being on the random forest.
-The elements of statistical learning by \cite{friedman2001elements} \cite{varian2014big} \cite{maimon2005data},
-\cite{louppe2014understanding} and as expected \cite{breiman2001random} are the main literature 
-that will be utilized in this project.
+We examined and applied one of the infamous machine learning algorithms, Random Forest. 
+We started with explaining the decision trees and the room for improvement in it. 
+As solutions of high-variance in decision trees, bagging, boosting and Random Forest are developed. 
+Random Forest shows better predictions can be achieved with introducing randomness into the picture.
+That randomness provides us with a decorrelated ensemble of trees and 
+the increase in the number of uncorrelated trees yields lower error considering prediction purposes.
+With using Random Forest, we are able to assess the importance of every variable and draw conclusions about data.
+We explained the intuition of Random Forest in detail and included mathematical clarification. 
+Finally, we applied Random Forest on both simulated and real data and compared with various methods. 
+%Considering results, Random Forest appears to be employed in the future as well, 
+%thus, a better understanding of the idea and the dynamics can give us a chance to improve. 
+This paper aims to introduce the idea in detail and essentially a review and a showcase of the Random Forest algorithm. 
 
-To explain the concept of random forests in full extent, primarily decision trees should be discussed. 
-Exploiting the main idea and struggles with bias-variance trade-off, 
-random forests' importance can be emphasized as a more stable prediction tool \cite{maimon2005data}. 
-Conceptual comparison of random forests with bagging and boosting can deliver a better understanding of 
-its unique features as \cite{lee2019bootstrap} shows in a similar fashion. To get a further understanding, 
-random forests’ estimation process can be mathematical explained \cite{biau2012analysis} and likewise, 
-examining the consistency of estimator and showing the properties can be included \cite{breiman2004consistency}, 
-\cite{denil2014narrowing}. Also, variable importance in the tree growing process is another area that needs to be 
-delved into \cite{ishwaran2007variable} and \cite{louppe2013understanding}.
+
+
+%As a non-parametric estimation tool, decision trees attract attention in the economics literature. 
+%Yet, decision trees suffer from high variance and, 
+%for prediction purposes higher variance seems to be a crucial problem, thus, 
+%several improvements were proposed such as bootstrap aggregation, boosting and most importantly random forests. 
+%In this project, while the main focus is being on the random forest.
+%The elements of statistical learning by \cite{friedman2001elements} \cite{varian2014big} \cite{maimon2005data},
+%\cite{louppe2014understanding} and as expected \cite{breiman2001random} are the main literature 
+%that will be utilized in this project.
+
+%To explain the concept of random forests in full extent, primarily decision trees should be discussed. 
+%Exploiting the main idea and struggles with bias-variance trade-off, 
+%random forests' importance can be emphasized as a more stable prediction tool \cite{maimon2005data}. 
+%Conceptual comparison of random forests with bagging and boosting can deliver a better understanding of 
+%its unique features as \cite{lee2019bootstrap} shows in a similar fashion. To get a further understanding, 
+%random forests’ estimation process can be mathematical explained \cite{biau2012analysis} and likewise, 
+%examining the consistency of estimator and showing the properties can be included \cite{breiman2004consistency}, 
+%\cite{denil2014narrowing}. Also, variable importance in the tree growing process is another area that needs to be 
+%delved into \cite{ishwaran2007variable} and \cite{louppe2013understanding}.
