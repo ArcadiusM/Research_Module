@@ -385,3 +385,11 @@ Above two theorems inform us that that the variable importance obtained with an 
 In practise, mentioned properties are desirable conditions for a reliable criterion for assessing the variable importance. As it should be expected, any noise should not have importance higher than zero and it should not influence on any other variable importance.
 
 
+\subsubsection{Variable importance of non-totally randomized trees}
+
+In the previous two subsections, analysis of variable importance do not directly relate to the Random Forest \cite{breiman2001random}, because we mention analysis of totally randomized ensembles of trees. As it is proved in \cite{kohavi1997importance} it is not true for Random Forest that variable is irrelevant if and only if its importance is equal to 0. It is also true that importance of variables is dependent on the number of irrelevant variables, so variable importance as obtained from totally randomized trees has properties that unfortunately Random Forest does not possess. Asymptotically, it is more appropriate to use totally randomized trees to assess the importance of variable. In the finite examples, where we have limited number of samples and limited number of trees, guiding the choice of the splitting variables is still a reliable strategy. In these cases, we can not measure $I(X_j;Y|O)$ for all $X_j$ and $O$. Hence, even if the resulting variable importance can be biased, it is pragmatic to promote those that seem to be the most promising. 
+
+
+
+
+
