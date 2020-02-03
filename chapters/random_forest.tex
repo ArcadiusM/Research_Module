@@ -2,7 +2,7 @@
 Decision trees, which we mentioned in the previous section, have been used for a long time. 
 Deployment of decision trees is visible in simple situations and also in more complex scientific or real life and industrial affairs.
 The recent popularity of decision trees is due to work presented by 
-\cite{Breiman1996OUT-OF-BAG-E}, \cite{breiman2001random}, and \cite{breiman2004consistency} that ensamples of 
+\cite{Breiman1996OUT-OF-BAG-E}, \cite{breiman2001random}, and \cite{breiman2004consistency} that ensembles of 
 different decision trees can get a meaningful improvement in accuracy in classification problems and other 
 common learning tasks such as regression. As the unit in this procedure is based on decision tree and includes an injection of
 randomness, this method is known as a random forest. 
@@ -10,12 +10,11 @@ randomness, this method is known as a random forest.
 \subsection{Main idea and illustration}
 An ensemble of randomly trained decision trees, so in other words random decision forest was defined by \cite{breiman2001random}:
 
-
-\newtheorem{theorem}{Theorem}
-\begin{theorem}
+\newtheorem{definition}{Definition}
+\begin{definition}
 	A random forest is a classifier consisting of a collection of tree-structured classifiers ${\hat{T}_{\theta_{b}}(\textbf{x})}, b = 1,...,B$ where the $\theta_{b}$ are independent identically
 	distributed random vectors and each tree casts a unit vote for the most popular class at input $\textbf{x}$ .
-\end{theorem}
+\end{definition}
 
 \begin{algorithm}[H]
 \SetAlgoLined
@@ -308,8 +307,8 @@ based on a set of explanatory variables. In addition, very often, to understand 
 which explanatory variables are the most important and useful to make mentioned predictions. 
 Random Forest allows to not only build an accurate model with reliable predictions, 
 but also to provide variable importance measures which are very important in the process of interpreting the model and 
-its prediction results. This section of the paper will be based on work by \cite{louppe2013understanding} 
-and \cite{gerard2016foresttour}.
+its prediction results. In this section we will use \cite{louppe2013understanding} 
+and \cite{gerard2016foresttour} and after general background to Mean Decrease Impurity we will examine variable importance for totally randomized tree ensembles and then we will discuss these ideas closer to the Random Forest algorithm.
 
 \subsubsection{Variable importance}
 In order to rank the importance of the explanatory variables in classification problems using random forest 
@@ -322,7 +321,7 @@ then rearranging its values should not demolish prediction accuracy. Mean Decrea
 by \cite{breiman2001random} is given by: 
 
 \begin{equation}
-	\widehat{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t}) 
+	{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t}) 
 	=  X_{j}  } p(t)\Delta i(s_{t}, t)
 \end{equation}
 where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
@@ -335,4 +334,32 @@ In this case to measure the importance of the $X_{j}$ variable, we have to permu
 use these all observations in the tree. $ MDA( X_{j} )$ is counted thanks to averaging the differences in 
 out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
 this measure is sometimes called also as the permutation importance.
+
+\subsubsection{Variable importance for totally randomized tree ensembles}
+
+Let us now consider Mean Decrease Impurity as defined by equation 31 and assume a set $U$ which is a set of categorical input variables and is equal to $\{X_1,...,X_p\}$ in addition assume categorical output $Y$. For the simplicity our impurity measure which we will use is the Shannon entropy. Let us assume that we created an infinitely large ensemble of trees which are totally randomized and fully developed. Let assume also that for creation of these trees we used training sample $D$ of $N$ joint observations of $X_1,...,X_p,Y$ independently taken from the joint distribution $P(X_1,...,X_p,Y)$. A totally randomized and fully developed tree as defined in \cite{louppe2013understanding} is a decision tree with partitioned every node $t$ using a variable $X_j$ chosen uniformly and randomly among those which were not yet used at the parent nodes of $t$
+and where every $t$ is split into $|\Xb_j|$ sub-trees, where $\Xb$ is an image set. For these assumptions two following theorems have been proven.
+
+\newtheorem{theorem}{Theorem}
+\begin{theorem}
+    The $MDI$ of $X_j \in U$ for $Y$ as computed with an infinite ensemble of fully developed totally randomized trees and an infinitely large training sample is:
+    \begin{equation}
+	{MDI}( X_{j} ) = \displaystyle \sum_{k=0}^{p-1}\frac{1}{C^k_p}\frac{1}{p-k} \displaystyle\sum_{O \in \Pb_{k}(U^{-j})} I(X_j;Y|O)
+    \end{equation}
+    
+\end{theorem}
+where $U^{-j}$ denotes the subset $U-\{X_j\}$, $\Pb_{k}(U^{-j})$ is the set of subsets of $U^{-j}$
+of cardinality $k$ and $I(X_j;Y|O)$ is the conditional mutual information of $X_j$ and $Y$ given the variables $O$.
+
+\begin{theorem}
+	For any ensembles of fully developed trees in asymptotic learning sample size conditions (
+	e.g., in the same conditions as those of Theorem 1), we have that:
+	\begin{equation}
+	\displaystyle \sum_{j=1}^{p}{MDI}( X_{j} ) = I(X_1,...,X_p;Y)
+     \end{equation}
+	
+\end{theorem}
+
+\subsubsection{Relevant and irrelevant variable}
+
 
