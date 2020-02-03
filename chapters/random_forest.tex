@@ -362,4 +362,26 @@ of cardinality $k$ and $I(X_j;Y|O)$ is the conditional mutual information of $X_
 
 \subsubsection{Relevant and irrelevant variable}
 
+As it was done in \cite{kohavi1997importance} we define relevant and irrelevant variables. The variable $X_j$ for which exists at least one subset $O \subseteq U$ (possibly empty) s.t. $I(X_j;Y|O) > 0$ is a variable which is relevant to $Y$ with respect to $U$. In contrast, a variable which is irrelevant to $Y$ with respect to $U$ is a variable $X_i$ for which, for all 
+ $O \subseteq U$, $I(X_i;Y|O) = 0$. Remark that if variable is relevant then by definition it can not be irrelevant in the same time, so $j \neq i$. Remark also that if $X_i$ is irrelevant to $Y$ with respect to $U$, then also by definition it is always irrelevant to $Y$ with respect to any subset of $U$. Louppe et al. using these definitions showed that below holds.
+
+\begin{theorem}
+	$X_i \in U$ is irrelevant to $Y$ with respect to $U$ if and only if its infinite sample size
+	importance as computed with an infinite ensemble of fully developed totally randomized trees
+	built on $U$ for $Y$ is 0.
+\end{theorem}
+
+\begin{theorem}
+	 The infinite sample size importance of any variable $X_j \in U_R$ (where $U_R \subseteq U$ is the subset of all variables in $U$ which are relevant to $Y$ with respect to $U$) as computed with an infinite ensemble of fully developed totally randomized trees built on $U_R$ for $Y$ is the same as its importance computed in the same conditions by using all variables in $U$. It means:
+\begin{equation}
+	{MDI}( X_{j} ) = \displaystyle \sum_{k=0}^{p-1}\frac{1}{C^k_p}\frac{1}{p-k} \displaystyle\sum_{O \in \Pb_{k}(U^{-j})} I(X_j;Y|O) = 
+	\displaystyle \sum_{l=0}^{r-1}\frac{1}{C^l_r}\frac{1}{r-l} \displaystyle\sum_{O \in \Pb_{l}(U^{-j}_R)} I(X_j;Y|O)
+\end{equation}
+\end{theorem}
+ where $r$ is the number of relevant variables in $U_R$.
+ \newline
+ 
+Above two theorems inform us that that the variable importance obtained with an ensemble of totally randomized trees depends only on the relevant variables. It shows that importance of irrelevant variables is equal to 0 and accordingly it does not affect the importance of relevant variables. 
+In practise, mentioned properties are desirable conditions for a reliable criterion for assessing the variable importance. As it should be expected, any noise should not have importance higher than zero and it should not influence on any other variable importance.
+
 
