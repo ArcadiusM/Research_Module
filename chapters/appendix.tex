@@ -15,8 +15,8 @@ We derived the result in equation (\ref{eq:decomp_squared_loss}) as follows;
 \boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
 							  & = \mathbb{E}_{Y|X=x}\{(Y -\phi_{\beta}(x) +\phi_{\beta}(x) -T_{D,\theta}(x))^2\} \notag \\
 							  & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\} \notag \\
-							  &	\: + \underbrace{\mathbb{E}_{Y|X=x}\{2(Y-\phi_{\beta}(x))(\phi_{\beta}(x)-T_{D,\theta}(x))\}}_\text{$=0$ \ since $ \mathbb{E}_{Y|X=x}(Y-\phi_{\beta}(x)) = 0$ from $(18)$}  \notag \\
-							  & = \underbrace{\mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\}}_\text{from $(20)$ equals to $\boldsymbol{Err}(\phi_{\beta}(x))$} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\}  \notag \\
+							  &	\: + \underbrace{\mathbb{E}_{Y|X=x}\{2(Y-\phi_{\beta}(x))(\phi_{\beta}(x)-T_{D,\theta}(x))\}}_\text{$=0$ \ since $ \mathbb{E}_{Y|X=x}(Y-\phi_{\beta}(x)) = 0$ from \ref{eq:bayes_eq_y}}  \notag \\
+							  & = \underbrace{\mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\}}_\text{from \ref{eq:err_bayes} equals to $\boldsymbol{Err}(\phi_{\beta}(x))$} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\}  \notag \\
 							  & = \boldsymbol{Err}(\phi_{\beta}(x)) + (\phi_{\beta}(x)-T_{D,\theta}(x))^2\notag
 \end{align}
 We adopted following steps in the futher derivations of bias-variance decomposition in equation (\ref{eq:decomp_squared_loss_cont}).

@@ -312,7 +312,7 @@ and \cite{gerard2016foresttour} and after general background to Mean Decrease Im
 
 \subsubsection{Variable importance}
 In order to rank the importance of the explanatory variables in classification problems using random forest 
-we use two possible measures. Both the first and second measure have been proposed by \cite{breiman2001random}. 
+we use two possible measures proposed by \cite{breiman2001random}. 
 First of them is known as Mean Decrease Impurity (MDI). MDI measure is based on the total decrease in node impurity from splitting 
 on the given explanatory variable and moreover MDI is averaged over all trees. 
 The second measure is known as Mean Decrease Accuracy (MDA). 
@@ -320,24 +320,23 @@ This measure assumes that if the explanatory variable is not relevant to the stu
 then rearranging its values should not demolish prediction accuracy. Mean Decrease Impurity proposed 
 by \cite{breiman2001random} is given by: 
 
-\begin{equation}
-	{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t}) 
-	=  X_{j}  } p(t)\Delta i(s_{t}, t)
+\begin{equation}\label{eq:MDI}
+	{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t})=  X_{j}  } p(t)\Delta i(s_{t}, t)
 \end{equation}
 where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
 By definition $ MDI( X_{j} ) $ evaluates importance of a variable $ X_{j} $ for predicting $Y$ by 
 adding up the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used. 
-Mean in the name of MDI comes from averaging over all $B$ trees in the random forest. 
-Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the Shannon entropy. 
+Furthermore, $MDI$ averages over all $B$ trees in the Random Forest. 
+Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the information entropy. 
 The second mentioned measure MDA uses out-of-bag error estimate. 
 In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the out-of-bag example and 
-use these all observations in the tree. $ MDA( X_{j} )$ is counted thanks to averaging the differences in 
+use these all observations in the tree. $ MDA( X_{j} )$ is counted with averaging the differences in 
 out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
 this measure is sometimes called also as the permutation importance.
 
 \subsubsection{Variable importance for totally randomized tree ensembles}
 
-Let us now consider Mean Decrease Impurity as defined by equation 31 and assume a set $U$ which is a set of categorical input variables and is equal to $\{X_1,...,X_p\}$ in addition assume categorical output $Y$. For the simplicity our impurity measure which we will use is the Shannon entropy. Let us assume that we created an infinitely large ensemble of trees which are totally randomized and fully developed. Let assume also that for creation of these trees we used training sample $D$ of $N$ joint observations of $X_1,...,X_p,Y$ independently taken from the joint distribution $P(X_1,...,X_p,Y)$. A totally randomized and fully developed tree as defined in \cite{louppe2013understanding} is a decision tree with partitioned every node $t$ using a variable $X_j$ chosen uniformly and randomly among those which were not yet used at the parent nodes of $t$
+Let us now consider Mean Decrease Impurity as defined by equation \eqref{eq:MDI} and assume a set $U$ which is a set of categorical input variables and is equal to $\{X_1,...,X_p\}$ in addition assume categorical output $Y$. For the simplicity our impurity measure which we will use is the Shannon entropy. Let us assume that we created an infinitely large ensemble of trees which are totally randomized and fully developed. Let assume also that for creation of these trees we used training sample $D$ of $N$ joint observations of $X_1,...,X_p,Y$ independently taken from the joint distribution $P(X_1,...,X_p,Y)$. A totally randomized and fully developed tree as defined in \cite{louppe2013understanding} is a decision tree with partitioned every node $t$ using a variable $X_j$ chosen uniformly and randomly among those which were not yet used at the parent nodes of $t$
 and where every $t$ is split into $|\Xb_j|$ sub-trees, where $\Xb$ is an image set. For these assumptions two following theorems have been proven.
 
 \newtheorem{theorem}{Theorem}
@@ -349,11 +348,11 @@ and where every $t$ is split into $|\Xb_j|$ sub-trees, where $\Xb$ is an image s
     
 \end{theorem}
 where $U^{-j}$ denotes the subset $U-\{X_j\}$, $\Pb_{k}(U^{-j})$ is the set of subsets of $U^{-j}$
-of cardinality $k$ and $I(X_j;Y|O)$ is the conditional mutual information of $X_j$ and $Y$ given the variables $O$.
+of cardinality $k$ and $I(X_j;Y|O)$ is the conditional mutual information of $X_j$ and $Y$ given the variables $O$  as defined in \cite{kohavi1997importance}.
 
 \begin{theorem}
 	For any ensembles of fully developed trees in asymptotic learning sample size conditions (
-	e.g., in the same conditions as those of Theorem 1), we have that:
+	i.e. in the same conditions as those of Theorem 1), we have:
 	\begin{equation}
 	\displaystyle \sum_{j=1}^{p}{MDI}( X_{j} ) = I(X_1,...,X_p;Y)
      \end{equation}
@@ -384,12 +383,7 @@ As it was done in \cite{kohavi1997importance} we define relevant and irrelevant 
 Above two theorems inform us that that the variable importance obtained with an ensemble of totally randomized trees depends only on the relevant variables. It shows that importance of irrelevant variables is equal to 0 and accordingly it does not affect the importance of relevant variables. 
 In practise, mentioned properties are desirable conditions for a reliable criterion for assessing the variable importance. As it should be expected, any noise should not have importance higher than zero and it should not influence on any other variable importance.
 
-
 \subsubsection{Variable importance of non-totally randomized trees}
 
 In the previous two subsections, analysis of variable importance do not directly relate to the Random Forest \cite{breiman2001random}, because we mention analysis of totally randomized ensembles of trees. As it is proved in \cite{kohavi1997importance} it is not true for Random Forest that variable is irrelevant if and only if its importance is equal to 0. It is also true that importance of variables is dependent on the number of irrelevant variables, so variable importance as obtained from totally randomized trees has properties that unfortunately Random Forest does not possess. Asymptotically, it is more appropriate to use totally randomized trees to assess the importance of variable. In the finite examples, where we have limited number of samples and limited number of trees, guiding the choice of the splitting variables is still a reliable strategy. In these cases, we can not measure $I(X_j;Y|O)$ for all $X_j$ and $O$. Hence, even if the resulting variable importance can be biased, it is pragmatic to promote those that seem to be the most promising. 
-
-
-
-
 
