@@ -147,7 +147,7 @@ which measures the proportion of instances node \(t\) not belonging to the domin
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Bias-variance trade-off}
 We can measure the the performance of a Decision Tree by assessing its fit to the data. 
-The generalization error is a widely used concept for evaluating the fit \cite{breiman2001random}
+The generalization error is a widely used concept for evaluating the fit \cite{breiman2001random}.
 In this paper, we use generalization error to compare methods and adjust parameters to improve methods. 
 Under certain assumptions, we can decompose the generalization error into three main components:
 the Bayes Error, the squared bias ($bias^2$) and the variance. 
@@ -162,19 +162,23 @@ use Boosting in the application section.
 
 
 \subsection{Bagging}
-Decision trees belong to methods which are sensitive to the specific data on which they are trained. 
-When we change the training data, we can get very different resulting Decision Trees, 
-and as a result of that also predictions are different. 
-Bagging was created for methods which have high variance, like classification and regression trees.
-Bagging, or Bootstrap Aggregation, is a procedure that can be used for reducing the variance.
-It was also described by L. Breiman in his work \cite{breiman1996bagging}.
+Decision Tree belongs to methods which are sensitive to the specific data on which they are trained \cite{friedman2001elements}. 
+In other words, Decision Tree estimates are susceptible to even slight changes in data and 
+that stems from having high variance.
+%When we change the training data, we can get very different resulting Decision
+%Trees, and as a result of that also predictions are different.
+Bootstrap Aggregation (bagging) was designed for dealing the high variance problem in Decision Tree estimates.
+%Bagging, or, Bootstrap Aggregation is a procedure that can be used for reducing the variance.
+L. Breiman introduced bagging for Decision Tree in \cite{breiman1996bagging}.
 We start the bagging procedure by conducting bootstrapping.
 We draw multiple random subsamples with replacement,
 and then we use these datasets as training data for our model.
 Therefore, the number of Decision Trees equal that of the subsamples. 
-Finnaly, we obtain the final prediction of the bagged model by averaging over each prediction of the bootstrapped trees.
-After introducing bagged Decision Trees, a further improvement to this method was added. 
-The method which contains thisimprovement over the bagged Decision Tree is as the Random Forest. 
+Finaly, we obtain the final estimate of the bagged model by averaging over each estimate of the bootstrapped trees.
+As bagging, Random Forest makes use of bootstrapped sampling and employes bagged Decision Trees.
+%After introducing bagged Decision Trees, a further improvement to this method was added. 
+%The method which contains this improvement over the bagged Decision Tree is as the Random Forest. 
 The fundamental difference between bagging and Random Forest is 
-that in Random Forest injection of randomness is added. 
-This method and mentioned injection of randomness in it will be described in the next section of paper.
+injection of randomness in included explanatory variables. 
+We will go into details about Random Forest and that additional randomness in the next section.
+%This method and mentioned injection of randomness in it will be described in the next section of paper.
