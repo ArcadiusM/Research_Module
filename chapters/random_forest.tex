@@ -79,11 +79,11 @@ where in Random Forest with the number of decision trees equals to $B$ each tth 
 distribution $ p_{b}(Y = c |X = \textbf{x}) $.
 
 \subsubsection {Out of Bag Sample}
-In applications of random forest, we can use Out of Bag sample to validate our model.
+In applications of Random Forest, we can use Out of Bag sample to validate our model.
 When performing a bootstrap for getting a sample of data for training, in general only $2/3$ of data is included and the
 left-out part of data is called Out of Bag (OOB) sample.
-After training Random Forest model, we use OOB sample used as validation set. 
-Every Decision Tree in Random Forest is validated with corresponding leftover sample and averaged to calculate Out of Bag estimate \cite{friedman2001elements}. Out of Bag sample is commonly used to monitor error of predictions. 
+After training the Random Forest model, we use the OOB sample used as a validation set. 
+Every Decision Tree in Random Forest is validated with the corresponding leftover sample and averaged to calculate Out of Bag estimate \cite{friedman2001elements}. Out of Bag sample is commonly used to monitor error of predictions. 
 Breiman’s work \cite{Breiman1996OUT-OF-BAG-E} shows empirically that Out of Bag estimate is as accurate 
 as a test set of the same size as the training set \cite{Breiman1996OUT-OF-BAG-E}.
 
