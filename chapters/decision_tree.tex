@@ -37,19 +37,30 @@ considered. That is, each split depends on the value of only one predictor varia
 possible splits consist of possible splits of each predictor.
 
 A tree is grown starting from the root node by repeatedly using the following steps on each
-node (also called binary splitting):
+node in the following algorithm:
 
-\begin{itemize}
-    \item[(i)] \textbf{Find best split \(s\) for each feature \(X_{m}\):}
-    For each feature \(X_{m}\), there exist \(K-1\)-many potiential splits, whereas \(K\) is the number of different values for the respective feature.
-    Evaluate each value \(X_{m,i}\) at the current node \(t\) as a candidate split point (for \(x \in X_{m}\), if \(x \leq X_{m,i}=s\),
-    then \(x\) goes to left child node \(t_{L}\) else to right child node \(t_{R}\)).
-    The best split point is the one that maximize the splitting criterion \(\ \Delta i(s,t) \) the most when the node is split according to it.
-    The different splitting criteria will be covered in the next chapter.
-    \item[(ii)] \textbf{Find the node’s best split:} Among the best splits for each feature from Step (i) find the one \(s^{*}\), which maximizes the splitting criterion \(\Delta i(s,t)\).
-    \item[(iii)] \textbf{Satisfy stopping criterion:} Split the node \(t\) using best node split \(s^{*}\) from Step (ii) and 
-    repeat from Step (i) until stopping criterion is satisfied. 
-\end{itemize}
+\begin{algorithm}[H]
+    \caption{Binary Splitting \cite{breiman1984classification}}
+    \label{alg:binary_splitting}
+    \SetAlgoLined
+    \begin{itemize}
+        \item[(i)] \textbf{Find best split \(s\) for each feature \(X_{m}\):}
+        For each feature \(X_{m}\), there exist \(K-1\)-many potiential splits, 
+        whereas \(K\) is the number of different values for the respective feature.
+        Evaluate each value \(X_{m,i}\) at the current node \(t\) as a 
+        candidate split point (for \(x \in X_{m}\), if \(x \leq X_{m,i}=s\),
+        then \(x\) goes to left child node \(t_{L}\) else to right child node \(t_{R}\)).
+        The best split point is the one that maximize the splitting criterion \(\ \Delta i(s,t) \) the most when the node is split according to it.
+        The different splitting criteria will be covered in the next chapter.
+
+        \item[(ii)] \textbf{Find the node’s best split:} Among the best splits for each feature from Step (i) find the 
+        one \(s^{*}\), which maximizes the splitting criterion \(\Delta i(s,t)\).
+
+        \item[(iii)] \textbf{Satisfy stopping criterion:} Split the node \(t\) using best node split \(s^{*}\) from Step (ii) 
+        and repeat from Step (i) until stopping criterion is satisfied. 
+    \end{itemize}
+    \end{algorithm}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Splitting criteria}
@@ -179,6 +190,6 @@ As bagging, Random Forest makes use of bootstrapped sampling and employes bagged
 %After introducing bagged Decision Trees, a further improvement to this method was added. 
 %The method which contains this improvement over the bagged Decision Tree is as the Random Forest. 
 The fundamental difference between bagging and Random Forest is 
-injection of randomness in included explanatory variables. 
-We will go into details about Random Forest and that additional randomness in the next section.
+injection of randomness included explanatory variables. 
+We will go into further details about Random Forest and the additional randomness in the next section.
 %This method and mentioned injection of randomness in it will be described in the next section of paper.
