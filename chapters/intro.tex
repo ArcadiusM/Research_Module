@@ -3,9 +3,9 @@
 
 Drawing conclusions from data and utilizing it to get predictions is a common 
 practice in Economics alongside with many other fields. 
-As a non-parametric estimation tool, Decision Trees attract attention in the literature,
+As a non-parametric estimation tool, the Decision Tree attracts attention in the literature,
 yet we require robust methods to correctly identify patterns in the data and to obtain accurate predictions.
-However, Decision Trees suffer from high variance \cite{friedman2001elements}. 
+However, the Decision Tree suffers from high variance \cite{friedman2001elements}. 
 For prediction purposes, having high variance is a crucial problem, thus, several improvements were proposed.
 These improvements are bootstrap aggregation, boosting and most importantly Random Forests, which is our focus in this paper. 
 Fundamentally, the Random Forests is an ensemble of Decision Trees which are grown from randomly sampled data with 
@@ -28,7 +28,7 @@ There are two different class determination methods available in Random Forest.
 We start the Mathematical Explanation part by defining those voting processes. 
 Although, we primarily use soft voting, understanding majority voting provides us with a better insight.
 Then, we define a measure of the Decision Tree's fit and decompose it to 
-understand the improvement of Random Forest over Decision Trees.
+understand the improvement of Random Forest over the Decision Tree.
 By exploiting bias-variance decomposition of this measure and expanding our findings to Random Forest, 
 we exhibit the working principle of Random Forest.
 In the next section, we examine variable importance as the Random Forest enables us to measure 
@@ -40,9 +40,9 @@ In the real data study, we used Titanic data \cite{titanicData}
 and compared Random Forest's performance with two boosting methods: Adaptive and Gradient Boosting.
 
 In the literature, 
-Decision Trees are covered by several published works including 
+the Decision Tree is covered by several published works including 
 \cite{breiman1984classification} and \cite{James2013}.
-As a solution to the problem of high variance in Decision Trees, 
+As a solution to the problem of high variance in the Decision Tree, 
 Leo Breiman introduced bagging to add randomness to the model 
 with randomly sampling the data\cite{breiman1996bagging}. 
 Subsequently, the Random Forest is introduced as an extension including

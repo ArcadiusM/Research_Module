@@ -27,7 +27,6 @@ An example of such a tree is depicted below in figure \ref{fig:decision_tree_exa
              }
     \label{fig:decision_tree_example}
 \end{figure}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Tree Building Process}
 This chapter describes the CART algorithm for tree building as specified in \cite{breiman1984classification}.
@@ -121,7 +120,6 @@ In the following, different measures for impurity will be presented.
 
 The Gini impurity measure is defined as 
 
-
 \begin{equation}
     i(t) = \sum_{c \in C} p(c|t) (1 - p(c|t)) = 1 - \sum_{c \in C} p_{c}^{2}
 \end{equation}
@@ -143,15 +141,12 @@ The Entropy measure from information theory is defined as
 which measures the average rate at which information is produced by a stochastic source of data.
 Thus, it can also be used for measuring impurity.
 
-
 \textbf{Rate of Misclassification}
 
 The rate of misclassification is defined as 
-
 \begin{equation}
     i(t) = 1 - \max_{c \in C} p(c|t) .
 \end{equation}
-
 which measures the proportion of instances node \(t\) not belonging to the dominant group in \(t\).
 
 
