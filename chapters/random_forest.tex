@@ -347,11 +347,12 @@ Furthermore, in contemporary exercises, MDI is commonly used and
 also embedded into Random Forest algorithm in sklearn package \cite{scikit2011learn}. 
 The second measure is known as Mean Decrease Accuracy (MDA). 
 This measure assumes that if the explanatory variable is not relevant to the study of the problem, 
-then rearranging its values should not demolish prediction accuracy. 
-MDA uses out-of-bag error estimate to calculate variable importance. 
+then rearranging its values should not demolish the model's prediction accuracy. 
+MDA uses out-of-bag error estimate to calculate a variable's importance. 
 In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the out-of-bag example and 
 use these all observations in the tree. $ MDA( X_{j} )$ is counted with averaging the differences in 
-out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
+out-of-bag error estimation after and before the permutation in all trees. 
+Because of used permutations, 
 this measure is sometimes called also as the permutation importance.
 
 \subsubsection{Variable importance for totally randomized tree ensembles}
