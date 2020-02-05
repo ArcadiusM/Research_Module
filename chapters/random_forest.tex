@@ -219,7 +219,7 @@ due to random deviations in the
 data \cite{louppe2014understanding}. We will exploit the irreducible concept when examining the dynamics of random forests and 
 decision trees. In that sense, with a couple of manipulations, the Bayes Model for squared loss can be reduced to
 
-\begin{align}
+\begin{align}\label{eq:bayes_eq_y}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
 			 & = \mathbb{E}_{Y|X=x}\{Y\}
 \end{align}
@@ -239,7 +239,7 @@ We included intermediate steps in section \ref{app:bayes_model}.
 
 The aforementioned residual error can be computed for both functions
 
-\begin{align}
+\begin{align}\label{eq:err_bayes}
 \boldsymbol{Err}(\phi_{\beta}) & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2 \}\\
 \boldsymbol{Err}(\phi_{\beta}') & = P(Y \neq \phi_{\beta}'(x) )
 \end{align}
