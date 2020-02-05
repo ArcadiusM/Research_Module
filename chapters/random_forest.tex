@@ -3,7 +3,7 @@
 %Decision trees, which we mentioned in the previous section, have been used for a long time. 
 Deployment of Decision Trees is visible in simple situations and also in more complex scientific or 
 real life and industrial affairs.
-The recent popularity of decision trees is due to work presented by 
+The recent popularity of decision trees is due to the work presented by 
 \cite{Breiman1996OUT-OF-BAG-E}, \cite{breiman2001random}, and \cite{breiman2004consistency}, which propose that
 ensembles of different decision trees can achieve a meaningful improvement in accuracy in classification problems and other 
 common learning tasks such as regression.
@@ -39,7 +39,7 @@ An ensemble of randomly trained Decision Trees, i.e. Random Forest, was defined 
 \end{algorithm}
 
 \subsubsection{Randomness in the Model}
-The main aspect of the Random Forest model is further inclusion of randomness which allows for more divers bootstrapped trees.
+The main aspect of the Random Forest model is further inclusion of randomness which allows for more diverse bootstrapped trees.
 The two key concepts that make the Random Forest "random" are:
 
 \begin{enumerate}
@@ -52,7 +52,7 @@ Bootstrapping for random forests means that every single decision tree is traine
 which is drawn with replacement. 
 Further randomness gets added to the model by taking only a subset of all the variables into consideration
 when splitting each node in the respective Decision Tree.
-There are different practises for choosing the number of variables for splitting the node.
+There are different practices for choosing the number of variables for splitting the node.
 In \cite{friedman2001elements}, the following specifications are recommended:
 
 \begin{enumerate}
@@ -73,7 +73,7 @@ can differ and they also will depend on the problem. Therefore, these parameters
 treated as tuning parameters. The number of chosen variables has a decisive impact on the model,
 since it controls not only the amount of randomness within each tree,
 but also the amount of correlation between different trees in the forest.
-As randomness parameter decreases, the trees become more decorrelated \cite{criminisi2012decision}.
+As the randomness parameter decreases, the trees become more decorrelated \cite{criminisi2012decision}.
 
 \subsubsection {Training, Testing and Prediction}
 Training and testing is an integral part of building up every machine learning model.
@@ -84,8 +84,8 @@ Training and testing is an integral part of building up every machine learning m
 
 The last step consists of taking all predictions from 
 every decision tree and combining them into in order to get a single prediction of Random Forest. 
-We can adopt various approachs when combining the Decision Tree predictions. 
-We will delve into details regarding those approachs, but in contemporary exercises, 
+We can adopt various approaches when combining Decision Tree predictions. 
+We will delve into details regarding those approaches, but in contemporary exercises, 
 Random Forests generate probabilistic output in classification problems \cite{CGV-035}. 
 They return not just a single class point prediction, 
 but a whole class distribution. The combination of tree predictions can be described as below:
@@ -115,7 +115,7 @@ as a test set of the same size as the training set \cite{Breiman1996OUT-OF-BAG-E
 Let $D = \{(x_{1},y_{1}), (x_{2}, y_{2}), ... , (x_{N}, y_{N})\}$ be the set we want to train our model on. 
 Further, let $T_{D, \theta}$ be the Decision Tree produced by using the set $D$ 
 and parameters $\theta$. We assume that $D$ is countable which normally is the 
-case especially for $Y$ values although replacing sums with integrals can extent the analysis and 
+case especially for $Y$ values although replacing sums with integrals can extend the analysis and 
 provide results for uncountable sets as well \cite{kohavi1996bias}. As mentioned earlier, 
 the Random Forest classifier selects a bootstrapped subset of observations and 
 grows the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times 
@@ -146,7 +146,7 @@ We introduced majority voting to enhance our understanding and will use soft vot
 
 
 \subsubsection{Properties}
-Having explained the details of algorithm, we can show the improvement of the Random Forest upon the Decision Tree 
+Having explained the details of the algorithm, we can show the improvement of the Random Forest upon the Decision Tree 
 by exploiting the generalization error.
 We can measure a model's fit with the generalization error, which is also called test error or the expected prediction error.
 We will start by examining a Decision Tree's generalization error and expand our findings to the Random Forest. 
@@ -158,13 +158,13 @@ The generalization error of a Decision Tree $T_{D,\theta}$ which is grown using 
 \end{equation}
 
 where $L$ is the loss function measuring the difference between its two arguments. 
-Since we focus on classification setting, the zero-one loss function is of interest. 
+Since we focus on the classification setting, the zero-one loss function is of interest. 
 However, to get a better understanding, the squared loss function will be examined jointly. 
 The bias-variance decomposition of both functions are similar and 
 follow the same dynamics \cite{domingos2000decomposition}. 
 While the bias-variance decomposition of the zero-one loss function remains 
 to be relatively unexplanatory, the squared loss provides us a superior insight. 
-Therefore we denoted the findings by using the zero-one loss function with apostrophe.
+Therefore we denoted the findings by using the zero-one loss function with the apostrophe.
 The squared loss function measures the squared difference between the dependent variable and its predicted value 
 by Decision Tree $T_{D,\theta}$ and can be defined as
 
@@ -178,7 +178,7 @@ while the zero-one loss function yields is
 	L'(Y, T_{D,\theta}(X)) = \mathds{1} (Y \neq T_{D, \theta}(X))
 \end{equation}
 
-$L(Y, T_{D,\theta}(X))$ equals $1$ if the class of dependant variable is 
+$L(Y, T_{D,\theta}(X))$ equals $1$ if the class of dependent variable is 
 different than its predicted class by Decision Tree and equals to 0 if both are the same, 
 implying that $Y = T_{D, \theta}(X)$. 
 Both loss functions ultimately follow the same logic.
@@ -192,9 +192,9 @@ The generalization error for both functions are defined below:
 	= P(Y \neq T_{D, \theta}(X))
 \end{align}
 
-where the expression in the first equation measures the squared difference of true and predicted values.
+where the expression in the first equation measures the squared difference of true and predicted values
 and the expression in the second equation is the probability of misclassification of the tree. 
-We will decompose the expected generalization error and investigate the improvement of random forest upon 
+We will decompose the expected generalization error and investigate the improvement of the random forest upon 
 decision trees.
 \vspace{2mm}
 \\
@@ -216,7 +216,7 @@ Point-wise minimization the inner term with respect to Y yields \cite{louppe2014
 $\phi_{\beta}$ is denotes the Bayes Model and $\boldsymbol{Err}(\phi_{\beta})$ is the residual error, 
 the minimum obtainable error with any model, which is considered as the irreducible error due to random deviations in the 
 data \cite{louppe2014understanding}. We will exploit the irreducible concept when examining the dynamics of random forests and 
-decision trees. In that sense, with couple of manipulations, the Bayes Model squared loss can be reduced to
+decision trees. In that sense, with a couple of manipulations, the Bayes Model squared loss can be reduced to
 
 \begin{align}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
@@ -225,7 +225,7 @@ decision trees. In that sense, with couple of manipulations, the Bayes Model squ
 
 For the squared loss function, Bayes Model predicts the expected value of $Y$ at $X=x$,
 since the mean of $Y$ minimizes the squared difference 
-and equals to its expected value.
+and equals its expected value.
 The Bayes Model of zero-one loss function denoted as $\phi_{\beta}'$ is
 
 \begin{align}\label{eq:bayes_model}
@@ -233,7 +233,7 @@ The Bayes Model of zero-one loss function denoted as $\phi_{\beta}'$ is
 			 & = \underset{c \,\in\, Y}{argmax} \; P(Y = c \,| X = x)
 \end{align}
 
-The class with highest probability in the set $Y$ is chosen by the Bayes Model when using the zero-one loss function.
+The class with the highest probability in the set $Y$ is chosen by the Bayes Model when using the zero-one loss function.
 We included intermediate steps in section \ref{app:bayes_model}. 
 
 The aforementioned residual error can be computed for both functions
@@ -255,7 +255,7 @@ irreducible error and the second term is due to the prediction differences betwe
 The generalization error increases by an increase in that difference. Since the result does not depend on the $Y$-values, 
 it can be also expressed without conditional expectation. 
 Decision Trees in the Random Forest classifier use a bootstrapped datasets
-Further, $D$ is a random variable, thus, if we further examine the second term with taking expectation over $D$, 
+Further, $D$ is a random variable, thus, if we further examine the second term with taking an expectation over $D$, 
 it decomposes as
 
 \begin{align}\label{eq:decomp_squared_loss_cont}
@@ -285,11 +285,11 @@ Therefore, we can define $\boldsymbol{Err}(T_{D,\theta})$ as follows
 The same decomposition can be conducted for the zero-one loss function in a similar fashion and as mentioned in 
 \cite{louppe2014understanding}, \cite{domingos2000decomposition}, 
 \cite{james2003variance} and \cite{friedman1997zeroLoss}.
-Both zero-one and squared loss functions decompositions yield same results. 
+Both zero-one and squared loss functions decompositions yield the same results. 
 However, without assuming that $D$ is normally distributed, bias-variance decomposition 
 cannot be solved for zero-one loss function explicitly as done for squared loss \cite{louppe2014understanding}. 
 \cite{kohavi1996bias} introduces another decomposition for zero-one loss function (included in section \ref{app:kohavi_decomp}), 
-but still it remains to be unexplanatory compared to squared loss, thus, 
+but still, it remains to be unexplanatory compared to squared loss, thus, 
 we explain the dynamics by using squared loss, although the main focus of the paper remains to be on classification setting.
 \vspace{2mm}
 \\
@@ -318,16 +318,16 @@ the bias of a random forest we can state that
 bias^2 = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2.
 \end{equation}
 
-Intiutively, when we get the average prediction of all ensembled trees, 
+Intuitively, when we get the average prediction of all ensembled trees, 
 we are able to consider $\mu_{D,\theta}(x)$ as one Decision Tree in simplest terms and make this inference.
 We can interpret equation (\ref{eq:random_forest_bias}) as the squared bias 
 which cannot be decreased by ensembling randomized models, namely, 
-an ensemble of trees does not guarantee having lower bias compared to only one tree \cite{friedman2001elements}.
-Although, the Random Forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise$
+an ensemble of trees does not guarantee to have lower bias compared to only one tree \cite{friedman2001elements}.
+Although the Random Forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise$
 and $bias^2$, it shows promising performance in reducing the last remaining part of the generalization error.
 Thus, we can continue our exploration with the variance of Random Forest, yet, 
 we need to define the correlation coefficient $\rho(x)$
-before delving into variance since the correlation coefficient have significant role in variance. 
+before delving into variance since the correlation coefficient has a significant role in variance. 
 For any two trees $T_{D,\theta'}$ and $T_{D,\theta''}$ trained with the same data $D$
 and different growing parameters $\theta'$ and $\theta''$, we can define the correlation coefficient as follows
 
@@ -340,7 +340,7 @@ and different growing parameters $\theta'$ and $\theta''$, we can define the cor
 We utilize the definition of the Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following 
 the same distribution in the intermediate steps in section \ref{app:corr_coef}. 
 $\sigma_{D, \theta}(x)$ is the variance of a single Decision Tree and 
-associated with prediction variability stemming from randomness of the set $D$ 
+associated with prediction variability stemming from the randomness of the set $D$ 
 and randomness introduced with $\theta$ \cite{louppe2014understanding}.
 Therefore, $\rho(x)$ represents the effect of randomization in the learning algorithm in general.
 In our case, it is close to $1$ when predictions of two decision trees are highly correlated and implies that randomization 
@@ -359,7 +359,7 @@ We included derivations in detail in section \ref{app:var_decomp}.
 Increasing the number of ensembled trees $B$, will lower the latter expression in the equation, and in the extreme 
 case where $B \rightarrow \infty $, the variance of a Random Forest equals  $\rho(x)\sigma^2_{D,\theta}(x)$ 
 and due to randomization in the algorithm $\rho(x) < 1$.
-Thus, variance of the Random Forest is less than the variance of the Decision Tree. 
+Thus, the variance of the Random Forest is less than the variance of the Decision Tree. 
 This inference implies that the generalization error of the Random Forest is less 
 than the generalization error of the Decision Tree. 
 If the decision trees in the random Forest are independent 
@@ -401,7 +401,7 @@ summing over the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all n
 Furthermore, $MDI$ averages over all $B$ trees in the Random Forest. 
 The above definition can be used for any impurity measure $i(t)$ for example: the Gini Index, the Information Entropy. 
 The second mentioned measure MDA uses Out-of-Bag error estimate.
-In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the Out-of-Bag example and 
+In this case, to measure the importance of the $X_{j}$ variable, we have to permute its values in the Out-of-Bag example and 
 use these observations in the tree. $ MDA( X_{j} )$ is calculated by averaging the differences in the
 Out-of-Bag error estimation after and before the permutation in all trees. Because of these permutations, 
 the measure is also referred to as the permutation importance.
@@ -412,7 +412,7 @@ and assume that $U$ is a set of categorical input variables
 and is equal to $\{X_1,...,X_p\}$ 
 In addition, assume that categorical output $Y$. 
 For simplicity, the impurity measure which we use is the Shannon Entropy. 
-Let us assume that we created an infinitely large ensemble of trees which are completely randomized and fully developed.
+Let us assume that we created an infinitely large ensemble of trees that are completely randomized and fully developed.
 Further, assume  that for the creation of these trees, we used training sample $D$ consisting of $N$ joint observations 
 $X_1,...,X_p,Y$ independently taken from the joint distribution $P(X_1,...,X_p,Y)$. 
 A totally randomized and fully developed tree as defined in \cite{louppe2013understanding} is a Decision Tree 
@@ -450,7 +450,7 @@ The variable $X_j$ for which exists at least one subset $O \subseteq U$ (possibl
 s.t. $I(X_j;Y|O) > 0$ is a variable which is relevant to $Y$ with respect to $U$. 
 In contrast, a variable which is irrelevant to $Y$ with respect to $U$ is a variable $X_i$ for which, for all 
 $O \subseteq U$, $I(X_i;Y|O) = 0$ holds. 
-Remark that if a variable is relevant then by definition it can not be irrelevant in the same time,
+Remark that if a variable is relevant then by definition it can not be irrelevant at the same time,
 so $j \neq i$. Remark also that if $X_i$ is irrelevant to $Y$ with respect to $U$, 
 then also by definition it is always irrelevant to $Y$ with respect to any subset of $U$. 
 Louppe et al. using these definitions showed that below holds.
@@ -473,23 +473,21 @@ Louppe et al. using these definitions showed that below holds.
  
 The two theorems above inform us that the variable importance obtained with an ensemble of completelyy 
 randomized trees depends only on the relevant variables. 
-It shows that importance of irrelevant variables is equal to $0$. 
+It shows that the importance of irrelevant variables is equal to $0$. 
 Accordingly, it does not affect the importance of relevant variables. 
-In practise, the mentioned properties are desirable conditions for a reliable criterion for assessing the variable importance. 
-As it should be expected, any noise should not have importance higher than zero 
-and it should not influence on any other variable importance.
+In practice, the mentioned properties are desirable conditions for a reliable criterion for assessing the variable importance. 
+As should be expected, any noise should not have importance higher than zero 
+and it should not influence any other variable importance.
 
 \subsubsection{Variable importance of non-totally randomized trees}
 
-In the previous two subsections, analysis of variable importance do not directly relate to the 
+In the previous two subsections, analysis of variable importance does not directly relate to the 
 Random Forest \cite{breiman2001random}, because we mention the analysis of completely randomized ensembles of trees. 
-As proved in \cite{kohavi1997importance}, it is not true for the Random Forest 
-that variable is irrelevant if and only if its importance is equal to 0. 
-It is true that importance of variables is dependent on the number of irrelevant variables, 
-such that variable importance as obtained from totally randomized trees has properties 
-which the Random Forest does not possess. 
-Asymptotically, it is more appropriate to use totally randomized trees to assess the importance of variable. 
-In the finite examples, where we have limited number of samples and limited number of trees, 
+As proved in \cite{kohavi1997importance}, it is not true for the Random Forest that variable is irrelevant if and only if its importance is equal to 0. 
+It is true that the importance of variables is dependent on the number of irrelevant variables, 
+such that variable importance as obtained from totally randomized trees has properties that the Random Forest does not possess. 
+Asymptotically, it is more appropriate to use totally randomized trees to assess the importance of the variable. 
+In finite examples, where we have a limited number of samples and a limited number of trees, 
 guiding the choice of the splitting variables is still a reliable strategy. 
 In these cases, we can not measure $I(X_j;Y|O)$ for all $X_j$ and $O$. 
 Hence, even if the resulting variable importance can be biased, 

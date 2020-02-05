@@ -5,19 +5,18 @@ Drawing conclusions from data and utilizing it to get predictions is a common
 practice in Economics alongside with many other fields. 
 As a non-parametric estimation tool, Decision Trees attract attention in the literature,
 yet we require robust methods to correctly identify patterns in the data and to obtain accurate predictions.
-However, the Decision Trees suffers from high variance \cite{friedman2001elements}. 
+However, Decision Trees suffer from high variance \cite{friedman2001elements}. 
 For prediction purposes, having high variance is a crucial problem, thus, several improvements were proposed.
 These improvements are bootstrap aggregation, boosting and most importantly Random Forests, which is our focus in this paper. 
 Fundamentally, the Random Forests is an ensemble of Decision Trees which are grown from randomly sampled data with 
 randomly selected explanatory variables. 
 Although, the Random Forest is also capable of regression, 
-from our perspective it gives an account of itself in a classification setting 
+from our perspective, it gives an account of itself in a classification setting 
 Therefore, we narrow our focus to the classification settings, 
 meaning that the dependent variable in data is categorical.
 
 
-We start by explaining the Decision Trees, because the Decision Tree is the building block 
-and the starting point of Random Forest.
+We start by explaining the building block and the starting point of the Random Forest which is the Decision Tree.
 We focused on the tree-building process with different splitting criteria rather than pruning, since
 the Random Forest uses fully grown trees and does not prune them.
 After delving into the variance issue, we describe one of the solutions, bootstrap aggregating (bagging) 
@@ -28,7 +27,7 @@ Out of Bag sample which stems from the usage of bootstrapping.
 There are two different class determination methods available in Random Forest. 
 We start the Mathematical Explanation part by defining those voting processes. 
 Although, we primarily use soft voting, understanding majority voting provides us with a better insight.
-Then, we define a measure of the Decision Tree's fit and decompose it in order to 
+Then, we define a measure of the Decision Tree's fit and decompose it to 
 understand the improvement of Random Forest over Decision Trees.
 By exploiting bias-variance decomposition of this measure and expanding our findings to Random Forest, 
 we exhibit the working principle of Random Forest.
@@ -46,10 +45,10 @@ Decision Trees are covered by several published works including
 As a solution to the problem of high variance in Decision Trees, 
 Leo Breiman introduced bagging to add randomness to the model 
 with randomly sampling the data\cite{breiman1996bagging}. 
-Subsequently, the Random Forest is introduced as an extention including
+Subsequently, the Random Forest is introduced as an extension including
 randomness in the variable selection process \cite{breiman2001random}. 
 In our paper, while \cite{friedman2001elements} being the main source regarding intuition,
-Louppe provides us with a reassessment of published works and an insight in 
+Louppe provides us with a reassessment of published works and an insight into 
 the mathematical aspects of the Random Forest\cite{louppe2014understanding}.
 The bias-variance decomposition and the examination of 
 the improvement of the Random Forest upon the Decision Tree makes use of

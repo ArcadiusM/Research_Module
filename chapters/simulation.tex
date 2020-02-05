@@ -34,9 +34,9 @@ based on the holdout set of 100 instances.
     \makebox[\textwidth]{\includegraphics[width=120mm]{forest_vs_ols_linearDGP.png}}
     \caption
         {This plot illustrates the RSS for different training sample sizes for Random Forest and OLS.
-        These samples where drawn from a linear DGP in accordance to equation (\ref{eq:linear_dgp}).
-        The holdout set for calculating the RSS were drawn again for each training sample from the same DGP.
-        It always contained 100 observations. In case of the Random Forest, for each sample the parameters
+        These samples were drawn from a linear DGP in accordance with equation (\ref{eq:linear_dgp}).
+        The holdout set for calculating the RSS was drawn again for each training sample from the same DGP.
+        It always contained 100 observations. In the case of the Random Forest, for each sample, the parameters
         got optimized again via cross validation.
         }
     \label{fig:forest_vs_ols_linearDGP}
@@ -60,8 +60,8 @@ are the same as in the previous DGP.
     \caption
         {This plot illustrates the RSS for different training sample sizes for Random Forest and OLS.
         These samples where drawn from a non-linear DGP in accordance to equation (\ref{eq:non_linear_dgp}).
-        The holdout set for calculating the RSS were drawn again for each training sample from the same DGP.
-        It always contained 100 observations. In case of the Random Forest, for each sample the parameters
+        The holdout set for calculating the RSS was drawn again for each training sample from the same DGP.
+        It always contained 100 observations. In the case of the Random Forest, for each sample the parameters
         got optimized again via cross validation.
         }
     \label{fig:forest_vs_ols_nonLinearDGP}
@@ -69,5 +69,5 @@ are the same as in the previous DGP.
 
 As one can see above in figure \ref{fig:forest_vs_ols_nonLinearDGP}, the Random Forest performs strictly better
 than the OLS for any sample size. Due to this DGP resembling a stratification similar to
-that of a Descision Tree, the RSS of the Random Forest converges relatively quickly while that of the OLS
+that of a Decision Tree, the RSS of the Random Forest converges relatively quickly while that of the OLS
 remains unstable and high. 

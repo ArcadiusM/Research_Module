@@ -1,7 +1,7 @@
 \subsection{Application of Random Forest on real data}
 \label{sec:real_data}
-As previously mentioned, we applied the Random Forest on the Titanic data set \cite{titanicData} in order
-to determine the survival of the passengers based on reported attributes like name title or booked cabin.
+As previously mentioned, we applied the Random Forest on the Titanic data set \cite{titanicData} to 
+determine the survival of the passengers based on reported attributes like name title or booked cabin.
 A major reason for choosing this data set was due to the fact that it consists of many categorical features.
 In order to use the data to its fullest extent, we conducted additional feature engineering. 
 Without that, many features remain unusable for our methods, 
@@ -50,7 +50,7 @@ the original dataset \cite{James2013}.
 Adaptive Boosting (Adaboost) was introduced by \cite{freund1997boosting} and we employ Adaboost as a comparison 
 technique against Random Forest. In the Adaboost algorithm, instead of fully-grown trees as in Random Forest, 
 we use trees with only one internal node and two leaves also called stumps. We consider those as weak-learners 
-compared to trees since its depth and power is limited. Before generating stumps, 
+compared to trees since its depth and power are limited. Before generating stumps, 
 we assign weights to observations in the sample. Normally the weight of each observation takes the value 
 of $1/N$ as $N$ is the sample size. We generate a stump for each classifier in the data and compare them regarding 
 their misclassification rate. After selecting the best classifier by using its stump's misclassification rate,
@@ -59,7 +59,7 @@ We repeat the algorithm sequentially for the sample with new weights until a sto
 Generally, using the number of classifiers as the number of iteration is a common practice \cite{friedman2001elements}. 
 After generating multiple stumps, we can predict an observation's class. 
 We get the decision of every stump and form groups accordingly. 
-Every outcome class has a group of stumps which predicts that class and every stump has its significance. 
+Every outcome class has a group of stumps that predicts that class and every stump has its significance. 
 After summing significance values of stumps in each group, the prediction is the class with the total highest significance. 
 Although stumps are weak-learners, we exploit the error of a weak-learner to generate another weak-learner 
 and iterating multiple times provides us with a powerful algorithm.
@@ -89,16 +89,8 @@ but the Random Forest is slightly better when it comes to identifying survivors.
 \label{sec:gradient_boosting}
 
 \subsubsection{An introduction to the Gradient Boosting method}
-In Gradient Boosting the idea is to take weak learning algorithm or hypothesis 
-and make some corrections that will improve the power of this algorithm/hypothesis. 
-In hypothesis boosting, we check every observation on which statistical learning method was trained on, 
-then you leave the observations which were correctly classified. Then method creates new weak learner 
-and test it only on the observations that were poorly classified. 
-Next, the examples that were correctly classified are kept.
-The idea described above was used in the AdaBoost algorithm. 
-In this algorithm, many weak learners are created by many Decision Trees that only have a single split. 
-Created instances in the training dataset are weighted in the way that larger weights are assigned to instances which were difficult to classify. To the most difficult training instances weaker learners are added sequentially.
-Gradient boosting classifiers are the Adaptive Boosting method, but it is combined with weighted minimization. After weighted minimization, all classifiers and weighted inputs are again calculated. The aim of gradient boosting classifiers is to minimize the loss and it operates in the similar way, as gradient descent in a neural network.
+In Gradient Boosting the idea is to take a weak learning algorithm or hypothesis and make some corrections that will improve the power of this algorithm/hypothesis. In hypothesis boosting, we check every observation on which statistical learning method was trained on,
+then you leave the observations which were correctly classified. Then the method creates a new weak learner and tests it only on the observations that were poorly classified. Next, the examples that were correctly classified are kept. The idea described above was used in the AdaBoost algorithm. In this algorithm, many weak learners are created by many Decision Trees that only have a single split. Created instances in the training dataset are weighted in the way that larger weights are assigned to instances that were difficult to classify. To the most difficult training instances, weaker learners are added sequentially. Gradient boosting classifiers are the Adaptive Boosting method, but it is combined with weighted minimization. After weighted minimization, all classifiers and weighted inputs are again calculated. The aim of gradient boosting classifiers is to minimize the loss and it operates in a similar way, like gradient descent in a neural network.
 
 \subsubsection{Real data example}
 The application of Gradient Boosting is analogous to that of the other methods. 
