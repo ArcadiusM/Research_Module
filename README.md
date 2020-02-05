@@ -2,8 +2,8 @@
 
 Repo for collaborative development on **Random Forest for Classification Problems**
 
-<object data="http://yoursite.com/the.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="http://yoursite.com/the.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="http://yoursite.com/the.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+For our presentation's repository [click here](https://github.com/burakbalaban/Research_Module_presentation).
+
+For the application part's repository [click here](https://github.com/RaRedmer/Research_Module_Application).
+
+The pdf version of our paper can be downloaded with [this línk](https://github.com/RaRedmer/Research_module/raw/master/main.pdf).
