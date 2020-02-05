@@ -395,7 +395,7 @@ we can define MDI as
 %The Mean Decrease Impurity proposed by \cite{breiman2001random} is given by: 
 
 \begin{equation}\label{eq:MDI}
-	{MDI}( X_{j} ) = \frac{1}{B} \sum_{b=1}^{B} \sum_{t \in T_{b}}\mathds{1}(v(s_{t})=  X_{j}) p(t)\Delta i(s_{t}, t)
+	{MDI}( X_{j} ) = \frac{1}{B} \sum_{b=1}^{B} \sum_{t \in T_{b}}\mathds{1}(v(s_{t})=  X_{j}) [p(t)\Delta i(s_{t}, t)]
 \end{equation}
 
 where $v(s_{t})$ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $N_{t}/N$ of samples reaching $t$.
