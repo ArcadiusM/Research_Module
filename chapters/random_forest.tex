@@ -319,38 +319,42 @@ Conclusively, Random Forest improves the performance of decision tree with decre
 \subsection{Interpretation}
 In many cases, the main purpose of using a random forest model is its usefulness in performing predictions of a dependent variable
 based on a set of explanatory variables. In addition, very often, to understand the processes under study we need to understand
-which explanatory variables are the most important and useful to make mentioned predictions. 
+which explanatory variables are more important and useful to make mentioned predictions. 
 Random Forest allows to not only build an accurate model with reliable predictions, 
 but also to provide variable importance measures which are very important in the process of interpreting the model and 
-its prediction results. In this section we will use \cite{louppe2013understanding} 
-and \cite{gerard2016foresttour} and after general background to Mean Decrease Impurity we will examine variable importance for totally randomized tree ensembles and then we will discuss these ideas closer to the Random Forest algorithm.
+its prediction results. In this section while closely following \cite{louppe2013understanding} 
+and \cite{gerard2016foresttour}, we will introduce general background to Mean Decrease Impurity 
+and examine variable importance for totally randomized tree ensembles 
+and then we will discuss these ideas' link to the Random Forest algorithm.
 
 \subsubsection{Variable importance}
-In order to rank the importance of the explanatory variables in classification problems using random forest 
-we use two possible measures proposed by \cite{breiman2001random}. 
-First of them is known as Mean Decrease Impurity (MDI). MDI measure is based on the total decrease in node impurity from splitting 
-on the given explanatory variable and moreover MDI is averaged over all trees. 
+In order to rank the importance of the explanatory variables in classification problems using Random Forest 
+we use two possible measures proposed by \cite{breiman2001random}; 
+Mean Decrease Impurity (MDI) and Mean Decrease Accuracy (MDA). 
+For MDI, we get the total decrease in node impurity from splitting 
+with the given explanatory variable and we average that total over all trees. 
+While closely following Louppe's notation \cite{louppe2013understanding}, 
+we can define MDI as
+\begin{equation}\label{eq:MDI}
+	{MDI}( X_{j} ) = \frac{1}{B}\sum_{b=1}^{B}\sum_{t \in T_{b}}\mathds{1}(v(s_{t}) = X_{j})[ p(t)\Delta i(s_{t}, t)]
+\end{equation}
+where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $N_{t}/N$ of samples reaching $t$.
+By definition $ MDI( X_{j} ) $ evaluates importance of a variable $ X_{j} $ for predicting $Y$ by 
+adding up the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used 
+and averaging that sum over all $B$ trees in the Random Forest. 
+We can use above definition for various impurity measure $i(t)$ including the Gini index and the information entropy.
+Furthermore, in contemporary exercises, MDI is commonly used and 
+also embedded into Random Forest algorithm in sklearn package \cite{scikit2011learn}. 
 The second measure is known as Mean Decrease Accuracy (MDA). 
 This measure assumes that if the explanatory variable is not relevant to the study of the problem, 
-then rearranging its values should not demolish prediction accuracy. Mean Decrease Impurity proposed 
-by \cite{breiman2001random} is given by: 
-
-\begin{equation}\label{eq:MDI}
-	{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t})=  X_{j}  } p(t)\Delta i(s_{t}, t)
-\end{equation}
-where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
-By definition $ MDI( X_{j} ) $ evaluates importance of a variable $ X_{j} $ for predicting $Y$ by 
-adding up the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used. 
-Furthermore, $MDI$ averages over all $B$ trees in the Random Forest. 
-Above definition can be used for any impurity measure $i(t)$ for example: the Gini index, the information entropy. 
-The second mentioned measure MDA uses out-of-bag error estimate. 
+then rearranging its values should not demolish prediction accuracy. 
+MDA uses out-of-bag error estimate to calculate variable importance. 
 In this case to measure the importance of the $X_{j}$ variable, we have to permute its values in the out-of-bag example and 
 use these all observations in the tree. $ MDA( X_{j} )$ is counted with averaging the differences in 
 out-of-bag error estimation after and before the permutation in all trees. Because of used permutations, 
 this measure is sometimes called also as the permutation importance.
 
 \subsubsection{Variable importance for totally randomized tree ensembles}
-
 Let us now consider Mean Decrease Impurity as defined by equation \eqref{eq:MDI} and assume a set $U$ which is a set of categorical input variables and is equal to $\{X_1,...,X_p\}$ in addition assume categorical output $Y$. For the simplicity our impurity measure which we will use is the Shannon entropy. Let us assume that we created an infinitely large ensemble of trees which are totally randomized and fully developed. Let assume also that for creation of these trees we used training sample $D$ of $N$ joint observations of $X_1,...,X_p,Y$ independently taken from the joint distribution $P(X_1,...,X_p,Y)$. A totally randomized and fully developed tree as defined in \cite{louppe2013understanding} is a decision tree with partitioned every node $t$ using a variable $X_j$ chosen uniformly and randomly among those which were not yet used at the parent nodes of $t$
 and where every $t$ is split into $|\Xb_j|$ sub-trees, where $\Xb$ is an image set. For these assumptions two following theorems have been proven.
 
