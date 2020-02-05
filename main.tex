@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{dsfont}
 \usepackage{csquotes}
 \usepackage{makeidx}
 \usepackage[left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -22,12 +23,26 @@
 \addbibresource{references.bib}
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
+\usepackage[ruled, vlined]{algorithm2e}
+
+\usepackage{newclude}
+\usepackage{calrsfs}
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\newcommand{\Xa}{\mathcal{X}}
+\newcommand{\Xb}{\pazocal{X}}
+\newcommand{\Pa}{\mathcal{P}}
+\newcommand{\Pb}{\pazocal{P}}
+\newcommand{\Ya}{\mathcal{Y}}
+\newcommand{\Yb}{\pazocal{Y}}
+
 \hypersetup{
     colorlinks=true, %set true if you want colored links
     linktoc=all,     %set to all if you want both sections and subsections linked
-    linkcolor=blue,  %choose some color if you want links to stand out
+    urlcolor=blue,
+    citecolor=blue,
+    linkcolor=blue, %choose some color if you want links to stand out
 }
-
+\urlstyle{same}
 
 
 
@@ -44,7 +59,7 @@
 		\centering
 		University of Bonn
 		
-		 Master Programme in Economics
+		Master of Science in Economics
 		\vspace{1in}
 		\vspace{1in}
 		
@@ -69,28 +84,31 @@
 		
 	\end{titlepage}
 	
-
+	\include*{chapters/abstract}
+	\newpage	
 	\tableofcontents
 	\thispagestyle{empty}
 	\newpage
 
-	%\include{chapters/abstract}
-
 	\pagenumbering{arabic}
 
-	\include{chapters/intro}
+	\include*{chapters/intro}
 
-	\include{chapters/decision_tree}
+	\include*{chapters/decision_tree}
 
-	\include{chapters/random_forest}
+	\include*{chapters/random_forest}
 
-	\include{chapters/comparison}
+	\include*{chapters/simulation}
 
-	\include{chapters/conclusion}
+	\include*{chapters/simulation_bias_var}
+
+	\include*{chapters/comparison}
+
+%	\include*{chapters/conclusion}
 	% \newpage
 	\include{chapters/appendix}
 
-	% \pagebreak
+	\pagebreak
 
 	\printbibliography
 

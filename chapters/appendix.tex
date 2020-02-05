@@ -1,7 +1,8 @@
 \section{Appendix}
+\label{sec:appendix}
 \subsection{Bayes Model explanation}
 \label{app:bayes_model}
-We identified Bayes Model in \autoref{eq:bayes_model} as such
+We identified Bayes Model in equation (\ref{eq:bayes_model}) as such
 \begin{align}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c) \} \notag\\
 			 & = \underset{c \,\in\, Y}{argmin} \; P(Y \neq c \,| X = x) \notag\\
@@ -10,16 +11,16 @@ We identified Bayes Model in \autoref{eq:bayes_model} as such
 
 \subsection{Bias-variance decomposition of Squared Loss Function}
 \label{app:bias_var_decomp}
-We derived the result in \autoref{eq:decomp_squared_loss} as follows;
+We derived the result in equation (\ref{eq:decomp_squared_loss}) as follows;
 \begin{align}
 \boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
 							  & = \mathbb{E}_{Y|X=x}\{(Y -\phi_{\beta}(x) +\phi_{\beta}(x) -T_{D,\theta}(x))^2\} \notag \\
 							  & = \mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\} \notag \\
-							  &	\: + \underbrace{\mathbb{E}_{Y|X=x}\{2(Y-\phi_{\beta}(x))(\phi_{\beta}(x)-T_{D,\theta}(x))\}}_\text{$=0$ \ since $ \mathbb{E}_{Y|X=x}(Y-\phi_{\beta}(x)) = 0$ from $(18)$}  \notag \\
-							  & = \underbrace{\mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\}}_\text{from $(20)$ equals to $\boldsymbol{Err}(\phi_{\beta}(x))$} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\}  \notag \\
+							  &	\: + \underbrace{\mathbb{E}_{Y|X=x}\{2(Y-\phi_{\beta}(x))(\phi_{\beta}(x)-T_{D,\theta}(x))\}}_\text{$=0$ \ since $ \mathbb{E}_{Y|X=x}(Y-\phi_{\beta}(x)) = 0$ from \ref{eq:bayes_eq_y}}  \notag \\
+							  & = \underbrace{\mathbb{E}_{Y|X=x}\{(Y-\phi_{\beta}(x))^2\}}_\text{from \ref{eq:err_bayes} equals to $\boldsymbol{Err}(\phi_{\beta}(x))$} + \mathbb{E}_{Y|X=x}\{(\phi_{\beta}(x)-T_{D,\theta}(x))^2\}  \notag \\
 							  & = \boldsymbol{Err}(\phi_{\beta}(x)) + (\phi_{\beta}(x)-T_{D,\theta}(x))^2\notag
 \end{align}
-We adopted following steps in the futher derivations of bias-variance decomposition in \autoref{eq:decomp_squared_loss_cont}.
+We adopted following steps in the futher derivations of bias-variance decomposition in equation (\ref{eq:decomp_squared_loss_cont}).
 \begin{align}
 & \mathbb{E}_{D}\{(\phi_{\beta}(x) - T_{D,\theta}(x))^2 \} \notag \\
 & = \mathbb{E}_{D}\{(\phi_{\beta}(x) - \mathbb{E}_{D}\{T_{D,\theta}(x)\} + \mathbb{E}_{D}\{T_{D,\theta}(x)\} - T_{D,\theta}(x))^2\} \notag \\
@@ -49,7 +50,7 @@ where $\delta(\phi_{\beta}(x), T_{D, \theta}(x)) = 1$ if $\phi_{\beta}(x) = T_{D
 \end{align}
 Even if in the Kohavi's paper it is stated that the last step is a 
 simplified version of the extended Bayesian Formalism \cite{wolpert2018relationship}, 
-there is not enough explanation to explicitly show the mathematical derivation nor the intuition. If we continue examine the \autoref{eq:kohavi_eq} we get the following decomposition;
+there is not enough explanation to explicitly show the mathematical derivation nor the intuition. If we continue examine the equation (\ref{eq:kohavi_eq}) we get the following decomposition;
 \begin{align}\label{eq:kohavi_eq1}
 \boldsymbol{Err}(T_{D, \theta}(x))
 & = 1 - \sum_{y \in Y} P(\phi_{\beta}(x) = T_{D, \theta}(x)) = y) \notag\\
@@ -57,14 +58,14 @@ there is not enough explanation to explicitly show the mathematical derivation n
 & + \sum_{y \in Y}[-P(\phi_{\beta}(x) = y) P(T_{D, \theta}(x)) = y) + \dfrac{1}{2}P(T_{D, \theta}(x) = y)^2 + \dfrac{1}{2}P(\phi_{\beta} = y)^2] \notag\\
 & + [\dfrac{1}{2} - \dfrac{1}{2}\sum_{y \in Y} P(T_{D,\theta}(x)= y)^2] + [\dfrac{1}{2} - \dfrac{1}{2}\sum_{y \in Y} P(\phi_{\beta}(x)= y)^2]
 \end{align}
-Rearranging \autoref{eq:kohavi_eq1} yields
+Rearranging equation (\ref{eq:kohavi_eq1}) yields
 \begin{align}\label{eq:kohavi_eq2}
 \boldsymbol{Err}(T_{D, \theta}(x))
 & = \sum_{y \in Y} [P(T_{D,\theta}(x)=y)P(\phi_{\beta}(x) = y) - P(T_{D,\theta}(x) = \phi_{\beta}(x) = y)]\tag{$*$} \\
 & + \dfrac{1}{2}\sum_{y \in Y} [P(T_{D,\theta}(x)=y) - P(\phi_{\beta}(x) = y)]^2\notag \\
 & + \dfrac{1}{2}(1 - \sum_{y \in Y}P(T_{D, \theta}(x) = y)^2) + \dfrac{1}{2}(1 - \sum_{y \in Y}P(\phi_{\beta}(x) = y)^2)\notag \\
 \end{align}
-The $*$ term is the covariance between Bayes Model and decision tree which equals to zero since by construction Bayes Model cannot be dependent of any model. Then the decomposition becomes;
+The $*$ term is the covariance between Bayes Model and Decision Tree which equals to zero since by construction Bayes Model cannot be dependent of any model. Then the decomposition becomes;
 \begin{align}
 \boldsymbol{Err}(T_{D, \theta}(x)) = \sum_{x} P(x)(\boldsymbol{Err}(\phi_{\beta}) + bias^2 + variance) \notag
 \end{align}
@@ -92,7 +93,7 @@ Being that said the findings we explored with decomposing the variance of the sq
 
 \subsection{Decomposition of Variance}
 \label{app:var_decomp}
-The derivation of \autoref{eq:decomp_var} is as follows;
+The derivation of equation (\ref{eq:decomp_var}) is as follows;
 
 \begin{align}
 \mathbb{V}\{\boldsymbol{RF}\} & = \mathbb{V}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \}\notag \\
@@ -109,7 +110,7 @@ Following Louppe's derivations, we can rewrite the variance as pairwise products
 \begin{align}
 \mathbb{V}\{\boldsymbol{RF}\} & = \dfrac{1}{B}[\mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\sum_{i,j} T_{D,\theta_{i}}(x) T_{D,\theta_{j}}(x)\} - (B \mu_{D,\theta}(x))^2] \notag
 \end{align}
-where $\mu_{D, \theta}$ is the average prediction of all ensembled trees and derived in \autoref{eq:mu}.
+where $\mu_{D, \theta}$ is the average prediction of all ensembled trees and derived in equation (\ref{eq:mu}).
 \begin{align}
 \mathbb{V}\{\boldsymbol{RF}\} & = \dfrac{1}{B^2}\left[\sum_{i,j} \mathbb{E}_{D, \theta_{i}, \theta_{j}}\{T_{D,\theta_{i}}(x) T_{D,\theta_{i}}(x)\} - B^2 \mu_{D,\theta}^2(x)\right]\notag \\
 & = \dfrac{1}{B^2}\left[B\mathbb{E}_{D,\theta}\{T_{D,\theta}(x)^2\} + (B^2 - B) \mathbb{E}_{D, \theta_{i}, \theta_{j}}\{T_{D,\theta_{i}}(x) T_{D,\theta_{i}}(x)\} - B^2 \mu_{D,\theta}^2(x)\right]\notag \\
@@ -117,3 +118,30 @@ where $\mu_{D, \theta}$ is the average prediction of all ensembled trees and der
 & = \dfrac{\sigma_{D,\theta}^2(x)}{B} + \rho(x)\sigma_{D,\theta}^2(x) - \rho(x)\dfrac{\sigma_{D,\theta}^2(x)}{B}\notag \\
 & = \rho(x)\sigma_{D,\theta}^2(x) + \dfrac{1 - \rho(x)}{B}\sigma_{D,\theta}^2(x) \notag
 \end{align}
+\subsection{Bias-Variance Decomposition Figures}
+\begin{figure}[H]
+	\centering
+	\captionsetup{format=plain}
+	\makebox{\includegraphics[width=120mm]{bias_var_linearDGP.png}}
+	\caption{This figure demonstrates the decomposition of the expected generalization error in linear DGP. 
+			The expected generalization error is denoted with loss. 
+			As sample size increases both the expected generalization error and bias tend to decrease. 
+			Although the variance does not follow a pattern, in theory, we expect low variance and 
+			variance remains to be low for all sample sizes.}
+	\label{fig:bias_var_linear}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\captionsetup{format=plain}
+	\makebox{\includegraphics[width=120mm]{bias_var_nonlinearDGP.png}}
+	\caption{This figure demonstrates the decomposition of the expected generalization error in nonlinear DGP. 
+			The expected generalization error is denoted with loss. 
+			The expected generalization error is driven primarily 
+			by variance and bias remains to be low for all sample sizes. 
+			As expected, Random Forest decreases the variance and bias remains to be low due to low biasness of Decision Tree estimates.}
+	\label{fig:bias_var_nonlinear}
+\end{figure}
+
+
+
