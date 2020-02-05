@@ -121,7 +121,7 @@ the Random Forest classifier selects a bootstrapped subset of observations and
 grows the decision tree with only a subset of regressors. Repeating this tree growing process $B$ times 
 yields a Random Forest. Assume that $x^*$ is the value that we want to predict its class membership.
 There are two rules that can be used to get the prediction:
-majority voting and  soft voting \cite{louppe2014understanding} and \cite{zhou2012ensemble}.
+majority voting and  soft voting \cite{louppe2014understanding}\cite{zhou2012ensemble}.
 
 In majority voting, after getting every trees prediction denoted as $\hat{T}(x^*)$, 
 the final prediction is the class that gets the most votes from the trees:
@@ -172,7 +172,7 @@ by Decision Tree $T_{D,\theta}$ and can be defined as
 	L(Y, T_{D, \theta}(x)) = (Y - T_{D, \theta}(x))^2
 \end{equation}
 
-while the zero-one loss function yields is
+while the zero-one loss function yielding
 
 \begin{equation}
 	L'(Y, T_{D,\theta}(X)) = \mathds{1} (Y \neq T_{D, \theta}(X))
@@ -200,23 +200,24 @@ decision trees.
 \\
 \textbf{\emph{The Decomposition of $\boldsymbol{Err}(T_{D,\theta})$}}\\
 Given the probability distribution of $P(X,Y)$, there exists a model $\phi_{\beta}$ which minimizes the generalization error 
-and can be derived analytically independent of the learning set $D$ \cite{louppe2014understanding}. 
+and can be derived analytically \cite{louppe2014understanding}. 
 By conditioning on X generalization error for $\phi_{\beta}$ becomes:
 
 \begin{equation}
 \mathbb{E}_{X,Y} \{L(Y, \phi_{\beta}(X))\} = \mathbb{E}_{X}\{\mathbb{E}_{Y|X}\{L(Y, \phi_{\beta}(X)) \} \}
 \end{equation}
 
-Point-wise minimization the inner term with respect to Y yields \cite{louppe2014understanding}:
+Point-wise minimization the inner term with respect to Y yields;
 
 \begin{equation}
 \phi_{\beta} = \underset{c \in Y}{argmin} \; \mathbb{E}_{Y|X=x}\{L(Y,c)\}
 \end{equation}
 
 $\phi_{\beta}$ is denotes the Bayes Model and $\boldsymbol{Err}(\phi_{\beta})$ is the residual error, 
-the minimum obtainable error with any model, which is considered as the irreducible error due to random deviations in the 
+the minimum obtainable error with any model.The irreducible error, $\boldsymbol{Err}(\phi_{\beta})$, arises solely 
+due to random deviations in the 
 data \cite{louppe2014understanding}. We will exploit the irreducible concept when examining the dynamics of random forests and 
-decision trees. In that sense, with a couple of manipulations, the Bayes Model squared loss can be reduced to
+decision trees. In that sense, with a couple of manipulations, the Bayes Model for squared loss can be reduced to
 
 \begin{align}
 \phi_{\beta} & = \underset{c \,\in\, Y}{argmin} \; \mathbb{E}_{Y|X=x}\{(Y-c)^2 \} \notag\\
@@ -243,7 +244,7 @@ The aforementioned residual error can be computed for both functions
 \boldsymbol{Err}(\phi_{\beta}') & = P(Y \neq \phi_{\beta}'(x) )
 \end{align}
 
-by using the squared loss function. $\boldsymbol{Err}(T_{D,\theta}(x))$ can be written as
+By using the squared loss function, $\boldsymbol{Err}(T_{D,\theta}(x))$ can be written as
 
 \begin{align}\label{eq:decomp_squared_loss}
 \boldsymbol{Err}(T_{D, \theta}(x)) & = \mathbb{E}_{Y|X=x}\{(Y-T_{D,\theta}(x))^2\} \notag \\
@@ -254,8 +255,8 @@ As mentioned above, the first term in the equation corresponds to the
 irreducible error and the second term is due to the prediction differences between Bayes Model and our Decision Tree estimation. 
 The generalization error increases by an increase in that difference. Since the result does not depend on the $Y$-values, 
 it can be also expressed without conditional expectation. 
-Decision Trees in the Random Forest classifier use a bootstrapped datasets
-Further, $D$ is a random variable, thus, if we further examine the second term with taking an expectation over $D$, 
+Decision Trees in the Random Forest classifier use a bootstrapped dataset $D$, thus, 
+if we further examine the second term with taking an expectation over $D$, 
 it decomposes as
 
 \begin{align}\label{eq:decomp_squared_loss_cont}
@@ -300,9 +301,7 @@ Random forest for regression setting can be written as
 \begin{equation}
 \boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) = \dfrac{1}{B}\sum_{b = 1}^{B}T_{D,\theta_{b}}(x)
 \end{equation}
-
-Assuming equal expected values for the bootstrapped trees  $T_{D, \theta_{b}}(x)$, we get
-
+%Assuming equal expected values for the bootstrapped trees $T_{D, \theta_{b}}(x)$, we get
 \begin{align}\label{eq:mu}
 \mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\boldsymbol{RF}_{D, \theta_{1},\theta_{2},..., \theta_{B}}(x) \} 
 	& = \mathbb{E}_{D, \theta_{1}, \theta_{2},..., \theta_{B}}\{\dfrac{1}{B}\sum_{b = 1}^{B}T_{D,\theta_{b}}(x)\} \notag \\
@@ -311,18 +310,19 @@ Assuming equal expected values for the bootstrapped trees  $T_{D, \theta_{b}}(x)
 \end{align}
 
 where $\mu_{D,\theta}(x)$ is the average prediction of all ensembled trees. Since $\theta$'s are random, 
-independent and have the same distribution \cite{louppe2014understanding}, when we extend this finding, 
-the bias of a random forest we can state that
+independent and have the same distribution, expected values for the bootstrapped trees are equal \cite{louppe2014understanding}. 
+When we consider the bias of a random forest, we can state that
 
 \begin{equation}\label{eq:random_forest_bias}
 bias^2 = (\phi_{\beta}(x) - \mu_{D,\theta}(x))^2.
 \end{equation}
 
 Intuitively, when we get the average prediction of all ensembled trees, 
-we are able to consider $\mu_{D,\theta}(x)$ as one Decision Tree in simplest terms and make this inference.
+we are able to consider $\mu_{D,\theta}(x)$ as one Decision Tree in the simplest terms and make this inference.
 We can interpret equation (\ref{eq:random_forest_bias}) as the squared bias 
-which cannot be decreased by ensembling randomized models, namely, 
-an ensemble of trees does not guarantee to have lower bias compared to only one tree \cite{friedman2001elements}.
+cannot be decreased by ensembling randomized models, namely, 
+an ensemble of trees does not guarantee to have a lower bias compared to only one tree \cite{friedman2001elements}. 
+Furthermore, the squared bias of an ensemble of randomized model equals the squared bias of that model in theory \cite{louppe2014understanding}. 
 Although the Random Forest is inadequate to propose any structure to decrease the generalization error so far regarding $noise$
 and $bias^2$, it shows promising performance in reducing the last remaining part of the generalization error.
 Thus, we can continue our exploration with the variance of Random Forest, yet, 
@@ -337,7 +337,7 @@ and different growing parameters $\theta'$ and $\theta''$, we can define the cor
 	- \mu_{D,\theta}^2(x)}{\sigma_{D,\theta}^2(x)}
 \end{align}
 
-We utilize the definition of the Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following 
+We utilize the definition of Pearson's correlation coefficient and the property of $\theta'$ and $\theta''$ following 
 the same distribution in the intermediate steps in section \ref{app:corr_coef}. 
 $\sigma_{D, \theta}(x)$ is the variance of a single Decision Tree and 
 associated with prediction variability stemming from the randomness of the set $D$ 
@@ -346,7 +346,7 @@ Therefore, $\rho(x)$ represents the effect of randomization in the learning algo
 In our case, it is close to $1$ when predictions of two decision trees are highly correlated and implies that randomization 
 does not have a significant effect. 
 On the other hand, if it is close to 0, trees are non-correlated and 
-the prediction of trees are perfectly random in the sense that they are
+the prediction of trees are perfectly random in the sense that they are 
 not dependent on the predictions of other trees. 
 
 We can decompose variance of a random forest as follows:
@@ -362,8 +362,8 @@ and due to randomization in the algorithm $\rho(x) < 1$.
 Thus, the variance of the Random Forest is less than the variance of the Decision Tree. 
 This inference implies that the generalization error of the Random Forest is less 
 than the generalization error of the Decision Tree. 
-If the decision trees in the random Forest are independent 
-, therefore $\rho(x) \rightarrow 0$, the variance is reduced to $\sigma^2_{D,\theta}(x)/B$ 
+If the decision trees in the random Forest are independent, 
+therefore $\rho(x) \rightarrow 0$, the variance is reduced to $\sigma^2_{D,\theta}(x)/B$ 
 which can be decreased by increasing $B$ as mentioned. 
 Conclusively, the Random Forest improves the performance of the Decision Tree by decreasing variance 
 and keeping bias unaffected.
@@ -371,36 +371,44 @@ and keeping bias unaffected.
 \subsection{Interpretation}
 In many cases, the main purpose of using a Random Forest model is its usefulness in performing predictions 
 of a dependent variable based on a set of explanatory variables. 
-In addition, very often, to understand the processes we need to understand
-which explanatory variables are the most important and useful to make said predictions. 
+In addition, to get a better insight of the processes of interest, we need to understand
+which explanatory variables are more important and useful to make mentioned predictions. 
 The Random Forest allows to not only build an accurate model with reliable predictions, 
 but also to provide variable importance measures.
 % which are very important in the process of interpreting the model and its prediction results.
 In this section, we  use \cite{louppe2013understanding} 
 and \cite{gerard2016foresttour}, and after presenting the Mean Decrease Impurity,
 we will examine variable importance for randomized tree ensembles.
-Then, we will discuss these ideas closer to the Random Forest algorithm.
+Then, we will discuss these ideas' link to the Random Forest algorithm.
 
 \subsubsection{Variable importance}
 In order to rank the importance of the explanatory variables in classification problems using Random Forest, 
-we use two possible measures proposed by \cite{breiman2001random}. 
-First of them is known as Mean Decrease Impurity (MDI). The MDI measure is based on the total decrease in node impurity 
-resulting from splitting into further nodes. Moreover, the MDI is averaged over all trees. 
-The second measure is known as Mean Decrease Accuracy (MDA). 
-This measure assumes that if the explanatory variable is not relevant to the study of the problem,
-then rearranging its values should not significantly lower prediction accuracy.
-The Mean Decrease Impurity proposed by \cite{breiman2001random} is given by: 
+we use two possible measures proposed by \cite{breiman2001random}; 
+Mean Decrease Impurity (MDI) and Mean Decrease Accuracy (MDA).
+For MDI, we get the total decrease in node impurity 
+resulting from splitting into further nodes and we average that total over all trees. 
+While closely following Louppe's notation \cite{louppe2013understanding}, 
+we can define MDI as
+%The second measure is known as Mean Decrease Accuracy (MDA). 
+%This measure assumes that if the explanatory variable is not relevant to the study of the problem,
+%then rearranging its values should not significantly lower prediction accuracy.
+%The Mean Decrease Impurity proposed by \cite{breiman2001random} is given by: 
 
 \begin{equation}\label{eq:MDI}
-	{MDI}( X_{j} ) = \frac{1}{B} \displaystyle \sum_{b=1}^{B}  \displaystyle\sum_{t \in T_{b}: v(s_{t})=  X_{j}  } p(t)\Delta i(s_{t}, t)
+	{MDI}( X_{j} ) = \frac{1}{B} \sum_{b=1}^{B} \sum_{t \in T_{b}}\mathds{1}(v(s_{t})=  X_{j}) p(t)\Delta i(s_{t}, t)
 \end{equation}
 
-where $ v(s_{t}) $ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $\frac{N_{t}}{N}$ of samples reaching $t$.
-By definition, $ MDI( X_{j} ) $ evaluates the importance of a variable $ X_{j} $ for predicting $Y$ by 
-summing over the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used. 
-Furthermore, $MDI$ averages over all $B$ trees in the Random Forest. 
-The above definition can be used for any impurity measure $i(t)$ for example: the Gini Index, the Information Entropy. 
-The second mentioned measure MDA uses Out-of-Bag error estimate.
+where $v(s_{t})$ is the variable used in split $s_{t}$ and $ p(t) $ is the proportion $N_{t}/N$ of samples reaching $t$.
+By definition, $MDI( X_{j} )$ evaluates the importance of a variable $X_{j}$ for predicting $Y$ by 
+summing over the weighted impurity decreases $p(t) \Delta i(s_{t}, t)$ for all nodes $t$ where $ X_{j}$ is used 
+and averaging that sum over all $B$ trees in the Random Forest. 
+We can use the above definition for various impurity measures $i(t)$ including the Gini Index and the Information Entropy. 
+Furthermore, in the contemprorary exercises, MDI is commonly used and also embedded into the Random Forest algorithm 
+in skilearn package \cite{scikit2011learn}.
+The second measure is known as Mean Decrease Accuracy (MDA).
+This measure assumes that if the explanatory variable is not relevant to the study of the problem,
+then rearranging its values should not demolish the model's prediction accuracy.
+MDA uses Out-of-Bag error estimate to calculate a variable's importance.
 In this case, to measure the importance of the $X_{j}$ variable, we have to permute its values in the Out-of-Bag example and 
 use these observations in the tree. $ MDA( X_{j} )$ is calculated by averaging the differences in the
 Out-of-Bag error estimation after and before the permutation in all trees. Because of these permutations, 
